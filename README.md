@@ -1,6 +1,6 @@
 # Fullstack Gym
 
-This repo contains the code for the Fullstack Gym app built for my university course.
+This repo contains the code for the Fullstack Gym app built for our university course.
 
 ## Technologies Used
 

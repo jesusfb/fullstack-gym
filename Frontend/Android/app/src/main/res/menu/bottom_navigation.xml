@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_baseline_home"
+        android:title="Home"/>
+    <item
+        android:id="@+id/coursesFragment"
+        android:icon="@drawable/ic_baseline_sports_gymnastics"
+        android:title="Courses"/>
+
+    <item
+        android:id="@+id/myProfileFragment"
+        android:icon="@drawable/ic_baseline_user"
+        android:title="My Profile"/>
+</menu>

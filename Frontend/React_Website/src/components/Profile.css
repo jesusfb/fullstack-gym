@@ -1,0 +1,85 @@
+.Profile{
+    width: 100%;
+    height: 480;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 1px 10px 1px black;
+}
+
+.upper-container{
+    height: 100px;
+    background: #242424;
+}
+
+.image-container img{
+    background: white;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    padding: 5px;
+    margin-left: 5%;
+    margin-top: 45px;
+    border:2px solid #242424;
+
+}
+
+.lower-container{
+    margin-top: 60px;
+    height: 300px;
+    background: white;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.lower-container h3,h4,p{
+    margin: 0;
+    padding: 0;
+}
+
+.lower-container h3{
+    color: #242424;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.lower-container h4{
+    color: #242424;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+}
+
+.lower-container span{
+    color: #242424;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.lower-container p{
+    margin: 1rem;
+    color: black;
+    font-weight: 300;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.lower-container button{
+    margin: 1rem;
+    margin-top: 20px;
+    color: #242424;
+    font: bold;
+    background-color: white;
+    border: 2px solid #242424;
+    padding: 0.6rem;
+    border-radius: 6px;
+    transition-duration: 0.5s;
+    animation: ease-in-out;
+}
+
+.lower-container button:hover{
+    background: #242424;
+    transform: scale(1.2);
+    border:none;
+    color: white;
+}
+

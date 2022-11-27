@@ -1,0 +1,29 @@
+.left-arrow {
+    position: absolute;
+    top: 50%;
+    left : 32px;
+    font-size: 3rem;
+    color: #000;
+    z-index: 10;
+    cursor: pointer;
+    user-select: none;
+}
+
+.right-arrow {
+    position: absolute;
+    top: 50%;
+    right : 32px;
+    font-size: 3rem;
+    color: #000;
+    z-index: 10;
+    cursor: pointer;
+    user-select: none;
+}
+
+.image {
+    width : 900px;
+    height : 600px;
+    border-radius: 10px;
+    width: 100rem;
+    border: #000;
+}

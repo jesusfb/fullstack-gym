@@ -49,9 +49,9 @@ public class InstructorServiceImpl implements InstructorService
     public Instructor updateInstructor(Instructor instructor, int id)
     {
         Instructor existingInstructor = instructorRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("Instructor","Id",id));
-        existingInstructor.setFirstname(instructor.getFirstname());
-        existingInstructor.setLastname(instructor.getLastname());
-        existingInstructor.setEmail(instructor.getEmail());
+        existingInstructor.setInstructor_name(instructor.getInstructor_name());
+        existingInstructor.setInstructor_lastname(instructor.getInstructor_lastname());
+        existingInstructor.setInstructor_email(instructor.getInstructor_email());
         instructorRepository.save(existingInstructor);
         return existingInstructor;
     }

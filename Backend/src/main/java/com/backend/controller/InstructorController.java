@@ -20,39 +20,39 @@ public class InstructorController
         this.instructorService = instructorService;
     }
 
-    // http://localhost:8080/instructors  POST + JSON BODY
-    @PostMapping("")
+    // http://localhost:8080/instructors/add  POST METHOD + JSON BODY
+    @PostMapping("/add")
     public ResponseEntity<Instructor> saveInstructor(@RequestBody Instructor instructor)
     {
         return new ResponseEntity<>(instructorService.saveInstructor(instructor), HttpStatus.CREATED);
     }
 
-    // http://localhost:8080/instructors GET
-    @GetMapping("")
-    public List<Instructor> getAllInstructors()
+    // http://localhost:8080/instructors/all GET  METHOD
+    @GetMapping("/all")
+    public ResponseEntity<List<Instructor>> getAllInstructors()
     {
-        return instructorService.getAllInstructors();
+        return new ResponseEntity<>(instructorService.getAllInstructors(),HttpStatus.OK);
     }
 
-    // http://localhost:8080/instructors/1 GET
-    @GetMapping("{id}")
+    // http://localhost:8080/instructors/id/1 GET METHOD
+    @GetMapping("/id/{id}")
     public ResponseEntity<Instructor> getInstructorById( @PathVariable("id") int instructorId)
     {
         return new ResponseEntity<>(instructorService.getInstructorById(instructorId),HttpStatus.OK);
     }
 
-    // http://localhost:8080/instructors/1 PUT + JSON BODY
-    @PutMapping("{id}")
+    // http://localhost:8080/instructors/update/id/1 PUT METH0D + JSON BODY
+    @PutMapping("/update/id/{id}")
     public ResponseEntity<Instructor> updateInstructor( @PathVariable("id") int instructorId, @RequestBody Instructor instructor)
     {
         return new ResponseEntity<>(instructorService.updateInstructor(instructor,instructorId),HttpStatus.OK);
     }
 
-    // http://localhost:8080/instructors/1 DELETE
-    @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteInstructor(@PathVariable("id") int instructorId)
+    // http://localhost:8080/instructors/delete/id/1 DELETE METHOD
+    @DeleteMapping("/delete/id/{id}")
+    public ResponseEntity<HttpStatus> deleteInstructorById(@PathVariable("id") int instructorId)
     {
         instructorService.deleteInstructor(instructorId);
-        return new ResponseEntity<>("Instructor has been deleted successfully",HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

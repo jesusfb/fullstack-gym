@@ -3,6 +3,7 @@ package com.backend.service;
 import com.backend.exception.ResourceNotFoundException;
 import com.backend.model.Plan;
 import com.backend.repository.PlanRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,18 +12,13 @@ import java.util.Optional;
 @Service
 public class PlanServiceImpl implements PlanService
 {
+    @Autowired
     PlanRepository planRepository;
-
-    public PlanServiceImpl(PlanRepository planRepository)
-    {
-        super();
-        this.planRepository = planRepository;
-    }
 
     @Override
     public Plan savePlan(Plan plan)
     {
-        return planRepository.save(plan);
+        return planRepository.save(new Plan(plan.getPlan_type(), plan.getPlan_desc(), plan.getPlan_duration(), plan.getPlan_price()));
     }
 
     @Override

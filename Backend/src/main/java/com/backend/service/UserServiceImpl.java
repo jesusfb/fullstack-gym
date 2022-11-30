@@ -1,8 +1,11 @@
 package com.backend.service;
 
 import com.backend.exception.ResourceNotFoundException;
+import com.backend.model.Course;
 import com.backend.model.User;
+import com.backend.repository.PlanRepository;
 import com.backend.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,25 +14,34 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService
 {
+    @Autowired
     UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository)
-    {
-        super();
-        this.userRepository = userRepository;
-    }
-
+    @Autowired
+    PlanRepository planRepository;
 
     @Override
-    public User saveUser(User user)
+    public List<User> getAllUsersByPlanId(int plan_id)
     {
-        return userRepository.save(user);
+        if (!planRepository.existsById(plan_id))
+        {
+            throw new ResourceNotFoundException("Plan","Id",plan_id);
+        }
+
+        List<User> users = userRepository.findByPlan_Id(plan_id);
+        return users;
     }
 
     @Override
-    public List<User> getAllUsers()
+    public User saveUser(int plan_id, User userRequest)
     {
-        return userRepository.findAll();
+        User user = planRepository.findById(plan_id).map( plan ->
+                {
+                    userRequest.setPlan(plan);
+                    return userRepository.save(userRequest);
+                }
+        ).orElseThrow( () -> new ResourceNotFoundException("Plan","Id",plan_id));
+        return user;
     }
 
     @Override

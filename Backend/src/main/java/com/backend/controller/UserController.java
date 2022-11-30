@@ -2,6 +2,7 @@ package com.backend.controller;
 
 import com.backend.model.User;
 import com.backend.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,47 +10,37 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api")
 public class UserController
 {
-    private final UserService userService;
+    @Autowired
+    UserService userService;
 
-    public UserController(UserService userService)
+    @PostMapping("/plans/{plan_id}/users/add")
+    public ResponseEntity<User> saveUser(@PathVariable(value = "plan_id") int plan_id,@RequestBody User userRequest)
     {
-        super();
-        this.userService = userService;
+        return new ResponseEntity<>(userService.saveUser(plan_id,userRequest), HttpStatus.CREATED);
     }
 
-    // http://localhost:8080/users/add  POST METHOD + JSON BODY
-    @PostMapping("/add")
-    public ResponseEntity<User> saveUser(@RequestBody User user)
+    @GetMapping("/plans/{plan_id}/users/all")
+    public ResponseEntity<List<User>> getAllUsersByPlanId(@PathVariable(value = "plan_id") int plan_id)
     {
-        return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.getAllUsersByPlanId(plan_id),HttpStatus.OK);
     }
 
-    // http://localhost:8080/users/all GET METHOD
-    @GetMapping("/all")
-    public ResponseEntity<List<User>> getAllUsers()
-    {
-        return new ResponseEntity<>(userService.getAllUsers(),HttpStatus.OK);
-    }
-
-    // http://localhost:8080/users/id/1 GET METHOD
-    @GetMapping("/id/{id}")
+    @GetMapping("users/id/{id}")
     public ResponseEntity<User> getUserById( @PathVariable("id") int userId)
     {
         return new ResponseEntity<>(userService.getUserById(userId),HttpStatus.OK);
     }
 
-    // http://localhost:8080/users/update/id/1 PUT METHOD + JSON BODY
-    @PutMapping("/update/id/{id}")
+    @PutMapping("users/update/id/{id}")
     public ResponseEntity<User> updateUser( @PathVariable("id") int userId, @RequestBody User user)
     {
         return new ResponseEntity<>(userService.updateUser(user,userId),HttpStatus.OK);
     }
 
-    // http://localhost:8080/users/delete/id/1 DELETE METHOD
-    @DeleteMapping("/delete/id/{id}")
+    @DeleteMapping("users/delete/id/{id}")
     public ResponseEntity<HttpStatus> deleteUserById(@PathVariable("id") int userId)
     {
         userService.deleteUser(userId);

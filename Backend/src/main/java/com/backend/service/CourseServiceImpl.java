@@ -3,49 +3,52 @@ package com.backend.service;
 import com.backend.exception.ResourceNotFoundException;
 import com.backend.model.Course;
 import com.backend.repository.CourseRepository;
+import com.backend.repository.InstructorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CourseServiceImpl implements CourseService
 {
+    @Autowired
     CourseRepository courseRepository;
 
-    public CourseServiceImpl(CourseRepository courseRepository)
+    @Autowired
+    InstructorRepository instructorRepository;
+
+    @Override
+    public List<Course> getAllCoursesByInstructorId(int instructor_id)
     {
-        super();
-        this.courseRepository = courseRepository;
+        if (!instructorRepository.existsById(instructor_id))
+        {
+            throw new ResourceNotFoundException("Instructor","Id",instructor_id);
+        }
+
+        List<Course> courses = courseRepository.findByInstructor_Id(instructor_id);
+        return courses;
     }
 
     @Override
-    public Course saveCourse(Course course)
+    public Course saveCourse(int instructor_id, Course courseRequest)
     {
-        return courseRepository.save(course);
-    }
-
-    @Override
-    public List<Course> getAllCourses()
-    {
-        return courseRepository.findAll();
+        Course course = instructorRepository.findById(instructor_id).map( instructor ->
+                {
+                    courseRequest.setInstructor(instructor);
+                    return courseRepository.save(courseRequest);
+                }
+        ).orElseThrow( () -> new ResourceNotFoundException("Instructor","Id",instructor_id));
+        return course;
     }
 
     @Override
     public Course getCourseById(int id)
     {
-        Optional<Course> course = courseRepository.findById(id);
-        if(course.isPresent())
-        {
-            return course.get();
-        }
-        else
-        {
-            throw new ResourceNotFoundException("Course","Id",id);
-        }
+        Course existingCourse = courseRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("Course","Id",id));
+        return existingCourse;
     }
 
-    @Override
     public Course updateCourse(Course course, int id)
     {
         Course existingCourse = courseRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("Course","Id",id));
@@ -53,6 +56,7 @@ public class CourseServiceImpl implements CourseService
         existingCourse.setCourse_description(course.getCourse_description());
         courseRepository.save(existingCourse);
         return existingCourse;
+        // αλλαγή instructor????
     }
 
     @Override

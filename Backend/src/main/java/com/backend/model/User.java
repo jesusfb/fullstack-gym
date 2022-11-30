@@ -34,29 +34,6 @@ public class User
     @JoinColumn(name = "plan_id")
     private Plan plan;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_courses", // book_author
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "course_id"))
-    private List<Course> courses;
-
-    public User(int user_id, String user_name, String user_lastname, String user_type, String user_email, String user_address, String user_adt, Plan plan, List<Course> courses) {
-        this.user_id = user_id;
-        this.user_name = user_name;
-        this.user_lastname = user_lastname;
-        this.user_type = user_type;
-        this.user_email = user_email;
-        this.user_address = user_address;
-        this.user_adt = user_adt;
-        this.plan = plan;
-        this.courses = courses;
-    }
-
-    public User()
-    {
-
-    }
-
     public int getUser_id() {
         return user_id;
     }
@@ -121,11 +98,4 @@ public class User
         this.plan = plan;
     }
 
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
 }

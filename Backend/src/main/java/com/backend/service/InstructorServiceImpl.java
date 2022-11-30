@@ -3,6 +3,7 @@ package com.backend.service;
 import com.backend.exception.ResourceNotFoundException;
 import com.backend.model.Instructor;
 import com.backend.repository.InstructorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,18 +12,13 @@ import java.util.Optional;
 @Service
 public class InstructorServiceImpl implements InstructorService
 {
+    @Autowired
     InstructorRepository instructorRepository;
-
-    public InstructorServiceImpl(InstructorRepository instructorRepository)
-    {
-        super();
-        this.instructorRepository = instructorRepository;
-    }
 
     @Override
     public Instructor saveInstructor(Instructor instructor)
     {
-        return instructorRepository.save(instructor);
+        return instructorRepository.save(new Instructor(instructor.getInstructor_name(),instructor.getInstructor_lastname(),instructor.getInstructor_email()));
     }
 
     @Override

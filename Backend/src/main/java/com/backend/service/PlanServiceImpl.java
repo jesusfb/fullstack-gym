@@ -3,17 +3,20 @@ package com.backend.service;
 import com.backend.exception.ResourceNotFoundException;
 import com.backend.model.Plan;
 import com.backend.repository.PlanRepository;
+import com.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PlanServiceImpl implements PlanService
 {
     @Autowired
     PlanRepository planRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public Plan savePlan(Plan plan)
@@ -30,15 +33,8 @@ public class PlanServiceImpl implements PlanService
     @Override
     public Plan getPlanById(int id)
     {
-        Optional<Plan> plan = planRepository.findById(id);
-        if(plan.isPresent())
-        {
-            return plan.get();
-        }
-        else
-        {
-            throw new ResourceNotFoundException("Plan","Id",id);
-        }
+        Plan existingPlan = planRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("Plan","Id",id));
+        return existingPlan;
     }
 
     @Override
@@ -57,6 +53,10 @@ public class PlanServiceImpl implements PlanService
     public void deletePlan(int id)
     {
         planRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("Plan","Id",id));
+        if(!userRepository.findByPlan_Id(id).isEmpty())
+        {
+            throw new RuntimeException("Plan with ID " + id + "can not be deleted. User or users are subscribed to it");
+        }
         planRepository.deleteById(id);
     }
 }

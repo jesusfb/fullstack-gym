@@ -2,6 +2,7 @@ package com.backend.service;
 
 import com.backend.exception.ResourceNotFoundException;
 import com.backend.model.Course;
+import com.backend.model.Plan;
 import com.backend.model.User;
 import com.backend.repository.PlanRepository;
 import com.backend.repository.UserRepository;
@@ -21,6 +22,19 @@ public class UserServiceImpl implements UserService
     PlanRepository planRepository;
 
     @Override
+    public User changePlantoUser(int user_id, int plan_id)
+    {
+        User user = planRepository.findById(plan_id).map(
+                plan -> {
+                    User existingUser = userRepository.findById(user_id).orElseThrow(()-> new ResourceNotFoundException("User","Id",user_id));
+                    existingUser.setPlan(plan);
+                    return userRepository.save(existingUser);
+                }
+        ).orElseThrow(() -> new ResourceNotFoundException("Plan","Id",plan_id));
+        return user;
+    }
+
+    @Override
     public List<User> getAllUsersByPlanId(int plan_id)
     {
         if (!planRepository.existsById(plan_id))
@@ -30,6 +44,12 @@ public class UserServiceImpl implements UserService
 
         List<User> users = userRepository.findByPlan_Id(plan_id);
         return users;
+    }
+
+    @Override
+    public List<User> getAllUsers()
+    {
+        return userRepository.findAll();
     }
 
     @Override
@@ -47,22 +67,14 @@ public class UserServiceImpl implements UserService
     @Override
     public User getUserById(int id)
     {
-        Optional<User> user = userRepository.findById(id);
-        if(user.isPresent())
-        {
-            return user.get();
-        }
-        else
-        {
-            throw new ResourceNotFoundException("User","Id",id);
-        }
+        User existingUser = userRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("User","Id",id));
+        return existingUser;
     }
 
     @Override
     public User updateUser(User user, int id)
     {
         User existingUser = userRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("User","Id",id));
-        existingUser.setUser_adt(user.getUser_adt());
         existingUser.setUser_name(user.getUser_name());
         existingUser.setUser_email(user.getUser_email());
         existingUser.setUser_address(user.getUser_address());

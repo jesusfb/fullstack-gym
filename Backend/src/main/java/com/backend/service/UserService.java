@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface UserService
 {
+    User changePlantoUser(int user_id,int plan_id);
     List<User> getAllUsersByPlanId(int plan_id);
+    List<User> getAllUsers();
     User saveUser (int plan_id,User userRequest);
     User getUserById(int id);
     User updateUser(User user,int id);

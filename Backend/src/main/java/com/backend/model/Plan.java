@@ -1,6 +1,8 @@
 package com.backend.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "plans")
@@ -14,7 +16,7 @@ public class Plan
     @Column(name = "plan_type",nullable = false)
     private String plan_type;
 
-    @Column(name = "plan_desc",nullable = false)
+    @Column(name = "plan_description",nullable = false)
     private String plan_desc;
 
     @Column(name = "plan_duration",nullable = false)
@@ -22,6 +24,16 @@ public class Plan
 
     @Column(name = "plan_price",nullable = false)
     private float plan_price;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "plans_courses",
+            joinColumns = { @JoinColumn(name = "plan_id") },
+            inverseJoinColumns = { @JoinColumn(name = "course_id") })
+    private Set<Course> courseSet = new HashSet<>();
 
     public Plan()
     {
@@ -34,6 +46,21 @@ public class Plan
         this.plan_desc = plan_desc;
         this.plan_duration = plan_duration;
         this.plan_price = plan_price;
+    }
+
+    public void addCourse(Course course)
+    {
+        this.courseSet.add(course);
+        course.getPlanSet().add(this);
+    }
+
+    public void removeCourse(int course_id) {
+        Course course = this.courseSet.stream().filter(c -> c.getCourse_id() == course_id).findFirst().orElse(null);
+        if (course != null)
+        {
+            this.courseSet.remove(course);
+            course.getPlanSet().remove(this);
+        }
     }
 
     public int getId() {

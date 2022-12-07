@@ -27,9 +27,6 @@ public class User
     @Column(name = "user_address",nullable = false)
     private String user_address;
 
-    @Column(name = "user_adt",nullable = false)
-    private String user_adt;
-
     @ManyToOne
     @JoinColumn(name = "plan_id")
     private Plan plan;
@@ -82,14 +79,6 @@ public class User
         this.user_address = user_address;
     }
 
-    public String getUser_adt() {
-        return user_adt;
-    }
-
-    public void setUser_adt(String user_adt) {
-        this.user_adt = user_adt;
-    }
-
     public Plan getPlan() {
         return plan;
     }
@@ -97,5 +86,4 @@ public class User
     public void setPlan(Plan plan) {
         this.plan = plan;
     }
-
 }

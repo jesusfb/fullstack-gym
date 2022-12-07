@@ -1,5 +1,6 @@
 package com.backend.controller;
 
+import com.backend.model.Plan;
 import com.backend.model.User;
 import com.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,13 @@ public class UserController
     @Autowired
     UserService userService;
 
-    @PostMapping("/plans/{plan_id}/users/add")
+    @PostMapping("/plans/id/{plan_id}/users/add")
     public ResponseEntity<User> saveUser(@PathVariable(value = "plan_id") int plan_id,@RequestBody User userRequest)
     {
         return new ResponseEntity<>(userService.saveUser(plan_id,userRequest), HttpStatus.CREATED);
     }
 
-    @GetMapping("/plans/{plan_id}/users/all")
+    @GetMapping("/plans/id/{plan_id}/users/all")
     public ResponseEntity<List<User>> getAllUsersByPlanId(@PathVariable(value = "plan_id") int plan_id)
     {
         return new ResponseEntity<>(userService.getAllUsersByPlanId(plan_id),HttpStatus.OK);
@@ -34,10 +35,22 @@ public class UserController
         return new ResponseEntity<>(userService.getUserById(userId),HttpStatus.OK);
     }
 
+    @GetMapping("users/all")
+    public ResponseEntity<List<User>> getAllUsers()
+    {
+        return new ResponseEntity<>(userService.getAllUsers(),HttpStatus.OK);
+    }
+
     @PutMapping("users/update/id/{id}")
     public ResponseEntity<User> updateUser( @PathVariable("id") int userId, @RequestBody User user)
     {
         return new ResponseEntity<>(userService.updateUser(user,userId),HttpStatus.OK);
+    }
+
+    @PutMapping ("users/update/id/{user_id}/plan/id/{plan_id}")
+    public ResponseEntity<User> changePlanToUser( @PathVariable("user_id") int user_id, @PathVariable("plan_id") int plan_id)
+    {
+        return new ResponseEntity<>(userService.changePlantoUser(user_id,plan_id),HttpStatus.OK);
     }
 
     @DeleteMapping("users/delete/id/{id}")

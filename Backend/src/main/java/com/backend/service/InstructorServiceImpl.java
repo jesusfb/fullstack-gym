@@ -30,15 +30,8 @@ public class InstructorServiceImpl implements InstructorService
     @Override
     public Instructor getInstructorById(int id)
     {
-        Optional<Instructor> instructor = instructorRepository.findById(id);
-        if(instructor.isPresent())
-        {
-            return instructor.get();
-        }
-        else
-        {
-            throw new ResourceNotFoundException("Instructor","Id",id);
-        }
+        Instructor existingInstructor = instructorRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("Instructor","Id",id));
+        return existingInstructor;
     }
 
     @Override

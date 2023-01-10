@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_my_profile" />
     <fragment
         android:id="@+id/coursesFragment"
-        android:name="com.georgegipa.gym.CoursesFragment"
+        android:name="com.georgegipa.gym.adapters.CoursesFragment"
         android:label="Courses"
         tools:layout="@layout/fragment_courses" />
 </navigation>

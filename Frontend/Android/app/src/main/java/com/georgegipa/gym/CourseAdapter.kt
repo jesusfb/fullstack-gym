@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.georgegipa.gym.models.Course
 import com.google.android.material.textview.MaterialTextView
 
 class CourseAdapter (private val context: Context, private var courseList: List<Course>) : RecyclerView.Adapter<CourseAdapter.CourseViewHolder>() {
@@ -34,7 +35,7 @@ class CourseAdapter (private val context: Context, private var courseList: List<
         private val trainerTv : MaterialTextView by lazy { itemView.findViewById(R.id.trainer_tv) }
 
         fun bind(item: Course) {
-            timeTv.text = item.startTime
+            timeTv.text = item.date
             nameTv.text = item.name
             trainerTv.text = item.trainer
         }

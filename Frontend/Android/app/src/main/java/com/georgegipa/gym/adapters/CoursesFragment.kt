@@ -1,10 +1,11 @@
-package com.georgegipa.gym
+package com.georgegipa.gym.adapters
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.georgegipa.gym.R
 import com.georgegipa.gym.databinding.FragmentCoursesBinding
 
 class CoursesFragment : Fragment(R.layout.fragment_courses) {

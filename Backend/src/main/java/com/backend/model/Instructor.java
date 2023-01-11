@@ -20,6 +20,9 @@ public class Instructor
     @Column(name = "instructor_email",nullable = false)
     private String instructor_email;
 
+    @Column(name = "image_url")
+    private String image_url = "";
+
     public Instructor()
     {
 
@@ -30,6 +33,16 @@ public class Instructor
         this.instructor_name = instructor_name;
         this.instructor_lastname = instructor_lastname;
         this.instructor_email = instructor_email;
+    }
+
+    public String getImage_url()
+    {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url)
+    {
+        this.image_url = image_url;
     }
 
     public int getId()

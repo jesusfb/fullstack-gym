@@ -27,6 +27,11 @@ public class User
     @Column(name = "user_address",nullable = false)
     private String user_address;
 
+    @Column(name = "image_url")
+    private String image_url = "";
+
+
+
     @ManyToOne
     @JoinColumn(name = "plan_id")
     private Plan plan;
@@ -85,5 +90,13 @@ public class User
 
     public void setPlan(Plan plan) {
         this.plan = plan;
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 }

@@ -26,10 +26,12 @@ public class Course
     @Column(name = "course_date",nullable = false)
     private String course_date;
 
+    @Column(name = "image_url")
+    private String image_url = "";
+
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "instructor_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private Instructor instructor;
 
     @ManyToMany(fetch = FetchType.LAZY,
@@ -44,6 +46,14 @@ public class Course
     public Course()
     {
 
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 
     public Set<Plan> getPlanSet()

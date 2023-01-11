@@ -5,7 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface CourseService
@@ -20,4 +22,8 @@ public interface CourseService
     Course updateCourse(Course course,int id);
     void deleteCourse(int id);
     void deleteCourseFromPlan(int planId,int course_id);
+
+    Course uploadImage(MultipartFile file, int id) throws IOException;
+
+    Course deleteImage(int id);
 }

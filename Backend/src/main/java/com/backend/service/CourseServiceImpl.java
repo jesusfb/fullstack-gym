@@ -2,19 +2,27 @@ package com.backend.service;
 
 import com.backend.exception.ResourceNotFoundException;
 import com.backend.model.Course;
+import com.backend.model.Image;
+import com.backend.model.Instructor;
 import com.backend.model.Plan;
-import com.backend.model.User;
 import com.backend.repository.CourseRepository;
+import com.backend.repository.ImageRepository;
 import com.backend.repository.InstructorRepository;
 import com.backend.repository.PlanRepository;
+import com.backend.tool.ImageTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
 public class CourseServiceImpl implements CourseService
 {
+    @Autowired
+    ImageRepository imageRepository;
+
     @Autowired
     CourseRepository courseRepository;
 
@@ -129,5 +137,30 @@ public class CourseServiceImpl implements CourseService
         Course course = courseRepository.findById(course_id).orElseThrow(() -> new ResourceNotFoundException("Course","Id",course_id));
         plan.removeCourse(course_id);
         planRepository.save(plan);
+    }
+
+    @Override
+    public Course uploadImage(MultipartFile file, int id) throws IOException
+    {
+        Course existingCourse = courseRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("Course","Id",id));
+        if(!existingCourse.getImage_url().isEmpty())
+        {
+            existingCourse = deleteImage(id);
+        }
+        imageRepository.save(new Image(file.getOriginalFilename(),file.getContentType(), ImageTool.compressImage(file.getBytes())));
+        existingCourse.setImage_url(file.getOriginalFilename());
+        courseRepository.save(existingCourse);
+        return existingCourse;
+    }
+
+    @Override
+    public Course deleteImage(int id)
+    {
+        Course existingCourse = courseRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("Course","Id",id));
+        String tobedeletedImageName = existingCourse.getImage_url();
+        Image tobedeletedImage = imageRepository.findByName(tobedeletedImageName).orElseThrow( () -> new ResourceNotFoundException("Image with Name = " + tobedeletedImageName + "has mot been found"));
+        imageRepository.delete(tobedeletedImage);
+        existingCourse.setImage_url("");
+        return courseRepository.save(existingCourse);
     }
 }

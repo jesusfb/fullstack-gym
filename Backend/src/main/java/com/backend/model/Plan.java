@@ -25,6 +25,9 @@ public class Plan
     @Column(name = "plan_price",nullable = false)
     private float plan_price;
 
+    @Column(name = "image_url")
+    private String image_url = "";
+
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
@@ -61,6 +64,22 @@ public class Plan
             this.courseSet.remove(course);
             course.getPlanSet().remove(this);
         }
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
+    }
+
+    public Set<Course> getCourseSet() {
+        return courseSet;
+    }
+
+    public void setCourseSet(Set<Course> courseSet) {
+        this.courseSet = courseSet;
     }
 
     public int getId() {

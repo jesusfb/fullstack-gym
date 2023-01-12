@@ -1,4 +1,4 @@
-package com.georgegipa.gym
+package com.georgegipa.gym.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.georgegipa.gym.R
+import com.georgegipa.gym.adapters.CourseAdapter
 import com.georgegipa.gym.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -26,7 +28,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val context = requireContext()
         val recyclerView = binding.courseDetailsRv
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = CourseAdapter(context, courseList)
+        //recyclerView.adapter = CourseAdapter(context, courseList)
     }
 
     override fun onDestroyView() {

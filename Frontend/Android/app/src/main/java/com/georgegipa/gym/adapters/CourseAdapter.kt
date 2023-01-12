@@ -1,17 +1,23 @@
-package com.georgegipa.gym
+package com.georgegipa.gym.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.georgegipa.gym.PLACEHOLDER_COURSE_IMG
+import com.georgegipa.gym.R
 import com.georgegipa.gym.models.Course
 import com.google.android.material.textview.MaterialTextView
 
 class CourseAdapter (private val context: Context, private var courseList: List<Course>) : RecyclerView.Adapter<CourseAdapter.CourseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
-        val v: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_course_info, parent, false)
+        val v: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_image_course, parent, false)
         return CourseViewHolder(v)
     }
 
@@ -30,14 +36,21 @@ class CourseAdapter (private val context: Context, private var courseList: List<
     }
 
     inner class CourseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val courseImage: ImageView = itemView.findViewById(R.id.course_iv)
         private val timeTv : MaterialTextView by lazy { itemView.findViewById(R.id.time_tv) }
         private val nameTv : MaterialTextView by lazy { itemView.findViewById(R.id.course_tv) }
-        private val trainerTv : MaterialTextView by lazy { itemView.findViewById(R.id.trainer_tv) }
+        private val descTv : MaterialTextView by lazy { itemView.findViewById(R.id.course_description_tv) }
+        //private val trainerTv : MaterialTextView by lazy { itemView.findViewById(R.id.trainer_tv) }
+        private val registerBtn : Button by lazy { itemView.findViewById(R.id.register_btn) }
 
         fun bind(item: Course) {
+            Glide.with(context).load(PLACEHOLDER_COURSE_IMG).into(courseImage)
             timeTv.text = item.date
             nameTv.text = item.name
-            trainerTv.text = item.trainer
+            descTv.text = item.description
+            registerBtn.setOnClickListener {
+                Toast.makeText(context, "You have registered for ${item.name}", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

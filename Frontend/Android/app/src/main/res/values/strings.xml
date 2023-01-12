@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">gym</string>
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse condimentum eleifend ligula. Ut lobortis viverra dui, sed tincidunt leo interdum a. Nulla consequat varius nibh nec ornare. Ut quis leo non neque mollis luctus eu nec erat. Duis sapien felis, consectetur id turpis id, molestie blandit dui. Curabitur felis ex, euismod quis pharetra non, aliquam non ante. Vestibulum malesuada risus vel nibh tempus dictum. In non tortor vitae neque accumsan consectetur at vehicula mauris. Suspendisse potenti. In laoreet cursus enim, in porttitor purus maximus ut. Vestibulum tempor vitae ante a molestie. Phasellus id tristique turpis, ut ultrices leo.</string>
 </resources>

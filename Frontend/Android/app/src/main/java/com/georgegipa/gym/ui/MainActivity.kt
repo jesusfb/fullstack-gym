@@ -1,19 +1,16 @@
-package com.georgegipa.gym
+package com.georgegipa.gym.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import com.georgegipa.gym.api.GymClient
+import com.georgegipa.gym.R
 import com.georgegipa.gym.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityMainBinding
@@ -26,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -38,15 +36,6 @@ class MainActivity : AppCompatActivity() {
 
         //set bottom navigation
         bottomNav.setupWithNavController(navController)
-
-        //get courses
-        lifecycleScope.launchWhenStarted {
-            withContext(Dispatchers.Default) {
-                GymClient().getCourses().forEach {
-                    Log.d("MainActivity", "onCreate: ${it.course_name}")
-                }
-            }
-        }
     }
 
 }

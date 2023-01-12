@@ -1,10 +1,11 @@
-package com.georgegipa.gym
+package com.georgegipa.gym.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.georgegipa.gym.R
 import com.georgegipa.gym.databinding.FragmentMyProfileBinding
 
 class MyProfileFragment : Fragment(R.layout.fragment_my_profile) {

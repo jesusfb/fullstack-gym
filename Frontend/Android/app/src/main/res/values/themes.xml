@@ -19,4 +19,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/app_icon_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/app_icon_round</item>
+        <item name="postSplashScreenTheme">@style/AppTheme.NoActionBar</item>
+    </style>
+
 </resources>

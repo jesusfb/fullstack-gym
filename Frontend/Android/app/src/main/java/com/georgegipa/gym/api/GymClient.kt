@@ -2,9 +2,12 @@ package com.georgegipa.gym.api
 
 import android.util.Log
 import com.georgegipa.gym.models.Course
-import com.georgegipa.gym.models.pseudoCourses
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -21,15 +24,28 @@ class GymClient {
         .build()
         .create(GymAPI::class.java)
 
-    suspend fun getCourses(): List<pseudoCourses> {
-        val response = retrofit.getCourses()
-        if (response.isSuccessful) {
-            Log.d(TAG, "Successful Request: ${response.raw().request().url()}")
-            val data = response.body()
-            val courseType = object : TypeToken<ArrayList<pseudoCourses>>() {}.type
-            return Gson().fromJson<ArrayList<pseudoCourses>>(data.toString(), courseType)
-        }
-        return emptyList()
+
+    fun getCourses(onDone: (List<Course>) -> Unit) {
+
+        val service = retrofit.getCourses()
+        //show the url in logcat
+        Log.d(TAG, "CourseURL: ${service.request().url()}")
+        service.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                Gson().fromJson<List<Course>>(
+                    response.body()?.string(),
+                    object : TypeToken<List<Course>>() {}.type
+                ).let {
+                    Log.d(TAG, "onResponse: $it")
+                    onDone(it)
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
 }

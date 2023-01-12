@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.georgegipa.gym.HomeFragment"
+        android:name="com.georgegipa.gym.ui.fragments.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home"/>
     <fragment
         android:id="@+id/myProfileFragment"
-        android:name="com.georgegipa.gym.MyProfileFragment"
+        android:name="com.georgegipa.gym.ui.fragments.MyProfileFragment"
         android:label="My Profile"
         tools:layout="@layout/fragment_my_profile" />
     <fragment
         android:id="@+id/coursesFragment"
-        android:name="com.georgegipa.gym.adapters.CoursesFragment"
+        android:name="com.georgegipa.gym.ui.fragments.CoursesFragment"
         android:label="Courses"
         tools:layout="@layout/fragment_courses" />
 </navigation>

@@ -11,13 +11,10 @@ interface GymAPI {
     @GET("courses/all")
     fun getCourses(): Call<ResponseBody>
 
-    @GET("plans/id/{course_id}/courses/all")
-    fun getCoursesByPlanId(@Path(value = "course_id") id : Int): Call<ResponseBody>
-
     @GET("plans/all")
     fun getPlans(): Call<ResponseBody>
 
-    @GET("trainers/all")
+    @GET("instructors/all")
     fun getTrainers(): Call<ResponseBody>
 
     @GET("users/id/{user_id}")

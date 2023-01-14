@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.georgegipa.gym.R
 import com.georgegipa.gym.adapters.CourseAdapter
+import com.georgegipa.gym.api.ApiResponses
 import com.georgegipa.gym.api.GymClient
 import com.georgegipa.gym.databinding.FragmentCoursesBinding
 
@@ -27,12 +28,7 @@ class CoursesFragment : Fragment(R.layout.fragment_courses) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.coursesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.button.setOnClickListener {
-            GymClient().getCourses {
-                binding.coursesRecyclerView.adapter = CourseAdapter(requireContext(), it)
-
-            }
-        }
+        binding.coursesRecyclerView.adapter = CourseAdapter(requireContext(), ApiResponses.courses)
     }
 
     override fun onDestroyView() {

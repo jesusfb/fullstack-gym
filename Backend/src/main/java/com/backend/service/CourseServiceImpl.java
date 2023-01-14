@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,7 +36,27 @@ public class CourseServiceImpl implements CourseService
     @Override
     public List<Course> getAllCourses()
     {
-        return courseRepository.findAll();
+        //add an extra json property to the course object to show the plans that the course is in
+        List<Course> courses = courseRepository.findAll();
+        courses.forEach(course -> {
+                    ArrayList<Integer> plan_ids = new ArrayList<>();
+                    //loop through all the plans and check if the course is in the plan
+                    planRepository.findAll().forEach(plan ->
+                            //if the course is in the plan, add the plan to the course
+                            plan.getCourseSet().forEach(course1 ->
+                                    {
+                                        if (course1.getCourse_id() == course.getCourse_id()) {
+                                            System.out.println(courses);
+                                            plan_ids.add(plan.getId());
+                                        }
+                                    }
+                            )
+                    );
+                    course.setPlan_ids(plan_ids);
+                    course.setInstructor_id(course.getInstructor().getId());
+                }
+        );
+        return courses;
     }
 
     @Override

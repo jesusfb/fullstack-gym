@@ -5,6 +5,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +24,12 @@ public class Course
     @Column(name = "course_description",nullable = false)
     private String course_description;
 
+    @Column(name = "start_time",nullable = false)
+    private int start_time;
+
+    @Column(name = "end_time",nullable = false)
+    private int end_time;
+
     @Column(name = "course_date",nullable = false)
     private String course_date;
 
@@ -31,6 +38,7 @@ public class Course
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "instructor_id", nullable = false)
+    @JsonIgnore
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Instructor instructor;
 
@@ -42,6 +50,12 @@ public class Course
             mappedBy = "courseSet")
     @JsonIgnore
     private Set<Plan> planSet = new HashSet<>();
+
+    @Transient
+    private Integer[] plan_ids;
+
+    @Transient
+    private Integer instructor_id;
 
     public Course()
     {
@@ -113,4 +127,37 @@ public class Course
     public void setCourse_date(String course_date) {
         this.course_date = course_date;
     }
+
+    public int getStart_time() {
+        return start_time;
+    }
+
+    public void setStart_time(int start_time) {
+        this.start_time = start_time;
+    }
+
+    public int getEnd_time() {
+        return end_time;
+    }
+
+    public void setEnd_time(int end_time) {
+        this.end_time = end_time;
+    }
+
+    public Integer[] getPlan_ids() {
+        return plan_ids;
+    }
+
+    public void setPlan_ids(ArrayList<Integer> plan_ids) {
+        this.plan_ids = plan_ids.toArray(new Integer[plan_ids.size()]);
+    }
+
+    public Integer getInstructor_id() {
+        return instructor_id;
+    }
+
+    public void setInstructor_id(Integer instructor_id) {
+        this.instructor_id = instructor_id;
+    }
+
 }

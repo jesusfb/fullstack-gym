@@ -6,10 +6,6 @@ import com.georgegipa.gym.models.Instructor
 import com.georgegipa.gym.models.Plan
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -26,87 +22,57 @@ class GymClient {
         .build()
         .create(GymAPI::class.java)
 
-    fun checkAPI(onDone: (Boolean) -> Unit) {
+    //rewrite this to use suspend functions
+    //suspend functions can be called from a coroutine or another suspend function
+
+    suspend fun checkAPI() : Boolean {
         //hit the base url to check if the server is up and running
         //if response is 200, then the server is up and running
-        retrofit.getCourses().enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                Log.d(TAG, "onResponse: ${response.code()}")
-                onDone(response.code() == 200)
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.d(TAG, "onFailure: ${t.message}")
-                onDone(false)
-            }
-        })
+        return try {
+            val response = retrofit.getCourses()
+            response.code() == 200
+        } catch (e: Exception) {
+            false
+        }
     }
 
-
-    fun getCourses(onDone: (List<Course>) -> Unit) {
-
-        val service = retrofit.getCourses()
-        Log.d(TAG, "CourseURL: ${service.request().url()}")
-        service.enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                Gson().fromJson<List<Course>>(
-                    response.body()?.string(),
-                    object : TypeToken<List<Course>>() {}.type
-                ).let {
-                    Log.d(TAG, "onCourseResponse: $it")
-                    onDone(it)
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.d(TAG, "onFailure: ${t.message}")
-            }
-
-        })
+    suspend fun getCourses() : List<Course> {
+        return try {
+            val response = retrofit.getCourses()
+            Log.d(TAG, "CourseURL: ${response.raw().request().url()}")
+            Gson().fromJson<List<Course>>(
+                response.body()?.string(),
+                object : TypeToken<List<Course>>() {}.type
+            )
+        } catch (e: Exception) {
+            emptyList()
+        }
     }
 
-    fun getPlans(onDone: (List<Plan>) -> Unit) {
-
-        val service = retrofit.getPlans()
-        Log.d(TAG, "PlanURL: ${service.request().url()}")
-        service.enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                Gson().fromJson<List<Plan>>(
-                    response.body()?.string(),
-                    object : TypeToken<List<Plan>>() {}.type
-                ).let {
-                    Log.d(TAG, "onPlanResponse: $it")
-                    onDone(it)
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.d(TAG, "onFailure: ${t.message}")
-            }
-
-        })
+    suspend fun getPlans() : List<Plan> {
+        return try {
+            val response = retrofit.getPlans()
+            Log.d(TAG, "PlanURL: ${response.raw().request().url()}")
+            Gson().fromJson<List<Plan>>(
+                response.body()?.string(),
+                object : TypeToken<List<Plan>>() {}.type
+            )
+        } catch (e: Exception) {
+            emptyList()
+        }
     }
 
-    fun getInstructors(onDone: (List<Instructor>) -> Unit) {
-
-        val service = retrofit.getTrainers()
-        Log.d(TAG, "InstructorURL: ${service.request().url()}")
-        service.enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                Gson().fromJson<List<Instructor>>(
-                    response.body()?.string(),
-                    object : TypeToken<List<Instructor>>() {}.type
-                ).let {
-                    Log.d(TAG, "onInstructorResponse: $it")
-                    onDone(it)
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.d(TAG, "onFailure: ${t.message}")
-            }
-
-        })
+    suspend fun getTrainers() : List<Instructor> {
+        return try {
+            val response = retrofit.getTrainers()
+            Log.d(TAG, "TrainerURL: ${response.raw().request().url()}")
+            Gson().fromJson<List<Instructor>>(
+                response.body()?.string(),
+                object : TypeToken<List<Instructor>>() {}.type
+            )
+        } catch (e: Exception) {
+            emptyList()
+        }
     }
 
 }

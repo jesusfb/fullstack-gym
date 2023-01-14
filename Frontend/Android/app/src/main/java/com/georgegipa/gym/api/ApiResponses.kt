@@ -1,6 +1,5 @@
 package com.georgegipa.gym.api
 
-import android.content.Context
 import com.georgegipa.gym.models.Course
 import com.georgegipa.gym.models.Instructor
 import com.georgegipa.gym.models.Plan
@@ -14,26 +13,17 @@ object ApiResponses {
     var instructors: List<Instructor> = emptyList()
         private set
 
-    fun initialize(onDone: (Boolean) -> Unit) {
+
+    suspend fun init(): Boolean {
+        //use the new client
         val client = GymClient()
-        client.checkAPI { response ->
-            if (response) {
-                client.getInstructors { it1 ->
-                    instructors = it1
-                    client.getPlans { it2 ->
-                        plans = it2
-                        client.getCourses { it3 ->
-                            courses = it3
-                            onDone(true)
-                        }
-                    }
-                }
-            } else {
-                onDone(false)
-            }
+        if (client.checkAPI()) {
+            instructors = client.getTrainers()
+            plans = client.getPlans()
+            courses = client.getCourses()
+            return true
         }
-
+        return false
     }
-
 
 }

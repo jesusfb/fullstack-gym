@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:8080")
 public class PlanController
 {
     @Autowired
@@ -27,22 +28,22 @@ public class PlanController
         return new ResponseEntity<>(planService.getAllPlans(),HttpStatus.OK);
     }
 
-    @GetMapping("plans/id/{id}")
-    public ResponseEntity<Plan> getPlanById( @PathVariable("id") int planId)
+    @GetMapping("plans")
+    public ResponseEntity<Plan> getPlanById( @RequestParam("plan_id") int plan_id)
     {
-        return new ResponseEntity<>(planService.getPlanById(planId),HttpStatus.OK);
+        return new ResponseEntity<>(planService.getPlanById(plan_id),HttpStatus.OK);
     }
 
-    @PutMapping("plans/update/id/{id}")
-    public ResponseEntity<Plan> updatePlan( @PathVariable("id") int planId, @RequestBody Plan plan)
+    @PutMapping("plans/update")
+    public ResponseEntity<Plan> updatePlan( @RequestParam("plan_id") int plan_id, @RequestBody Plan plan)
     {
-        return new ResponseEntity<>(planService.updatePlan(plan,planId),HttpStatus.OK);
+        return new ResponseEntity<>(planService.updatePlan(plan,plan_id),HttpStatus.OK);
     }
 
-    @DeleteMapping("plans/delete/id/{id}")
-    public ResponseEntity<HttpStatus> deletePlanById(@PathVariable("id") int planId)
+    @DeleteMapping("plans/delete")
+    public ResponseEntity<HttpStatus> deletePlanById(@RequestParam("plan_id") int plan_id)
     {
-        planService.deletePlan(planId);
+        planService.deletePlan(plan_id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

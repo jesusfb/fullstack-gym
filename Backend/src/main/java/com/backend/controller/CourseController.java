@@ -11,19 +11,20 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:8080")
 public class CourseController
 {
     @Autowired
     CourseService courseService;
 
-    @PostMapping("/plans/id/{plan_id}/courses/add")
-    public ResponseEntity<Course> addExistingCourseToPlan(@PathVariable(value = "plan_id") int plan_id, @RequestBody Course courseRequest)
+    @PostMapping("/plans/courses/add")
+    public ResponseEntity<Course> addExistingCourseToPlan(@RequestParam(value = "plan_id") int plan_id, @RequestParam(value = "course_id") int course_id)
     {
-        return new ResponseEntity<>(courseService.addCourseToPlan(plan_id,courseRequest), HttpStatus.CREATED);
+        return new ResponseEntity<>(courseService.addExistingCourseToPlan(plan_id,course_id), HttpStatus.OK);
     }
 
-    @PostMapping("/instructors/id/{instructor_id}/courses/add")
-    public ResponseEntity<Course> saveCourse(@PathVariable(value = "instructor_id") int instructor_id,
+    @PostMapping("/instructors/courses/add")
+    public ResponseEntity<Course> saveCourse(@RequestParam(value = "instructor_id") int instructor_id,
                                              @RequestBody Course courseRequest)
     {
         return new ResponseEntity<>(courseService.saveCourse(instructor_id,courseRequest), HttpStatus.CREATED);
@@ -35,45 +36,45 @@ public class CourseController
         return new ResponseEntity<>(courseService.getAllCourses(), HttpStatus.OK);
     }
 
-    @GetMapping("/plans/id/{plan_id}/courses/all")
-    public ResponseEntity<List<Course>> getAllCoursesByPlanId(@PathVariable(value = "plan_id") int plan_id)
+    @GetMapping("/plans/courses/all")
+    public ResponseEntity<List<Course>> getAllCoursesByPlanId(@RequestParam(value = "plan_id") int plan_id)
     {
         return new ResponseEntity<>(courseService.getAllCoursesByPlanId(plan_id), HttpStatus.OK);
     }
 
-    @GetMapping("/instructors/id/{instructor_id}/courses/all")
-    public ResponseEntity<List<Course>> getAllCoursesByInstructorId(@PathVariable(value = "instructor_id") int instructor_id)
+    @GetMapping("/instructors/courses/all")
+    public ResponseEntity<List<Course>> getAllCoursesByInstructorId(@RequestParam(value = "instructor_id") int instructor_id)
     {
         return new ResponseEntity<>(courseService.getAllCoursesByInstructorId(instructor_id),HttpStatus.OK);
     }
 
-    @GetMapping("/courses/id/{id}")
-    public ResponseEntity<Course> getCourseById( @PathVariable("id") int courseId)
+    @GetMapping("/courses")
+    public ResponseEntity<Course> getCourseById( @RequestParam("course_id") int course_id)
     {
-        return new ResponseEntity<>(courseService.getCourseById(courseId),HttpStatus.OK);
+        return new ResponseEntity<>(courseService.getCourseById(course_id),HttpStatus.OK);
     }
 
-    @PutMapping("courses/update/id/{id}")
-    public ResponseEntity<Course> updateCourse( @PathVariable("id") int courseId, @RequestBody Course course)
+    @PutMapping("courses/update")
+    public ResponseEntity<Course> updateCourse( @RequestParam("course_id") int course_id, @RequestBody Course course)
     {
-        return new ResponseEntity<>(courseService.updateCourse(course,courseId),HttpStatus.OK);
+        return new ResponseEntity<>(courseService.updateCourse(course,course_id),HttpStatus.OK);
     }
 
-    @PutMapping ("courses/update/id/{course_id}/instructor/id/{instructor_id}")
-    public ResponseEntity<Course> changeInstructorToCourse(@PathVariable("course_id") int course_id, @PathVariable("instructor_id") int instructor_id)
+    @PutMapping ("courses/update/instructor")
+    public ResponseEntity<Course> changeInstructorToCourse(@RequestParam("course_id") int course_id, @RequestParam("instructor_id") int instructor_id)
     {
         return new ResponseEntity<>(courseService.changeInstructorToCourse(course_id,instructor_id),HttpStatus.OK);
     }
 
-    @DeleteMapping("courses/delete/id/{id}")
-    public ResponseEntity<HttpStatus> deleteCourseById(@PathVariable("id") int courseId)
+    @DeleteMapping("courses/delete")
+    public ResponseEntity<HttpStatus> deleteCourseById(@RequestParam("course_id") int course_id)
     {
-        courseService.deleteCourse(courseId);
+        courseService.deleteCourse(course_id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/plans/{plan_id}/courses/delete/id/{course_id}")
-    public ResponseEntity<HttpStatus> deleteCourseFromPlan(@PathVariable(value = "plan_id") int plan_id, @PathVariable(value = "course_id") int course_id)
+    @DeleteMapping("/plans//delete/courses")
+    public ResponseEntity<HttpStatus> deleteCourseFromPlan(@RequestParam(value = "plan_id") int plan_id, @RequestParam(value = "course_id") int course_id)
     {
         courseService.deleteCourseFromPlan(plan_id,course_id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

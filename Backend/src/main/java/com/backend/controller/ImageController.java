@@ -1,12 +1,7 @@
 package com.backend.controller;
 
-import com.backend.exception.ResourceNotFoundException;
 import com.backend.model.*;
-import com.backend.repository.ImageRepository;
-import com.backend.service.CourseService;
-import com.backend.service.InstructorService;
-import com.backend.service.PlanService;
-import com.backend.service.UserService;
+import com.backend.service.*;
 import com.backend.tool.ImageTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,73 +18,60 @@ import java.util.Optional;
 public class ImageController
 {
     @Autowired
-    ImageRepository imageRepository;
+    ImageService imageService;
 
-    @Autowired
-    CourseService courseService;
-
-    @Autowired
-    InstructorService instructorService;
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    PlanService planService;
-
-    @PostMapping("/course/id/{id}/upload/image")
-    public ResponseEntity<Course> uploadImageToCourse(@RequestParam("image") MultipartFile file, @PathVariable("id") int id ) throws IOException
+    @PostMapping("/courses/upload/image")
+    public ResponseEntity<Course> uploadImageToCourse(@RequestParam("image") MultipartFile file, @RequestParam("course_id") int course_id ) throws IOException
     {
-        return new ResponseEntity<>(courseService.uploadImage(file,id),HttpStatus.CREATED);
+        return new ResponseEntity<>(imageService.uploadImageToCourse(file,course_id),HttpStatus.CREATED);
     }
 
-    @DeleteMapping ("/course/id/{id}/delete/image")
-    public ResponseEntity<Course> DeleteImageFromCourse(@PathVariable("id") int id ) throws IOException
+    @DeleteMapping ("/courses/delete/image")
+    public ResponseEntity<Course> DeleteImageFromCourse(@RequestParam("course_id") int course_id )
     {
-        return new ResponseEntity<>(courseService.deleteImage(id),HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(imageService.deleteImageFromCourse(course_id),HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/instructor/id/{id}/upload/image")
-    public ResponseEntity<Instructor> uploadImageToInstructor(@RequestParam("image") MultipartFile file, @PathVariable("id") int id ) throws IOException
+    @PostMapping("/instructors/upload/image")
+    public ResponseEntity<Instructor> uploadImageToInstructor(@RequestParam("image") MultipartFile file, @RequestParam("instructor_id") int instructor_id ) throws IOException
     {
-        return new ResponseEntity<>(instructorService.uploadImage(file,id),HttpStatus.CREATED);
+        return new ResponseEntity<>(imageService.uploadImageToInstructor(file,instructor_id),HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/instructor/id/{id}/delete/image")
-    public ResponseEntity<Instructor> DeleteImageFromInstructor(@PathVariable("id") int id ) throws IOException
+    @DeleteMapping("/instructors/delete/image")
+    public ResponseEntity<Instructor> DeleteImageFromInstructor(@RequestParam("instructor_id") int instructor_id )
     {
-        return new ResponseEntity<>(instructorService.deleteImage(id),HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(imageService.deleteImageFromInstructor(instructor_id),HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/user/id/{id}/upload/image")
-    public ResponseEntity<User> uploadImageToUser(@RequestParam("image") MultipartFile file, @PathVariable("id") int id ) throws IOException
+    @PostMapping("/users/upload/image")
+    public ResponseEntity<User> uploadImageToUser(@RequestParam("image") MultipartFile file, @RequestParam("user_id") int user_id) throws IOException
     {
-        return new ResponseEntity<>(userService.uploadImage(file,id),HttpStatus.CREATED);
+        return new ResponseEntity<>(imageService.uploadImageToUser(file,user_id),HttpStatus.CREATED);
     }
 
-    @DeleteMapping ("/user/id/{id}/delete/image")
-    public ResponseEntity<User> DeleteImageFromUser(@PathVariable("id") int id ) throws IOException
+    @DeleteMapping ("/users/delete/image")
+    public ResponseEntity<User> DeleteImageFromUser(@RequestParam("user_id") int user_id )
     {
-        return new ResponseEntity<>(userService.deleteImage(id),HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(imageService.deleteImageFromUser(user_id),HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/plan/id/{id}/upload/image")
-    public ResponseEntity<Plan> uploadImageToPlan(@RequestParam("image") MultipartFile file, @PathVariable("id") int id ) throws IOException
+    @PostMapping("/plans/upload/image")
+    public ResponseEntity<Plan> uploadImageToPlan(@RequestParam("image") MultipartFile file, @RequestParam("plan_id") int plan_id ) throws IOException
     {
-        return new ResponseEntity<>(planService.uploadImage(file,id),HttpStatus.CREATED);
+        return new ResponseEntity<>(imageService.uploadImageToPlan(file,plan_id),HttpStatus.CREATED);
     }
 
-    @DeleteMapping ("/plan/id/{id}/delete/image")
-    public ResponseEntity<Plan> DeleteImageFromPlan(@PathVariable("id") int id ) throws IOException
+    @DeleteMapping ("/plans/delete/image")
+    public ResponseEntity<Plan> DeleteImageFromPlan(@RequestParam("plan_id") int plan_id )
     {
-        return new ResponseEntity<>(planService.deleteImage(id),HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(imageService.deleteImageFromPlan(plan_id),HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping(path = {"/get/image/{name}"})
-    public ResponseEntity<byte[]> getImage(@PathVariable("name") String name) throws IOException
+    @GetMapping(path = {"/get/image"})
+    public ResponseEntity<byte[]> getImage(@RequestParam("name") String name)
     {
-        final Optional<Image> dbImage = Optional.ofNullable(imageRepository.findByName(name).orElseThrow(() -> new ResourceNotFoundException("Image with name = " + name + " has not been found")));
-
+        final Optional<Image> dbImage = imageService.getImage(name);
         return ResponseEntity
                 .ok()
                 .contentType(MediaType.valueOf(dbImage.get().getType()))

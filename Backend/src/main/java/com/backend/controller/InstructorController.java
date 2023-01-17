@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:8080")
 public class InstructorController
 {
     @Autowired
@@ -28,22 +29,22 @@ public class InstructorController
         return new ResponseEntity<>(instructorService.getAllInstructors(),HttpStatus.OK);
     }
 
-    @GetMapping("instructors/id/{id}")
-    public ResponseEntity<Instructor> getInstructorById( @PathVariable("id") int instructorId)
+    @GetMapping("instructors")
+    public ResponseEntity<Instructor> getInstructorById( @RequestParam("instructor_id") int instructor_id)
     {
-        return new ResponseEntity<>(instructorService.getInstructorById(instructorId),HttpStatus.OK);
+        return new ResponseEntity<>(instructorService.getInstructorById(instructor_id),HttpStatus.OK);
     }
 
-    @PutMapping("instructors/update/id/{id}")
-    public ResponseEntity<Instructor> updateInstructor( @PathVariable("id") int instructorId, @RequestBody Instructor instructor)
+    @PutMapping("instructors/update")
+    public ResponseEntity<Instructor> updateInstructor( @RequestParam("instructor_id") int instructor_id, @RequestBody Instructor instructor)
     {
-        return new ResponseEntity<>(instructorService.updateInstructor(instructor,instructorId),HttpStatus.OK);
+        return new ResponseEntity<>(instructorService.updateInstructor(instructor,instructor_id),HttpStatus.OK);
     }
 
-    @DeleteMapping("instructors/delete/id/{id}")
-    public ResponseEntity<HttpStatus> deleteInstructorById(@PathVariable("id") int instructorId)
+    @DeleteMapping("instructors/delete")
+    public ResponseEntity<HttpStatus> deleteInstructorById(@RequestParam("instructor_id") int instructor_id)
     {
-        instructorService.deleteInstructor(instructorId);
+        instructorService.deleteInstructor(instructor_id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

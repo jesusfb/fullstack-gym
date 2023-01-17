@@ -1,5 +1,7 @@
 package com.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,6 +30,7 @@ public class Plan
     @Column(name = "image_url")
     private String image_url = "";
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
@@ -58,7 +61,7 @@ public class Plan
     }
 
     public void removeCourse(int course_id) {
-        Course course = this.courseSet.stream().filter(c -> c.getCourse_id() == course_id).findFirst().orElse(null);
+        Course course = this.courseSet.stream().filter(c -> c.getId() == course_id).findFirst().orElse(null);
         if (course != null)
         {
             this.courseSet.remove(course);

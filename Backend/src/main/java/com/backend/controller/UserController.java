@@ -1,6 +1,5 @@
 package com.backend.controller;
 
-import com.backend.model.Plan;
 import com.backend.model.User;
 import com.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,27 +11,28 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:8080")
 public class UserController
 {
     @Autowired
     UserService userService;
 
-    @PostMapping("/plans/id/{plan_id}/users/add")
-    public ResponseEntity<User> saveUser(@PathVariable(value = "plan_id") int plan_id,@RequestBody User userRequest)
+    @PostMapping("/plans/users/add")
+    public ResponseEntity<User> saveUser(@RequestParam(value = "plan_id") int plan_id,@RequestBody User userRequest)
     {
         return new ResponseEntity<>(userService.saveUser(plan_id,userRequest), HttpStatus.CREATED);
     }
 
-    @GetMapping("/plans/id/{plan_id}/users/all")
-    public ResponseEntity<List<User>> getAllUsersByPlanId(@PathVariable(value = "plan_id") int plan_id)
+    @GetMapping("/plans/users/all")
+    public ResponseEntity<List<User>> getAllUsersByPlanId(@RequestParam(value = "plan_id") int plan_id)
     {
         return new ResponseEntity<>(userService.getAllUsersByPlanId(plan_id),HttpStatus.OK);
     }
 
-    @GetMapping("users/id/{id}")
-    public ResponseEntity<User> getUserById( @PathVariable("id") int userId)
+    @GetMapping("users")
+    public ResponseEntity<User> getUserById( @RequestParam("user_id") int user_id)
     {
-        return new ResponseEntity<>(userService.getUserById(userId),HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUserById(user_id),HttpStatus.OK);
     }
 
     @GetMapping("users/all")
@@ -41,22 +41,22 @@ public class UserController
         return new ResponseEntity<>(userService.getAllUsers(),HttpStatus.OK);
     }
 
-    @PutMapping("users/update/id/{id}")
-    public ResponseEntity<User> updateUser( @PathVariable("id") int userId, @RequestBody User user)
+    @PutMapping("users/update")
+    public ResponseEntity<User> updateUser( @RequestParam("user_id") int user_id, @RequestBody User user)
     {
-        return new ResponseEntity<>(userService.updateUser(user,userId),HttpStatus.OK);
+        return new ResponseEntity<>(userService.updateUser(user,user_id),HttpStatus.OK);
     }
 
-    @PutMapping ("users/update/id/{user_id}/plan/id/{plan_id}")
-    public ResponseEntity<User> changePlanToUser( @PathVariable("user_id") int user_id, @PathVariable("plan_id") int plan_id)
+    @PutMapping ("users/update/plan")
+    public ResponseEntity<User> changePlanToUser( @RequestParam("user_id") int user_id, @RequestParam("plan_id") int plan_id)
     {
         return new ResponseEntity<>(userService.changePlantoUser(user_id,plan_id),HttpStatus.OK);
     }
 
-    @DeleteMapping("users/delete/id/{id}")
-    public ResponseEntity<HttpStatus> deleteUserById(@PathVariable("id") int userId)
+    @DeleteMapping("users/delete")
+    public ResponseEntity<HttpStatus> deleteUserById(@RequestParam("user_id") int user_id)
     {
-        userService.deleteUser(userId);
+        userService.deleteUser(user_id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

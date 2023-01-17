@@ -1,7 +1,8 @@
 package com.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -30,11 +31,13 @@ public class User
     @Column(name = "image_url")
     private String image_url = "";
 
-
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "plan_id")
     private Plan plan;
+
+    @Transient
+    private Integer plan_id;
 
     public int getUser_id() {
         return user_id;
@@ -98,5 +101,13 @@ public class User
 
     public void setImage_url(String image_url) {
         this.image_url = image_url;
+    }
+
+    public Integer getPlan_id() {
+        return plan_id;
+    }
+
+    public void setPlan_id(Integer plan_id) {
+        this.plan_id = plan_id;
     }
 }

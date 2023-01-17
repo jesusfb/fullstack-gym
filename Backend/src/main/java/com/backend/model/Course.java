@@ -16,7 +16,7 @@ public class Course
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "course_generator")
     @Column(name = "course_id",nullable = false)
-    private int course_id;
+    private int id;
 
     @Column(name = "course_name",nullable = false)
     private String course_name;
@@ -24,22 +24,13 @@ public class Course
     @Column(name = "course_description",nullable = false)
     private String course_description;
 
-    @Column(name = "start_time",nullable = false)
-    private int start_time;
-
-    @Column(name = "end_time",nullable = false)
-    private int end_time;
-
-    @Column(name = "course_date",nullable = false)
-    private String course_date;
-
     @Column(name = "image_url")
     private String image_url = "";
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "instructor_id", nullable = false)
-    @JsonIgnore
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Instructor instructor;
 
     @ManyToMany(fetch = FetchType.LAZY,
@@ -80,14 +71,14 @@ public class Course
         this.planSet = planSet;
     }
 
-    public int getCourse_id()
+    public int getId()
     {
-        return course_id;
+        return id;
     }
 
-    public void setCourse_id(int course_id)
+    public void setId(int course_id)
     {
-        this.course_id = course_id;
+        this.id = course_id;
     }
 
     public String getCourse_name()
@@ -120,30 +111,6 @@ public class Course
         this.course_description = course_description;
     }
 
-    public String getCourse_date() {
-        return course_date;
-    }
-
-    public void setCourse_date(String course_date) {
-        this.course_date = course_date;
-    }
-
-    public int getStart_time() {
-        return start_time;
-    }
-
-    public void setStart_time(int start_time) {
-        this.start_time = start_time;
-    }
-
-    public int getEnd_time() {
-        return end_time;
-    }
-
-    public void setEnd_time(int end_time) {
-        this.end_time = end_time;
-    }
-
     public Integer[] getPlan_ids() {
         return plan_ids;
     }
@@ -159,5 +126,4 @@ public class Course
     public void setInstructor_id(Integer instructor_id) {
         this.instructor_id = instructor_id;
     }
-
 }

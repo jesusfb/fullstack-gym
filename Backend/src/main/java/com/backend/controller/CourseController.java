@@ -11,13 +11,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CourseController
 {
     @Autowired
     CourseService courseService;
 
-    @PostMapping("/plans/courses/add")
+    @PutMapping("/plans/courses/add")
     public ResponseEntity<Course> addExistingCourseToPlan(@RequestParam(value = "plan_id") int plan_id, @RequestParam(value = "course_id") int course_id)
     {
         return new ResponseEntity<>(courseService.addExistingCourseToPlan(plan_id,course_id), HttpStatus.OK);
@@ -29,6 +29,7 @@ public class CourseController
     {
         return new ResponseEntity<>(courseService.saveCourse(instructor_id,courseRequest), HttpStatus.CREATED);
     }
+
 
     @GetMapping("/courses/all")
     public ResponseEntity<List<Course>> getAllCourses()
@@ -73,7 +74,7 @@ public class CourseController
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/plans//delete/courses")
+    @DeleteMapping("plans/delete/courses")
     public ResponseEntity<HttpStatus> deleteCourseFromPlan(@RequestParam(value = "plan_id") int plan_id, @RequestParam(value = "course_id") int course_id)
     {
         courseService.deleteCourseFromPlan(plan_id,course_id);

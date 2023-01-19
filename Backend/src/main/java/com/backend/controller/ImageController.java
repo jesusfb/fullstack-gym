@@ -2,7 +2,6 @@ package com.backend.controller;
 
 import com.backend.model.*;
 import com.backend.service.*;
-import com.backend.tool.ImageTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,14 +10,22 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ImageController
 {
     @Autowired
     ImageService imageService;
+
+    @GetMapping("get/image")
+    public ResponseEntity<?> downloadImageFromFileSystem(@RequestParam("name") String fileName) throws IOException
+    {
+        byte[] imageData = imageService.downloadImageFromFileSystem(fileName);
+        String imageType = imageService.getImageType(fileName);
+        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.valueOf(imageType)).body(imageData);
+    }
 
     @PostMapping("/courses/upload/image")
     public ResponseEntity<Course> uploadImageToCourse(@RequestParam("image") MultipartFile file, @RequestParam("course_id") int course_id ) throws IOException
@@ -66,16 +73,6 @@ public class ImageController
     public ResponseEntity<Plan> DeleteImageFromPlan(@RequestParam("plan_id") int plan_id )
     {
         return new ResponseEntity<>(imageService.deleteImageFromPlan(plan_id),HttpStatus.NO_CONTENT);
-    }
-
-    @GetMapping(path = {"/get/image"})
-    public ResponseEntity<byte[]> getImage(@RequestParam("name") String name)
-    {
-        final Optional<Image> dbImage = imageService.getImage(name);
-        return ResponseEntity
-                .ok()
-                .contentType(MediaType.valueOf(dbImage.get().getType()))
-                .body(ImageTool.decompressImage(dbImage.get().getImage()));
     }
 }
 

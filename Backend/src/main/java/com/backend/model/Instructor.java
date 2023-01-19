@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Instructor
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "instructor_generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "instructor_id",nullable = false)
     private int id;
 
@@ -20,6 +20,9 @@ public class Instructor
     @Column(name = "instructor_email",nullable = false)
     private String instructor_email;
 
+    @Column(name = "instructor_specialty",nullable = false)
+    private String instructor_specialty;
+
     @Column(name = "image_url")
     private String image_url = "";
 
@@ -28,11 +31,12 @@ public class Instructor
 
     }
 
-    public Instructor(String instructor_name, String instructor_lastname, String instructor_email)
+    public Instructor(String instructor_name, String instructor_lastname, String instructor_email,String instructor_specialty)
     {
         this.instructor_name = instructor_name;
         this.instructor_lastname = instructor_lastname;
         this.instructor_email = instructor_email;
+        this.instructor_specialty=instructor_specialty;
     }
 
     public String getImage_url()
@@ -83,5 +87,13 @@ public class Instructor
     public void setInstructor_email(String instructor_email)
     {
         this.instructor_email = instructor_email;
+    }
+
+    public String getInstructor_specialty() {
+        return instructor_specialty;
+    }
+
+    public void setInstructor_specialty(String instructor_specialty) {
+        this.instructor_specialty = instructor_specialty;
     }
 }

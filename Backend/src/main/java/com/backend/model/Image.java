@@ -17,19 +17,15 @@ public class Image
     @Column(name = "type")
     private String type;
 
-    @Column(name = "image", unique = false, nullable = false, length = 100000)
-    private byte[] image;
-
     public Image()
     {
 
     }
 
-    public Image(String name, String type, byte[] image)
+    public Image(String name, String type, String filePath)
     {
         this.name = name;
         this.type = type;
-        this.image = image;
     }
 
     public int getId()
@@ -60,15 +56,5 @@ public class Image
     public void setType(String type)
     {
         this.type = type;
-    }
-
-    public byte[] getImage()
-    {
-        return image;
-    }
-
-    public void setImage(byte[] image)
-    {
-        this.image = image;
     }
 }

@@ -1,6 +1,7 @@
 package com.backend.service;
 
 import com.backend.model.ScheduleEvents;
+import com.backend.response.ScheduleEventsResponse;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface ScheduleEventsService
     ScheduleEvents updateEvent(int event_id, ScheduleEvents scheduleEvent);
 
     void deleteEvent(int event_id);
+
+    List<ScheduleEventsResponse> getAllEventsInEpochFormat();
 }

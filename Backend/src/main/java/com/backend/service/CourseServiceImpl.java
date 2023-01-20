@@ -71,6 +71,23 @@ public class CourseServiceImpl implements CourseService
         }
 
         List<Course> courses = courseRepository.findByInstructor_Id(instructor_id);
+        courses.forEach(course -> {
+                    ArrayList<Integer> plan_ids = new ArrayList<>();
+                    //loop through all the plans and check if the course is in the plan
+                    planRepository.findAll().forEach(plan ->
+                            //if the course is in the plan, add the plan to the course
+                            plan.getCourseSet().forEach(course1 ->
+                                    {
+                                        if (course1.getId() == course.getId()) {
+                                            plan_ids.add(plan.getId());
+                                        }
+                                    }
+                            )
+                    );
+                    course.setPlan_ids(plan_ids);
+                    course.setInstructor_id(course.getInstructor().getId());
+                }
+        );
         return courses;
     }
 
@@ -82,6 +99,23 @@ public class CourseServiceImpl implements CourseService
             throw new ResourceNotFoundException("Plan","Id",plan_id);
         }
         List<Course> courses = courseRepository.findAllByPlanSet_Id(plan_id);
+        courses.forEach(course -> {
+                    ArrayList<Integer> plan_ids = new ArrayList<>();
+                    //loop through all the plans and check if the course is in the plan
+                    planRepository.findAll().forEach(plan ->
+                            //if the course is in the plan, add the plan to the course
+                            plan.getCourseSet().forEach(course1 ->
+                                    {
+                                        if (course1.getId() == course.getId()) {
+                                            plan_ids.add(plan.getId());
+                                        }
+                                    }
+                            )
+                    );
+                    course.setPlan_ids(plan_ids);
+                    course.setInstructor_id(course.getInstructor().getId());
+                }
+        );
         return courses;
     }
 
@@ -111,6 +145,20 @@ public class CourseServiceImpl implements CourseService
     public Course getCourseById(int id)
     {
         Course existingCourse = courseRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("Course","Id",id));
+        ArrayList<Integer> plan_ids = new ArrayList<>();
+        //loop through all the plans and check if the course is in the plan
+        planRepository.findAll().forEach(plan ->
+                //if the course is in the plan, add the plan to the course
+                plan.getCourseSet().forEach(course1 ->
+                        {
+                            if (course1.getId() == existingCourse.getId()) {
+                                plan_ids.add(plan.getId());
+                            }
+                        }
+                )
+        );
+        existingCourse.setPlan_ids(plan_ids);
+        existingCourse.setInstructor_id(existingCourse.getInstructor().getId());
         return existingCourse;
     }
 

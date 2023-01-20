@@ -14,13 +14,13 @@ public class User
     private int user_id;
 
     @Column(name = "user_name",nullable = false)
-    private String user_name; // admin or simple
+    private String user_name;
 
     @Column(name = "user_lastname",nullable = false)
     private String user_lastname;
 
     @Column(name = "user_type",nullable = false)
-    private String user_type; // admin or simple
+    private String user_type;
 
     @Column(name = "user_email",nullable = false)
     private String user_email;

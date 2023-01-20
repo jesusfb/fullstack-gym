@@ -4,7 +4,6 @@ import com.backend.model.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Optional;
 
 public interface ImageService
 {
@@ -16,5 +15,6 @@ public interface ImageService
     Plan deleteImageFromPlan(int id);
     User uploadImageToUser(MultipartFile file, int id) throws IOException;
     User deleteImageFromUser(int id);
-    Optional<Image> getImage(String name);
+    byte[] downloadImageFromFileSystem(String fileName) throws IOException;
+    String getImageType(String fileName);
 }

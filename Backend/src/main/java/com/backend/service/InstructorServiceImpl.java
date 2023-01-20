@@ -16,7 +16,7 @@ public class InstructorServiceImpl implements InstructorService
     @Override
     public Instructor saveInstructor(Instructor instructor)
     {
-        return instructorRepository.save(new Instructor(instructor.getInstructor_name(),instructor.getInstructor_lastname(),instructor.getInstructor_email()));
+        return instructorRepository.save(new Instructor(instructor.getInstructor_name(),instructor.getInstructor_lastname(),instructor.getInstructor_email(),instructor.getInstructor_specialty()));
     }
 
     @Override
@@ -39,6 +39,7 @@ public class InstructorServiceImpl implements InstructorService
         existingInstructor.setInstructor_name(instructor.getInstructor_name());
         existingInstructor.setInstructor_lastname(instructor.getInstructor_lastname());
         existingInstructor.setInstructor_email(instructor.getInstructor_email());
+        existingInstructor.setInstructor_specialty(instructor.getInstructor_specialty());
         instructorRepository.save(existingInstructor);
         return existingInstructor;
     }

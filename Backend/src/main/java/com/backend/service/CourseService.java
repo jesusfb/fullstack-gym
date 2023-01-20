@@ -1,7 +1,6 @@
 package com.backend.service;
 
 import com.backend.model.Course;
-import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 public interface CourseService

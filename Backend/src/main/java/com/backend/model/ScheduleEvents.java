@@ -19,10 +19,10 @@ public class ScheduleEvents
     private String scheduled_day;
 
     @Column(name = "scheduled_start_time",nullable = false)
-    private int scheduled_start_time;
+    private String scheduled_start_time;
 
     @Column(name = "scheduled_end_time",nullable = false)
-    private int scheduled_end_time;
+    private String scheduled_end_time;
 
     @Column(name = "scheduled_room",nullable = false)
     private String scheduled_room;
@@ -33,7 +33,6 @@ public class ScheduleEvents
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Course course;
 
-
     @Transient
     private String scheduled_course;
 
@@ -41,7 +40,7 @@ public class ScheduleEvents
 
     }
 
-    public ScheduleEvents(String scheduled_day, int scheduled_start_time, int scheduled_end_time, String scheduled_room) {
+    public ScheduleEvents(String scheduled_day, String scheduled_start_time, String scheduled_end_time, String scheduled_room) {
         this.scheduled_day = scheduled_day;
         this.scheduled_start_time = scheduled_start_time;
         this.scheduled_end_time = scheduled_end_time;
@@ -64,19 +63,19 @@ public class ScheduleEvents
         this.scheduled_day = scheduled_day;
     }
 
-    public int getScheduled_start_time() {
+    public String getScheduled_start_time() {
         return scheduled_start_time;
     }
 
-    public void setScheduled_start_time(int scheduled_start_time) {
+    public void setScheduled_start_time(String scheduled_start_time) {
         this.scheduled_start_time = scheduled_start_time;
     }
 
-    public int getScheduled_end_time() {
+    public String getScheduled_end_time() {
         return scheduled_end_time;
     }
 
-    public void setScheduled_end_time(int scheduled_end_time) {
+    public void setScheduled_end_time(String scheduled_end_time) {
         this.scheduled_end_time = scheduled_end_time;
     }
 

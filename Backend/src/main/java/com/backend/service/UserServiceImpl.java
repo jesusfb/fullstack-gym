@@ -2,6 +2,7 @@ package com.backend.service;
 
 import com.backend.exception.ResourceNotFoundException;
 import com.backend.model.*;
+import com.backend.repository.CourseRepository;
 import com.backend.repository.PlanRepository;
 import com.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,9 @@ public class UserServiceImpl implements UserService
 {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    CourseRepository courseRepository;
 
     @Autowired
     PlanRepository planRepository;
@@ -39,6 +43,9 @@ public class UserServiceImpl implements UserService
         }
 
         List<User> users = userRepository.findByPlan_Id(plan_id);
+        users.forEach(user -> {
+            user.setPlan_id(user.getPlan().getId());
+        });
         return users;
     }
 
@@ -68,6 +75,7 @@ public class UserServiceImpl implements UserService
     public User getUserById(int id)
     {
         User existingUser = userRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("User","Id",id));
+        existingUser.setPlan_id(existingUser.getPlan().getId());
         return existingUser;
     }
 

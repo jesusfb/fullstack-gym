@@ -1,6 +1,7 @@
 package com.backend.controller;
 
 import com.backend.model.ScheduleEvents;
+import com.backend.response.ScheduleEventsResponse;
 import com.backend.service.ScheduleEventsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ScheduleEventsController
 {
     @Autowired
@@ -33,6 +34,12 @@ public class ScheduleEventsController
     public ResponseEntity<List<ScheduleEvents>> getAllEvents()
     {
         return new ResponseEntity<>(scheduleEventsService.getAllEvents(), HttpStatus.OK);
+    }
+
+    @GetMapping("/courses/events/allEpoch")
+    public ResponseEntity<List<ScheduleEventsResponse>> getAllEpochEvents()
+    {
+        return new ResponseEntity<>(scheduleEventsService.getAllEventsInEpochFormat(), HttpStatus.OK);
     }
 
     @PutMapping("/courses/update/events")

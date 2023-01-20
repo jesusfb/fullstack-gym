@@ -14,14 +14,14 @@ import java.util.Set;
 public class Course
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "course_generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_id",nullable = false)
     private int id;
 
     @Column(name = "course_name",nullable = false)
     private String course_name;
 
-    @Column(name = "course_description",nullable = false)
+    @Column(name = "course_description",nullable = false,length = 2000)
     private String course_description;
 
     @Column(name = "image_url")

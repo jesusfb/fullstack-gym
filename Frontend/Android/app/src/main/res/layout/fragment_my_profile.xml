@@ -55,27 +55,15 @@
                     app:layout_constraintTop_toBottomOf="@id/username_tv" />
 
                 <TextView
-                    android:id="@+id/phone_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="+1 123 456 7890"
-                    android:textSize="@dimen/text_size_2"
-                    app:layout_constraintEnd_toEndOf="@+id/email_tv"
-                    app:layout_constraintStart_toStartOf="@+id/email_tv"
-                    app:layout_constraintTop_toBottomOf="@+id/email_tv" />
-
-                <TextView
                     android:id="@+id/address_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="1234 Main St, Anytown, USA"
                     android:textSize="@dimen/text_size_2"
-                    app:layout_constraintEnd_toEndOf="@+id/phone_tv"
-                    app:layout_constraintStart_toStartOf="@+id/phone_tv"
-                    app:layout_constraintTop_toBottomOf="@+id/phone_tv" />
-
+                    app:layout_constraintEnd_toEndOf="@+id/email_tv"
+                    app:layout_constraintStart_toStartOf="@+id/email_tv"
+                    app:layout_constraintTop_toBottomOf="@+id/email_tv" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -94,6 +82,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <ImageView
+                    android:id="@+id/plan_iv"
+                    android:layout_gravity="center"
+                    tools:src="@tools:sample/avatars"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="10dp" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -110,6 +106,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/plan_name_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -137,44 +134,8 @@
                         android:layout_marginStart="@dimen/default_margin_half"
                         android:text="Plan End Date: 12/31/2020" />
 
-                    <Button
-                        android:id="@+id/upgrade_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:icon="@drawable/ic_baseline_autorenew"
-                        android:layout_marginStart="@dimen/default_margin_half"
-                        android:layout_marginEnd="@dimen/default_margin_half"
-                        android:text="Renew" />
 
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="@dimen/default_margin_half"
-                        android:layout_marginEnd="@dimen/default_margin_half"
-                        app:icon="@drawable/ic_mdi_chevron_double_up"
-                        android:text="Upgrade" />
-
-                    <Button
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="@dimen/default_margin_half"
-                        android:layout_marginEnd="@dimen/default_margin_half"
-                        app:icon="@drawable/ic_baseline_cancel"
-                        android:text="Cancel" />
-
-                </LinearLayout>
-
-
 
             </LinearLayout>
 

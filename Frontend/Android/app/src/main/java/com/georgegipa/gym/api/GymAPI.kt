@@ -1,8 +1,10 @@
 package com.georgegipa.gym.api
 
+import com.georgegipa.gym.TEMP_USER_ID
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface GymAPI {
     @GET("courses/all")
@@ -13,4 +15,9 @@ interface GymAPI {
 
     @GET("instructors/all")
     suspend fun getTrainers(): Response<ResponseBody>
+
+    @GET("users")
+    suspend fun getUser(
+        @Query("user_id") id: Int = TEMP_USER_ID
+    ): Response<ResponseBody>
 }

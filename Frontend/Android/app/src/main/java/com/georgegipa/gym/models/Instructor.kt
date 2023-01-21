@@ -1,6 +1,6 @@
 package com.georgegipa.gym.models
 
-import com.georgegipa.gym.PLACEHOLDER_INSTRUCTOR_IMG
+import com.georgegipa.gym.utils.removeUrlFromImage
 import com.google.gson.annotations.SerializedName
 
 data class Instructor(
@@ -12,8 +12,10 @@ data class Instructor(
     @SerializedName("instructor_email")
     val email: String,
     @SerializedName("image_url")
-    private val url: String = ""
+    private val url: String = "",
+    @SerializedName("instructor_specialty")
+    val specialty: String
 ) {
     val image : String
-        get() = url.ifEmpty { PLACEHOLDER_INSTRUCTOR_IMG }
+        get() = url.removeUrlFromImage()
 }

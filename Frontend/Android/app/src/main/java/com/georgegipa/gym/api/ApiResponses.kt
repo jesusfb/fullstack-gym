@@ -3,6 +3,9 @@ package com.georgegipa.gym.api
 import com.georgegipa.gym.models.Course
 import com.georgegipa.gym.models.Instructor
 import com.georgegipa.gym.models.Plan
+import com.georgegipa.gym.models.User
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 object ApiResponses {
 
@@ -12,7 +15,8 @@ object ApiResponses {
         private set
     var instructors: List<Instructor> = emptyList()
         private set
-
+    lateinit var user: User
+        private set
 
     suspend fun init(): Boolean {
         //use the new client
@@ -21,6 +25,7 @@ object ApiResponses {
             instructors = client.getTrainers()
             plans = client.getPlans()
             courses = client.getCourses()
+            user = client.getUser()
             return true
         }
         return false

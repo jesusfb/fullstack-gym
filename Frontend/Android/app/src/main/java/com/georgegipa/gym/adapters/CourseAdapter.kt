@@ -9,8 +9,8 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.georgegipa.gym.PLACEHOLDER_COURSE_IMG
 import com.georgegipa.gym.R
+import com.georgegipa.gym.api.ApiResponses
 import com.georgegipa.gym.models.Course
 import com.google.android.material.textview.MaterialTextView
 
@@ -44,10 +44,15 @@ class CourseAdapter (private val context: Context, private var courseList: List<
         private val registerBtn : Button by lazy { itemView.findViewById(R.id.register_btn) }
 
         fun bind(item: Course) {
-            Glide.with(context).load(PLACEHOLDER_COURSE_IMG).into(courseImage)
-            timeTv.text = item.date
+            Glide.with(context).load(item.image).into(courseImage)
+            timeTv.text = "Date incoming"
             nameTv.text = item.name
             descTv.text = item.description
+            if(!item.plans.contains(ApiResponses.user.plan))
+            {
+                registerBtn.isEnabled = false
+                registerBtn.text = "Not available for your plan"
+            }
             registerBtn.setOnClickListener {
                 Toast.makeText(context, "You have registered for ${item.name}", Toast.LENGTH_SHORT).show()
             }

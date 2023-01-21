@@ -7,8 +7,8 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "schedule_events")
-public class ScheduleEvents
+@Table(name = "schedule")
+public class Schedule
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,11 +36,11 @@ public class ScheduleEvents
     @Transient
     private String scheduled_course;
 
-    public ScheduleEvents() {
+    public Schedule() {
 
     }
 
-    public ScheduleEvents(String scheduled_day, String scheduled_start_time, String scheduled_end_time, String scheduled_room) {
+    public Schedule(String scheduled_day, String scheduled_start_time, String scheduled_end_time, String scheduled_room) {
         this.scheduled_day = scheduled_day;
         this.scheduled_start_time = scheduled_start_time;
         this.scheduled_end_time = scheduled_end_time;

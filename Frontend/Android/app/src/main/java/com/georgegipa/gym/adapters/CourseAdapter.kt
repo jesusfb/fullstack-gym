@@ -45,7 +45,7 @@ class CourseAdapter (private val context: Context, private var courseList: List<
 
         fun bind(item: Course) {
             Glide.with(context).load(item.image).into(courseImage)
-            timeTv.text = "Date incoming"
+            timeTv.text = item.schedule
             nameTv.text = item.name
             descTv.text = item.description
             if(!item.plans.contains(ApiResponses.user.plan))

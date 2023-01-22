@@ -1,10 +1,7 @@
 package com.georgegipa.gym.api
 
 import android.util.Log
-import com.georgegipa.gym.models.Course
-import com.georgegipa.gym.models.Instructor
-import com.georgegipa.gym.models.Plan
-import com.georgegipa.gym.models.User
+import com.georgegipa.gym.models.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import retrofit2.Retrofit
@@ -83,6 +80,19 @@ class GymClient {
             response.body()?.string(),
             object : TypeToken<User>() {}.type
         )
+    }
+
+    suspend fun getEvents(): List<Event> {
+        return try {
+            val response = retrofit.getEvents()
+            Log.d(TAG, "EventURL: ${response.raw().request().url()}")
+            Gson().fromJson<List<Event>>(
+                response.body()?.string(),
+                object : TypeToken<List<Event>>() {}.type
+            )
+        } catch (e: Exception) {
+            emptyList()
+        }
     }
 
 }

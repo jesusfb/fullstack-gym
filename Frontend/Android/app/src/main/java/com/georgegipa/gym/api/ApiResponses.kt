@@ -1,19 +1,21 @@
 package com.georgegipa.gym.api
 
-import com.georgegipa.gym.models.Course
-import com.georgegipa.gym.models.Instructor
-import com.georgegipa.gym.models.Plan
-import com.georgegipa.gym.models.User
+import com.georgegipa.gym.models.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.system.measureTimeMillis
 
 object ApiResponses {
 
-    var courses: List<Course> = emptyList()
+    lateinit var events: List<Event>
         private set
-    var plans: List<Plan> = emptyList()
+    lateinit var courses: List<Course>
         private set
-    var instructors: List<Instructor> = emptyList()
+    lateinit var plans: List<Plan>
+        private set
+    lateinit var instructors: List<Instructor>
         private set
     lateinit var user: User
         private set
@@ -22,10 +24,24 @@ object ApiResponses {
         //use the new client
         val client = GymClient()
         if (client.checkAPI()) {
-            instructors = client.getTrainers()
-            plans = client.getPlans()
-            courses = client.getCourses()
-            user = client.getUser()
+            //request all the data in parallel
+            CoroutineScope(Dispatchers.IO).launch {
+                launch {
+                    instructors = client.getTrainers()
+                }
+                launch {
+                    plans = client.getPlans()
+                }
+                launch {
+                    courses = client.getCourses()
+                }
+                launch {
+                    user = client.getUser()
+                }
+                launch {
+                    events = client.getEvents()
+                }
+            }
             return true
         }
         return false

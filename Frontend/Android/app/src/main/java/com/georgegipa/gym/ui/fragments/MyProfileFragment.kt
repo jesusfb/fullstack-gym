@@ -1,5 +1,6 @@
 package com.georgegipa.gym.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,9 @@ import com.bumptech.glide.Glide
 import com.georgegipa.gym.R
 import com.georgegipa.gym.api.ApiResponses
 import com.georgegipa.gym.databinding.FragmentMyProfileBinding
+import com.georgegipa.gym.ui.MainActivity
+import com.georgegipa.gym.ui.StartActivity
+import com.georgegipa.gym.utils.clearUserCredentials
 
 class MyProfileFragment : Fragment(R.layout.fragment_my_profile) {
     private var _binding: FragmentMyProfileBinding? = null
@@ -36,6 +40,12 @@ class MyProfileFragment : Fragment(R.layout.fragment_my_profile) {
 
         Glide.with(requireContext()).load(userPlan.image).into(binding.planIv)
         binding.planNameTv.text = userPlan.name
+
+        binding.logoutBtn.setOnClickListener {
+            requireContext().clearUserCredentials()
+            startActivity(Intent(requireContext(), StartActivity::class.java))
+            requireActivity().finish()
+        }
     }
 
     override fun onDestroyView() {

@@ -1,10 +1,7 @@
 package com.georgegipa.gym.api
 
 import com.georgegipa.gym.models.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import kotlin.system.measureTimeMillis
 
 object ApiResponses {
@@ -20,7 +17,11 @@ object ApiResponses {
     lateinit var user: User
         private set
 
-    suspend fun init(): Boolean {
+    fun isInitialized(): Boolean {
+        return this::events.isInitialized && this::courses.isInitialized && this::plans.isInitialized && this::instructors.isInitialized && this::user.isInitialized
+    }
+
+    suspend fun init(userId : Int): Boolean {
         //use the new client
         val client = GymClient()
         if (client.checkAPI()) {
@@ -36,12 +37,12 @@ object ApiResponses {
                     courses = client.getCourses()
                 }
                 launch {
-                    user = client.getUser()
+                    user = client.getUser(userId)
                 }
                 launch {
                     events = client.getEvents()
                 }
-            }
+            }.join()
             return true
         }
         return false

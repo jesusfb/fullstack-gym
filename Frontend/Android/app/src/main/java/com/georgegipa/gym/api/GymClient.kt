@@ -73,8 +73,8 @@ class GymClient {
         }
     }
 
-    suspend fun getUser() : User {
-        val response = retrofit.getUser()
+    suspend fun getUser(userId : Int) : User {
+        val response = retrofit.getUser(userId)
         Log.d(TAG, "UserURL: ${response.raw().request().url()}")
         return Gson().fromJson<User>(
             response.body()?.string(),

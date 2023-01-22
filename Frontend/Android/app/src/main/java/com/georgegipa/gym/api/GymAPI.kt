@@ -18,7 +18,7 @@ interface GymAPI {
 
     @GET("users")
     suspend fun getUser(
-        @Query("user_id") id: Int = TEMP_USER_ID
+        @Query("user_id") id: Int
     ): Response<ResponseBody>
 
     @GET("courses/events/allEpoch")

@@ -31,7 +31,8 @@
         </activity>
         <activity
             android:theme="@style/AppTheme.NoActionBar"
-            android:name=".ui.MainActivity" />
+            android:name=".ui.MainActivity"
+            android:noHistory="true"/>
 
     </application>
 

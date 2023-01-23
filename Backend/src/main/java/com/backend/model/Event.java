@@ -18,12 +18,9 @@ import javax.persistence.Table;
 public class Event
 {
     @Id
-    private int event_id;
-    @Id
     private int user_id;
-
-    private String start_datetime;
-    private String end_datetime;
+    @Id
     private long start_timestamp;
     private long end_timestamp;
+    private int course_id;
 }

@@ -13,6 +13,6 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class EventId implements Serializable
 {
-    private int event_id;
     private int user_id;
+    private long start_timestamp;
 }

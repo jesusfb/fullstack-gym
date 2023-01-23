@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface EventService
 {
-    Event saveEvent(Event eventRequest);
+    Event register(Event eventRequest);
     List<Event> getAll();
+    List<Event> getAllByUserId(int user_id);
+    void unregister(Event eventRequest);
 }

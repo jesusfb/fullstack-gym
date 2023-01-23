@@ -1,6 +1,8 @@
 package com.backend.controller;
 
 import com.backend.model.Schedule;
+import com.backend.request.CalendarResponse;
+import com.backend.request.EventResponse;
 import com.backend.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,5 +48,18 @@ public class ScheduleController
     {
         scheduleService.deleteSchedule(schedule_id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // returns results for the next x number of weeks
+    @GetMapping("/courses/schedule/all/iso8601")
+    public ResponseEntity<List<CalendarResponse>> getScheduleInIso8601Format(@RequestParam(value = "weeks") int weeks)
+    {
+        return new ResponseEntity<>(scheduleService.getScheduleInIso8601Format(weeks), HttpStatus.OK);
+    }
+
+    @GetMapping("/courses/schedule/all/epoch")
+    public ResponseEntity<List<EventResponse>> getScheduleInEpochFormat()
+    {
+        return new ResponseEntity<>(scheduleService.getScheduleInEpochFormat(), HttpStatus.OK);
     }
 }

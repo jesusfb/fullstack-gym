@@ -31,6 +31,9 @@ public class User
     @Column(name = "image_url")
     private String image_url = "";
 
+    @Column(name = "plan_start_date")
+    private long plan_start_date;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "plan_id")
@@ -109,5 +112,13 @@ public class User
 
     public void setPlan_id(Integer plan_id) {
         this.plan_id = plan_id;
+    }
+
+    public long getPlan_start_date() {
+        return plan_start_date;
+    }
+
+    public void setPlan_start_date(long plan_start_date) {
+        this.plan_start_date = plan_start_date;
     }
 }

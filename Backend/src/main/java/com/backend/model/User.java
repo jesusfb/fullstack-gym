@@ -3,6 +3,7 @@ package com.backend.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -33,6 +34,9 @@ public class User
 
     @Column(name = "plan_start_date")
     private long plan_start_date;
+
+    @OneToMany
+    private List<Event> events;
 
     @JsonIgnore
     @ManyToOne
@@ -120,5 +124,18 @@ public class User
 
     public void setPlan_start_date(long plan_start_date) {
         this.plan_start_date = plan_start_date;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    public void addEvent(Event event)
+    {
+        this.events.add(event);
     }
 }

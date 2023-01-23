@@ -2,6 +2,8 @@ package com.backend.service;
 
 import com.backend.exception.GymPolicyException;
 import com.backend.exception.RegistryAlreadyExistsException;
+import com.backend.exception.ResourceNotFoundException;
+import com.backend.model.Course;
 import com.backend.model.Event;
 import com.backend.repository.EventRepository;
 import com.backend.repository.UserRepository;
@@ -52,7 +54,13 @@ public class EventServiceImpl implements EventService
                 throw new GymPolicyException("You cant register to more than 2 events of the same course each week");
             }
         }
-        return eventRepository.save(eventRequest);
+        Event event = userRepository.findById(eventRequest.getUser_id()).map(
+                user -> {
+                    user.addEvent(eventRequest);
+                    return eventRepository.save(eventRequest);
+                }
+        ).orElseThrow(() -> new ResourceNotFoundException("User","Id", eventRequest.getUser_id()));
+        return event;
     }
 
     @Override

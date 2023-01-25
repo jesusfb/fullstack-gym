@@ -1,7 +1,6 @@
 package com.backend.service;
 
 import com.backend.exception.GymPolicyException;
-import com.backend.exception.RegistryAlreadyExistsException;
 import com.backend.exception.ResourceNotFoundException;
 import com.backend.model.Course;
 import com.backend.model.Event;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.*;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 

@@ -1,6 +1,9 @@
 package com.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -8,6 +11,9 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "schedule")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Schedule
 {
     @Id
@@ -35,67 +41,4 @@ public class Schedule
 
     @Transient
     private String scheduled_course;
-
-    public Schedule() {
-
-    }
-
-    public Schedule(String scheduled_day, String scheduled_start_time, String scheduled_end_time, String scheduled_room) {
-        this.scheduled_day = scheduled_day;
-        this.scheduled_start_time = scheduled_start_time;
-        this.scheduled_end_time = scheduled_end_time;
-        this.scheduled_room = scheduled_room;
-    }
-
-    public int getSchedule_id() {
-        return schedule_id;
-    }
-
-    public void setSchedule_id(int schedule_id) {
-        this.schedule_id = schedule_id;
-    }
-
-    public String getScheduled_day() {
-        return scheduled_day;
-    }
-
-    public void setScheduled_day(String scheduled_day) {
-        this.scheduled_day = scheduled_day;
-    }
-
-    public String getScheduled_start_time() {
-        return scheduled_start_time;
-    }
-
-    public void setScheduled_start_time(String scheduled_start_time) {
-        this.scheduled_start_time = scheduled_start_time;
-    }
-
-    public String getScheduled_end_time() {
-        return scheduled_end_time;
-    }
-
-    public void setScheduled_end_time(String scheduled_end_time) {
-        this.scheduled_end_time = scheduled_end_time;
-    }
-
-    public String getScheduled_room() {
-        return scheduled_room;
-    }
-
-    public void setScheduled_room(String scheduled_room) {
-        this.scheduled_room = scheduled_room;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    public void setScheduled_course(String scheduled_course) {
-        this.scheduled_course = scheduled_course;
-    }
 }

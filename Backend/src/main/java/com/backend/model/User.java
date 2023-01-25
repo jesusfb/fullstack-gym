@@ -3,6 +3,8 @@ package com.backend.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -32,11 +34,8 @@ public class User
     @Column(name = "image_url")
     private String image_url = "";
 
-    @Column(name = "plan_start_date")
-    private long plan_start_date;
-
-    @OneToMany
-    private List<Event> events;
+    @Column(name = "registered_date")
+    private LocalDate registered_date;
 
     @JsonIgnore
     @ManyToOne
@@ -118,24 +117,13 @@ public class User
         this.plan_id = plan_id;
     }
 
-    public long getPlan_start_date() {
-        return plan_start_date;
-    }
-
-    public void setPlan_start_date(long plan_start_date) {
-        this.plan_start_date = plan_start_date;
-    }
-
-    public List<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(List<Event> events) {
-        this.events = events;
-    }
-
-    public void addEvent(Event event)
+    public LocalDate getRegistered_date()
     {
-        this.events.add(event);
+        return registered_date;
+    }
+
+    public void setRegistered_date(LocalDate registered_date)
+    {
+        this.registered_date = registered_date;
     }
 }

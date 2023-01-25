@@ -5,14 +5,20 @@ import com.backend.exception.RegistryAlreadyExistsException;
 import com.backend.exception.ResourceNotFoundException;
 import com.backend.model.Course;
 import com.backend.model.Event;
+import com.backend.model.Plan;
+import com.backend.model.User;
+import com.backend.repository.CourseRepository;
 import com.backend.repository.EventRepository;
+import com.backend.repository.PlanRepository;
 import com.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class EventServiceImpl implements EventService
@@ -23,14 +29,62 @@ public class EventServiceImpl implements EventService
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    CourseRepository courseRepository;
+
+    @Autowired
+    PlanRepository planRepository;
+
     @Override
-    public Event register(Event eventRequest)
+    public Event saveEvent(Event eventRequest,int user_id,int course_id)
     {
-        if(eventRepository.findByCompositeKey(eventRequest.getUser_id(),eventRequest.getStart_timestamp()) != null)
+        // check if user and course exists by id
+        User user = userRepository.findById(user_id).orElseThrow( () -> new ResourceNotFoundException("User","Id",user_id));
+        Course course = courseRepository.findById(course_id).orElseThrow( () -> new ResourceNotFoundException("Course","Id",course_id));
+        // check if user can register to course
+        if(checkIfCourseBelongsToPlan(user.getPlan().getId(),course_id))
         {
-            throw new RegistryAlreadyExistsException("Event with Composite Primary Key = (" + eventRequest.getUser_id()+","+eventRequest.getStart_timestamp()+")" + " already exists");
+            // check if registry already exists in database
+            if(checkIfRegistryExists(user_id,course_id,eventRequest.getStart_timestamp()))
+            {
+                // check if user can register to this course concerning hours limit policy
+                if(checkIfUserCanRegister(user_id,course_id))
+                {
+                    eventRequest.setUser(user);
+                    eventRequest.setCourse(course);
+                    eventRequest.setStart_timestamp(eventRequest.getStart_timestamp());
+                    eventRequest.setEnd_timestamp(eventRequest.getEnd_timestamp());
+                    return eventRepository.save(eventRequest);
+                }
+            }
         }
-        List<Event> already_registered_events_by_user = eventRepository.findByUserId(eventRequest.getUser_id());
+        return null;
+    }
+
+    private boolean checkIfCourseBelongsToPlan(int plan_id,int course_id)
+    {
+        Course course = courseRepository.findById(course_id).orElseThrow( () -> new ResourceNotFoundException("Course","Id",course_id));
+        Plan plan = planRepository.findById(plan_id).orElseThrow( () -> new ResourceNotFoundException("Plan","Id",plan_id));
+        Set<Course> courseSet = plan.getCourseSet();
+        if(!courseSet.contains(course))
+        {
+            throw new GymPolicyException("You cant register to this course because it is not belong to your plan");
+        }
+        return true;
+    }
+
+    private boolean checkIfRegistryExists(int user_id, int course_id, long timestamp)
+    {
+        if(eventRepository.findRegistryByUserCourseAndTimestamp(user_id,timestamp,course_id) == null)
+        {
+            throw new ResourceNotFoundException("Event with user_id = " + user_id + " and course_id = " + course_id + " and start time = " + timestamp + "has not been found");
+        }
+        return true;
+    }
+
+    private boolean checkIfUserCanRegister(int user_id,int course_id)
+    {
+        List<Event> already_registered_events_by_user = eventRepository.findByUserId(user_id);
         if(already_registered_events_by_user != null)
         {
             // find previous or same Monday DateTime in epoch seconds
@@ -44,7 +98,7 @@ public class EventServiceImpl implements EventService
             int counter = 0;
             for(int i=0; i<already_registered_events_by_user.size(); i++)
             {
-                if(already_registered_events_by_user.get(i).getStart_timestamp() > previousSundayDateTimeInSeconds && already_registered_events_by_user.get(i).getCourse_id() == eventRequest.getCourse_id())
+                if(already_registered_events_by_user.get(i).getStart_timestamp() > previousSundayDateTimeInSeconds && already_registered_events_by_user.get(i).getCourse().getId() == course_id)
                 {
                     counter++;
                 }
@@ -54,35 +108,43 @@ public class EventServiceImpl implements EventService
                 throw new GymPolicyException("You cant register to more than 2 events of the same course each week");
             }
         }
-        Event event = userRepository.findById(eventRequest.getUser_id()).map(
-                user -> {
-                    user.addEvent(eventRequest);
-                    return eventRepository.save(eventRequest);
-                }
-        ).orElseThrow(() -> new ResourceNotFoundException("User","Id", eventRequest.getUser_id()));
-        return event;
+        return true;
     }
 
     @Override
     public List<Event> getAll()
     {
-        return eventRepository.findAll();
+        List<Event> events = eventRepository.findAll();
+        events.forEach(event -> {
+                    event.setCourse_id(event.getCourse().getId());
+                    event.setUser_id(event.getUser().getUser_id());
+                }
+        );
+        return events;
     }
 
     @Override
     public List<Event> getAllByUserId(int user_id)
     {
-        return eventRepository.findByUserId(user_id);
+        List<Event> events = eventRepository.findByUserId(user_id);
+        events.forEach(event -> {
+                    event.setCourse_id(event.getCourse().getId());
+                    event.setUser_id(event.getUser().getUser_id());
+                }
+        );
+        return events;
     }
 
     @Override
-    public void unregister(Event eventRequest)
+    public void unregister(int user_id,int course_id, Event eventRequest)
     {
+        System.out.println(eventRequest.getStart_timestamp());
+        List<Event> events = eventRepository.findRegistryByUserCourseAndTimestamp(user_id,eventRequest.getStart_timestamp(),course_id);
         long now_timestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
-        if(eventRequest.getStart_timestamp() < now_timestamp)
+        if(events.get(0).getStart_timestamp() < now_timestamp)
         {
             throw new GymPolicyException("You cant cancel this Event.");
         }
-        eventRepository.delete(eventRequest);
+        eventRepository.delete(events.get(0));
     }
 }

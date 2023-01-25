@@ -95,10 +95,6 @@ public class Schedule
         this.course = course;
     }
 
-    public String getScheduled_course() {
-        return scheduled_course;
-    }
-
     public void setScheduled_course(String scheduled_course) {
         this.scheduled_course = scheduled_course;
     }

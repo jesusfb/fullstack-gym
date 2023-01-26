@@ -34,7 +34,7 @@ public class EventServiceImpl implements EventService
     PlanRepository planRepository;
 
     @Override
-    public Event saveEvent(Event eventRequest,int user_id,int course_id)
+    public Event saveEvent(long start_tmp,long end_tmp,int user_id,int course_id)
     {
         // check if user and course exists by id
         User user = userRepository.findById(user_id).orElseThrow( () -> new ResourceNotFoundException("User","Id",user_id));
@@ -43,16 +43,17 @@ public class EventServiceImpl implements EventService
         if(checkIfCourseBelongsToPlan(user.getPlan().getId(),course_id))
         {
             // check if registry already exists in database
-            if(checkIfRegistryExists(user_id,course_id,eventRequest.getStart_timestamp()))
+            if(checkIfRegistryExists(user_id,course_id,start_tmp))
             {
                 // check if user can register to this course concerning hours limit policy
                 if(checkIfUserCanRegister(user_id,course_id))
                 {
-                    eventRequest.setUser(user);
-                    eventRequest.setCourse(course);
-                    eventRequest.setStart_timestamp(eventRequest.getStart_timestamp());
-                    eventRequest.setEnd_timestamp(eventRequest.getEnd_timestamp());
-                    return eventRepository.save(eventRequest);
+                    Event event = new Event();
+                    event.setUser(user);
+                    event.setCourse(course);
+                    event.setStart_timestamp(start_tmp);
+                    event.setEnd_timestamp(end_tmp);
+                    return eventRepository.save(event);
                 }
             }
         }
@@ -134,10 +135,9 @@ public class EventServiceImpl implements EventService
     }
 
     @Override
-    public void unregister(int user_id,int course_id, Event eventRequest)
+    public void unregister(int user_id,int course_id, long start_tmp)
     {
-        System.out.println(eventRequest.getStart_timestamp());
-        List<Event> events = eventRepository.findRegistryByUserCourseAndTimestamp(user_id,eventRequest.getStart_timestamp(),course_id);
+        List<Event> events = eventRepository.findRegistryByUserCourseAndTimestamp(user_id,start_tmp,course_id);
         long now_timestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
         if(events.get(0).getStart_timestamp() < now_timestamp)
         {

@@ -19,9 +19,9 @@ public class EventController
 
     //@RequestBody com.fasterxml.jackson.databind.JsonNode payload
     @PostMapping("/events/register")
-    public ResponseEntity<Event> saveEvent(@RequestBody Event eventRequest,@RequestParam("user_id") int user_id,@RequestParam("course_id") int course_id)
+    public ResponseEntity<Event> saveEvent(@RequestParam("start_tmp") long start_tmp, @RequestParam("end_tmp") long end_tmp,@RequestParam("user_id") int user_id,@RequestParam("course_id") int course_id)
     {
-        return new ResponseEntity<>(eventService.saveEvent(eventRequest,user_id,course_id), HttpStatus.CREATED);
+        return new ResponseEntity<>(eventService.saveEvent(start_tmp,end_tmp,user_id,course_id), HttpStatus.CREATED);
     }
 
     @GetMapping("/events/all")
@@ -37,9 +37,10 @@ public class EventController
     }
 
     @DeleteMapping("/events/unregister")
-    public ResponseEntity<HttpStatus> unregister(@RequestParam("user_id") int user_id,@RequestParam("course_id") int course_id,@RequestBody Event eventRequest)
+    public ResponseEntity<HttpStatus> unregister(@RequestParam("user_id") int user_id,@RequestParam("course_id") int course_id,
+                                                 @RequestParam("start_tmp") long start_tmp)
     {
-        eventService.unregister(user_id,course_id,eventRequest);
+        eventService.unregister(user_id,course_id,start_tmp);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

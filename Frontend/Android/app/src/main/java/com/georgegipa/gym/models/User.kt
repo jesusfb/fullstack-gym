@@ -18,6 +18,8 @@ data class User(
     val address: String,
     @SerializedName("image_url")
     private val url: String = "",
+    @SerializedName("registered_date")
+    val registeredDate: String,
     @SerializedName("plan_id")
     val plan: Int
 ) {

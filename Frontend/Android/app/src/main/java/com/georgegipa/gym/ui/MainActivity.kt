@@ -9,7 +9,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.georgegipa.gym.R
+import com.georgegipa.gym.api.ApiResponses
 import com.georgegipa.gym.databinding.ActivityMainBinding
+import com.georgegipa.gym.utils.getGreeting
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +37,10 @@ class MainActivity : AppCompatActivity() {
 
         //set bottom navigation
         bottomNav.setupWithNavController(navController)
+    }
+
+    fun changeGreetingTitleBar(title : String) {
+        binding.greetingTv.text = title
     }
 
 }

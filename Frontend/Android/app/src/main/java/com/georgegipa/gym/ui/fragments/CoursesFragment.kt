@@ -11,6 +11,7 @@ import com.georgegipa.gym.adapters.CourseAdapter
 import com.georgegipa.gym.api.ApiResponses
 import com.georgegipa.gym.api.GymClient
 import com.georgegipa.gym.databinding.FragmentCoursesBinding
+import com.georgegipa.gym.ui.MainActivity
 
 class CoursesFragment : Fragment(R.layout.fragment_courses) {
     private var _binding: FragmentCoursesBinding? = null
@@ -27,6 +28,7 @@ class CoursesFragment : Fragment(R.layout.fragment_courses) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireActivity() as MainActivity).changeGreetingTitleBar("Available Courses")
         binding.coursesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.coursesRecyclerView.adapter = CourseAdapter(requireContext(), ApiResponses.courses)
     }

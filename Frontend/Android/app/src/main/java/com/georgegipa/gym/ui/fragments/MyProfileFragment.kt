@@ -30,6 +30,8 @@ class MyProfileFragment : Fragment(R.layout.fragment_my_profile) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireActivity() as MainActivity ).changeGreetingTitleBar("${ApiResponses.user.name}'s Profile")
+
         Glide.with(requireContext()).load(ApiResponses.user.image).into(binding.userImage)
         val name = ApiResponses.user.name + " " + ApiResponses.user.lastname
         binding.usernameTv.text = name

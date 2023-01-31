@@ -10,6 +10,7 @@ import com.georgegipa.gym.R
 import com.georgegipa.gym.adapters.CourseAdapter
 import com.georgegipa.gym.api.ApiResponses
 import com.georgegipa.gym.databinding.FragmentHomeBinding
+import com.georgegipa.gym.ui.MainActivity
 import com.georgegipa.gym.utils.getGreeting
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -33,7 +34,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         //recyclerView.adapter = CourseAdapter(context, courseList)
 
         val greeting = getGreeting() + ", " + ApiResponses.user.name
-        binding.greetingTv.text = greeting
+        (requireActivity() as MainActivity ).changeGreetingTitleBar(greeting)
 
         val courseList = ""
         if(courseList.isEmpty()){

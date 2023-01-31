@@ -1,6 +1,9 @@
 package com.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -8,6 +11,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "plans")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Plan
 {
     @Id
@@ -41,10 +47,6 @@ public class Plan
             inverseJoinColumns = { @JoinColumn(name = "course_id") })
     private Set<Course> courseSet = new HashSet<>();
 
-    public Plan()
-    {
-
-    }
 
     public Plan(String plan_type, String plan_desc, int plan_duration, float plan_price)
     {
@@ -67,61 +69,5 @@ public class Plan
             this.courseSet.remove(course);
             course.getPlanSet().remove(this);
         }
-    }
-
-    public String getImage_url() {
-        return image_url;
-    }
-
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
-    }
-
-    public Set<Course> getCourseSet() {
-        return courseSet;
-    }
-
-    public void setCourseSet(Set<Course> courseSet) {
-        this.courseSet = courseSet;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int plan_id) {
-        this.id = plan_id;
-    }
-
-    public String getPlan_type() {
-        return plan_type;
-    }
-
-    public void setPlan_type(String plan_type) {
-        this.plan_type = plan_type;
-    }
-
-    public String getPlan_desc() {
-        return plan_desc;
-    }
-
-    public void setPlan_desc(String plan_desc) {
-        this.plan_desc = plan_desc;
-    }
-
-    public int getPlan_duration() {
-        return plan_duration;
-    }
-
-    public void setPlan_duration(int plan_duration) {
-        this.plan_duration = plan_duration;
-    }
-
-    public float getPlan_price() {
-        return plan_price;
-    }
-
-    public void setPlan_price(float plan_price) {
-        this.plan_price = plan_price;
     }
 }

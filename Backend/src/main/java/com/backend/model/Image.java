@@ -1,9 +1,16 @@
 package com.backend.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "images")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Image
 {
     @Id
@@ -17,44 +24,13 @@ public class Image
     @Column(name = "type")
     private String type;
 
-    public Image()
-    {
+    @Column(name = "file_path")
+    private String filePath;
 
-    }
-
-    public Image(String name, String type, String filePath)
+    public Image(String name, String type,String filePath)
     {
         this.name = name;
         this.type = type;
-    }
-
-    public int getId()
-    {
-        return id;
-    }
-
-    public void setId(int id)
-    {
-        this.id = id;
-    }
-
-    public String getName()
-    {
-        return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public String getType()
-    {
-        return type;
-    }
-
-    public void setType(String type)
-    {
-        this.type = type;
+        this.filePath = filePath;
     }
 }

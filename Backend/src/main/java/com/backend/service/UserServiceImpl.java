@@ -7,6 +7,8 @@ import com.backend.repository.PlanRepository;
 import com.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -28,6 +30,8 @@ public class UserServiceImpl implements UserService
                 plan -> {
                     User existingUser = userRepository.findById(user_id).orElseThrow(()-> new ResourceNotFoundException("User","Id",user_id));
                     existingUser.setPlan(plan);
+                    LocalDate startPlan = LocalDate.now();
+                    existingUser.setRegistered_date(startPlan);
                     return userRepository.save(existingUser);
                 }
         ).orElseThrow(() -> new ResourceNotFoundException("Plan","Id",plan_id));
@@ -65,6 +69,8 @@ public class UserServiceImpl implements UserService
         User user = planRepository.findById(plan_id).map( plan ->
                 {
                     userRequest.setPlan(plan);
+                    LocalDate startPlan = LocalDate.now();
+                    userRequest.setRegistered_date(startPlan);
                     return userRepository.save(userRequest);
                 }
         ).orElseThrow( () -> new ResourceNotFoundException("Plan","Id",plan_id));

@@ -1,11 +1,18 @@
 package com.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "users")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User
 {
     @Id
@@ -31,6 +38,9 @@ public class User
     @Column(name = "image_url")
     private String image_url = "";
 
+    @Column(name = "registered_date")
+    private LocalDate registered_date;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "plan_id")
@@ -38,76 +48,4 @@ public class User
 
     @Transient
     private Integer plan_id;
-
-    public int getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
-    }
-
-    public String getUser_name() {
-        return user_name;
-    }
-
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
-    }
-
-    public String getUser_lastname() {
-        return user_lastname;
-    }
-
-    public void setUser_lastname(String user_lastname) {
-        this.user_lastname = user_lastname;
-    }
-
-    public String getUser_type() {
-        return user_type;
-    }
-
-    public void setUser_type(String user_type) {
-        this.user_type = user_type;
-    }
-
-    public String getUser_email() {
-        return user_email;
-    }
-
-    public void setUser_email(String user_email) {
-        this.user_email = user_email;
-    }
-
-    public String getUser_address() {
-        return user_address;
-    }
-
-    public void setUser_address(String user_address) {
-        this.user_address = user_address;
-    }
-
-    public Plan getPlan() {
-        return plan;
-    }
-
-    public void setPlan(Plan plan) {
-        this.plan = plan;
-    }
-
-    public String getImage_url() {
-        return image_url;
-    }
-
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
-    }
-
-    public Integer getPlan_id() {
-        return plan_id;
-    }
-
-    public void setPlan_id(Integer plan_id) {
-        this.plan_id = plan_id;
-    }
 }

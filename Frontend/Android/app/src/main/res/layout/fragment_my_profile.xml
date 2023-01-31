@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.MyProfileFragment"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
+    tools:context=".ui.fragments.MyProfileFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,75 +24,32 @@
 
                 <ImageView
                     android:id="@+id/user_image"
-                    tools:src="@tools:sample/avatars"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/username_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_margin_half"
-                    android:text="Username"
-                    android:textSize="@dimen/text_size_2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/user_image" />
-
-                <TextView
-                    android:id="@+id/email_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="test@test.com"
-                    android:textSize="@dimen/text_size_2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/username_tv" />
-
-                <TextView
-                    android:id="@+id/address_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="1234 Main St, Anytown, USA"
-                    android:textSize="@dimen/text_size_2"
-                    app:layout_constraintEnd_toEndOf="@+id/email_tv"
-                    app:layout_constraintStart_toStartOf="@+id/email_tv"
-                    app:layout_constraintTop_toBottomOf="@+id/email_tv" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <!--    add a card that displays the current plan with the end date with a option to upgrade-->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            app:cardCornerRadius="10dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@tools:sample/avatars" />
 
                 <ImageView
                     android:id="@+id/plan_iv"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="center"
-                    tools:src="@tools:sample/avatars"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_margin="10dp" />
+                    android:layout_margin="10dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/user_image"
+                    app:layout_constraintEnd_toEndOf="@+id/user_image"
+                    app:layout_constraintHorizontal_bias="1.7"
+                    app:layout_constraintStart_toStartOf="@+id/user_image"
+                    app:layout_constraintTop_toBottomOf="@+id/user_image"
+                    tools:src="@tools:sample/avatars" />
 
                 <RelativeLayout
+                    android:id="@+id/relativeLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/plan_iv">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -119,50 +76,76 @@
                 </RelativeLayout>
 
 
-
-<!--                relative layout 2 buttons horizontal-->
+                <!--                relative layout 2 buttons horizontal-->
                 <LinearLayout
+                    android:id="@+id/linearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
 
                     <TextView
                         android:id="@+id/plan_end_date_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
                         android:layout_marginStart="@dimen/default_margin_half"
+                        android:layout_weight="2"
                         android:text="Plan End Date: 12/31/2020" />
 
 
                 </LinearLayout>
 
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/username_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_margin_half"
+                    android:text="Username"
+                    android:textSize="@dimen/text_size_2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+                <TextView
+                    android:id="@+id/email_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="test@test.com"
+                    android:textSize="@dimen/text_size_2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/username_tv" />
+
+                <TextView
+                    android:id="@+id/address_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="1234 Main St, Anytown, USA"
+                    android:textSize="@dimen/text_size_2"
+                    app:layout_constraintEnd_toEndOf="@+id/email_tv"
+                    app:layout_constraintStart_toStartOf="@+id/email_tv"
+                    app:layout_constraintTop_toBottomOf="@+id/email_tv" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/logout_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_margin"
+                    android:text="Logout"
+                    app:icon="@drawable/ic_baseline_logout"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/address_tv" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            app:cardCornerRadius="10dp">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/logout_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
-                android:text="Logout"
-                app:icon="@drawable/ic_baseline_logout"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/qr_iv" />
-
-        </androidx.cardview.widget.CardView>
-
-
-
 
     </LinearLayout>
 

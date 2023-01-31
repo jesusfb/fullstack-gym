@@ -1,29 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background_gradient"
     tools:context=".ui.fragments.HomeFragment">
 
-    <com.applandeo.materialcalendarview.CalendarView
-        android:id="@+id/calendar"
-        android:layout_width="match_parent"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/greeting_tv"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="@dimen/title_padding"
+        android:text="Good morning, John"
+        android:textColor="?attr/colorOnPrimary"
+        android:textSize="@dimen/title_size_huge"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/title_tv"
-        android:layout_width="wrap_content"
+        android:id="@+id/upcoming_courses_tv"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Upcoming courses"
+        android:layout_marginStart="@dimen/title_padding"
+        android:text="@string/upcoming_courses"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="@dimen/title_size_large"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendar" />
+        app:layout_constraintEnd_toEndOf="@+id/greeting_tv"
+        app:layout_constraintStart_toStartOf="@+id/greeting_tv"
+        app:layout_constraintTop_toBottomOf="@+id/greeting_tv" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/course_details_rv"
@@ -32,6 +42,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/upcoming_courses_tv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

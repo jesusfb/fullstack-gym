@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Fitness Center</string>
+    <string name="no_courses_registered">Check out the courses tab to see what\'s available.Your upcoming courses will appear below.</string>
+    <string name="upcoming_courses">Your Upcoming courses</string>
+
 </resources>

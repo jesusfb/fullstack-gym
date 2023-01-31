@@ -3,8 +3,10 @@
     <dimen name="rounded_corner_radius">12dp</dimen>
     <dimen name="default_margin">10dp</dimen>
     <dimen name="default_margin_half">5dp</dimen>
+    <dimen name="title_padding">16dp</dimen>
     <dimen name="text_size">16sp</dimen>
     <dimen name="text_size_2">18sp</dimen>
     <dimen name="title_size">20sp</dimen>
+    <dimen name="title_size_huge">32sp</dimen>
     <dimen name="title_size_large">24sp</dimen>
 </resources>

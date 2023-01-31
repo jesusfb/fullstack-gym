@@ -2,6 +2,8 @@ package com.georgegipa.gym.ui
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
+import android.graphics.ColorMatrixColorFilter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +17,7 @@ import com.georgegipa.gym.utils.isUserLoggedIn
 import com.georgegipa.gym.utils.saveUserCredentials
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import android.text.Editable.Factory.getInstance
+import androidx.appcompat.app.AppCompatDelegate
 import com.georgegipa.gym.utils.getUserCode
 import com.georgegipa.gym.utils.getUserEmail
 import kotlinx.coroutines.launch
@@ -26,6 +29,7 @@ class StartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
+        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) //disable dark mode
         _binding = ActivityStartBinding.inflate(layoutInflater)
         setContentView(binding.root)
         if (!isUserLoggedIn()) {
@@ -73,7 +77,11 @@ class StartActivity : AppCompatActivity() {
                         .setCancelable(false)
                         .setTitle("Error")
                         .setMessage("An error occurred while fetching data from the server. Please try again later.")
-                        .setPositiveButton("OK") { dialog, _ ->
+                        .setPositiveButton("Retry") { dialog, _ ->
+                            dialog.dismiss()
+                            initNow()
+                        }
+                        .setNegativeButton("Exit") { dialog, _ ->
                             dialog.dismiss()
                             finish()
                         }

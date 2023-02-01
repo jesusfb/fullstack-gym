@@ -14,7 +14,7 @@ data class Course(
     @SerializedName("course_description")
     val description: String,
     @SerializedName("instructor_id")
-    val instructor: Int,
+    val instructorId: Int,
     @SerializedName("plan_ids")
     val plans: List<Int>,
     @SerializedName("image_url")

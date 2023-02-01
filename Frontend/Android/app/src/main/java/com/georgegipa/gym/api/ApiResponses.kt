@@ -6,7 +6,7 @@ import kotlin.system.measureTimeMillis
 
 object ApiResponses {
 
-    lateinit var events: List<Event>
+    var events: List<Event> = listOf()
         private set
     lateinit var courses: List<Course>
         private set
@@ -16,10 +16,6 @@ object ApiResponses {
         private set
     lateinit var user: User
         private set
-
-    fun isInitialized(): Boolean {
-        return this::events.isInitialized && this::courses.isInitialized && this::plans.isInitialized && this::instructors.isInitialized && this::user.isInitialized
-    }
 
     suspend fun init(userId : Int): Boolean {
         //use the new client

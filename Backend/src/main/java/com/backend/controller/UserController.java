@@ -18,9 +18,9 @@ public class UserController
     UserService userService;
 
     @PostMapping("/plans/users/add")
-    public ResponseEntity<User> saveUser(@RequestParam(value = "plan_id") int plan_id,@RequestBody User userRequest)
+    public ResponseEntity<User> saveUser(@RequestBody User userRequest)
     {
-        return new ResponseEntity<>(userService.saveUser(plan_id,userRequest), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.saveUser(userRequest), HttpStatus.CREATED);
     }
 
     @GetMapping("/plans/users/all")

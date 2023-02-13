@@ -102,7 +102,7 @@ public class ScheduleServiceImpl implements ScheduleService
             for(int i=1; i<=weeks; i++)
             {
                 CalendarResponse calendarResponse = new CalendarResponse();
-                localDate = localDate.with(TemporalAdjusters.nextOrSame(dow));
+                localDate = localDate.with(TemporalAdjusters.next(dow));
                 LocalTime startLocalTime = LocalTime.parse(start_time);
                 LocalDateTime startLocalDateTime = LocalDateTime.of(localDate, startLocalTime);
                 calendarResponse.setStart(startLocalDateTime.toString());

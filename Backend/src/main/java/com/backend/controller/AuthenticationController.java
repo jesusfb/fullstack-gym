@@ -1,5 +1,6 @@
 package com.backend.controller;
 
+import com.backend.model.User;
 import com.backend.request.AuthenticationRequest;
 import com.backend.request.RegisterRequest;
 import com.backend.response.AuthenticationResponse;
@@ -19,9 +20,8 @@ public class AuthenticationController {
     private final AuthenticationService service;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
-    ) {
+    public ResponseEntity<User> register(@RequestBody RegisterRequest request)
+    {
         return ResponseEntity.ok(service.register(request));
     }
     @PostMapping("/authenticate")

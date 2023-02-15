@@ -64,21 +64,6 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public User saveUser(User userRequest)
-    {
-        int plan_id = userRequest.getPlan_id();
-        User user = planRepository.findById(plan_id).map( plan ->
-                {
-                    userRequest.setPlan(plan);
-                    LocalDate startPlan = LocalDate.now();
-                    userRequest.setRegistered_date(startPlan);
-                    return userRepository.save(userRequest);
-                }
-        ).orElseThrow( () -> new ResourceNotFoundException("Plan","Id",plan_id));
-        return user;
-    }
-
-    @Override
     public User getUserById(int id)
     {
         User existingUser = userRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("User","Id",id));

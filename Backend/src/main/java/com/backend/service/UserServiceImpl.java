@@ -91,9 +91,8 @@ public class UserServiceImpl implements UserService
     {
         User existingUser = userRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("User","Id",id));
         existingUser.setUser_name(user.getUser_name());
-        existingUser.setUser_email(user.getUser_email());
+        existingUser.setEmail(user.getEmail());
         existingUser.setUser_address(user.getUser_address());
-        existingUser.setUser_type(user.getUser_type());
         existingUser.setUser_lastname(user.getUser_lastname());
         userRepository.save(existingUser);
         return existingUser;

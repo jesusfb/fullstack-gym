@@ -64,8 +64,9 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public User saveUser(int plan_id, User userRequest)
+    public User saveUser(User userRequest)
     {
+        int plan_id = userRequest.getPlan_id();
         User user = planRepository.findById(plan_id).map( plan ->
                 {
                     userRequest.setPlan(plan);

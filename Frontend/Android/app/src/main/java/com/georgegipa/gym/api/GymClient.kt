@@ -82,6 +82,12 @@ class GymClient {
         )
     }
 
+    suspend fun registerToCourse(userId : Int, courseId : Int, start : Int , end : Int) : Boolean {
+        val response = retrofit.registerCourse(userId, courseId, start, end)
+        Log.d(TAG, "RegisterURL: ${response.raw().request().url()}")
+        return response.code() == 200
+    }
+
     suspend fun getEvents(): List<Event> {
         return try {
             val response = retrofit.getEvents()

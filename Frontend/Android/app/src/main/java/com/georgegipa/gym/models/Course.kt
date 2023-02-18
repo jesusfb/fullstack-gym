@@ -23,18 +23,6 @@ data class Course(
     val image: String
         get() = url.removeUrlFromImage()
 
-    val schedule : String
-        get()  {
-            ApiResponses.events.find { it.courseId == id }?.let { event ->
-                //given 2 timestamps, return Mon 19:00 - 20:00
-                val start = java.text.SimpleDateFormat("HH:mm").format(event.startTime * 1000L)
-                val end = java.text.SimpleDateFormat("HH:mm").format(event.endTime * 1000L)
-                val day = java.text.SimpleDateFormat("EEE").format(event.startTime * 1000L)
-                return "$day $start - $end"
-            }
-            return ""
-        }
-
     val room : String
         get() {
             ApiResponses.events.find { it.courseId == id }?.let { event ->

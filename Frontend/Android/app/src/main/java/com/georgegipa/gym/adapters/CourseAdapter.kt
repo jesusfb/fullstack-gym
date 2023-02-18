@@ -11,9 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.georgegipa.gym.R
 import com.georgegipa.gym.api.ApiResponses
+import com.georgegipa.gym.api.GymClient
 import com.georgegipa.gym.models.Course
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textview.MaterialTextView
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class CourseAdapter(private val context: Context, private var courseList: List<Course>) :
     RecyclerView.Adapter<CourseAdapter.CourseViewHolder>() {
@@ -57,11 +60,28 @@ class CourseAdapter(private val context: Context, private var courseList: List<C
                 true
             }
             registerBtn.setOnClickListener {
-                Toast.makeText(context, "You have registered for ${item.name}", Toast.LENGTH_SHORT)
-                    .show()
-
                 //create a multiple selection dialog
+                val scheduledCourses =
+                    ApiResponses.events.filter { it.courseId == item.id }.sortedBy { it.start }
+                val scheduledCoursesNames = scheduledCourses.map { it.getReadAbleDate() }
 
+                MaterialAlertDialogBuilder(context)
+                    .setTitle("Choose a date")
+                    .setItems(scheduledCoursesNames.toTypedArray()) { dialog, which ->
+                        // Respond to item chosen
+                        Toast.makeText(
+                            context,
+                            "You have registered for ${item.name} on ${scheduledCoursesNames[which]}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        //get the selected event
+                        val selectedEvent = scheduledCourses[which]
+                        GlobalScope.launch {
+                            //register the user to the event
+                            GymClient().registerToCourse(ApiResponses.user.id,item.id,selectedEvent.start, selectedEvent.end)
+                        }
+                    }
+                    .show()
             }
         }
     }

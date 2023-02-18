@@ -28,22 +28,22 @@ interface GymAPI {
         @Query("user_id") id: Int
     ): Response<ResponseBody>
 
-    @POST("events")
+    @POST("events/register")
     suspend fun registerCourse(
         @Query("user_id") id: Int,
         @Query("course_id") courseId: Int,
-        @Query("startTimeInEpochSeconds") startTime: Int,
-        @Query("endTimeInEpochSeconds") endTime: Int
+        @Query("start_tmp") startTime: Int,
+        @Query("end_tmp") endTime: Int
     ): Response<ResponseBody>
 
-    @DELETE("events")
+    @DELETE("events/unregister")
     suspend fun unregisterCourse(
         @Query("user_id") id: Int,
         @Query("course_id") courseId: Int,
-        @Query("startTimeInEpochSeconds") startTime: Int,
-        @Query("endTimeInEpochSeconds") endTime: Int
+        @Query("start_tmp") startTime: Int,
+        @Query("end_tmp") endTime: Int
     ): Response<ResponseBody>
 
-    @GET("courses/events/allEpoch")
+    @GET("courses/schedule/all/epoch")
     suspend fun getEvents(): Response<ResponseBody>
 }

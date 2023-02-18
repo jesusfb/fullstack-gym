@@ -1,12 +1,12 @@
 package com.georgegipa.gym.api
 
+import android.widget.Toast
 import com.georgegipa.gym.models.*
 import kotlinx.coroutines.*
-import kotlin.system.measureTimeMillis
 
 object ApiResponses {
 
-    var events: List<Event> = listOf()
+    var gymEvents: List<GymEvent> = listOf()
         private set
     lateinit var courses: List<Course>
         private set
@@ -16,6 +16,7 @@ object ApiResponses {
         private set
     lateinit var user: User
         private set
+    private lateinit var allEvents : List<GymEvent>
 
     suspend fun init(userId : Int): Boolean {
         //use the new client
@@ -36,12 +37,32 @@ object ApiResponses {
                     user = client.getUser(userId)
                 }
                 launch {
-                    events = client.getEvents()
+                    gymEvents = client.getEventsForUser(userId)
+                }
+                launch {
+                    allEvents = client.getAllEvents()
                 }
             }.join()
             return true
         }
         return false
+    }
+
+    suspend fun refreshRegisteredCourses(userId : Int) {
+        gymEvents = GymClient().getEventsForUser(userId)
+    }
+
+    fun getEventsForCourse(courseId : Int) : List<GymEvent> {
+        return allEvents.filter { it.courseId == courseId }.sortedBy { it.start }
+    }
+
+    fun checkIfUserIsRegisteredToCourse(courseId : Int) : Boolean {
+        return gymEvents.any { it.courseId == courseId }
+    }
+
+    //if yes return the event
+    fun getEventForCourse(courseId : Int) : GymEvent? {
+        return gymEvents.find { it.courseId == courseId }
     }
 
 }

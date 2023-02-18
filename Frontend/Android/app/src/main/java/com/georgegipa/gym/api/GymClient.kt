@@ -88,13 +88,32 @@ class GymClient {
         return response.code() == 200
     }
 
-    suspend fun getEvents(): List<Event> {
+    suspend fun unregisterFromCourse(userId : Int, courseId : Int, start : Int , end : Int) : Boolean {
+        val response = retrofit.unregisterCourse(userId, courseId, start, end)
+        Log.d(TAG, "UnRegisterURL: ${response.raw().request().url()}")
+        return response.code() == 200
+    }
+
+    suspend fun getEventsForUser(userId : Int) : List<GymEvent> {
+        return try {
+            val response = retrofit.getEventsForUser(userId)
+            Log.d(TAG, "EventURL: ${response.raw().request().url()}")
+            Gson().fromJson<List<GymEvent>>(
+                response.body()?.string(),
+                object : TypeToken<List<GymEvent>>() {}.type
+            )
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
+    suspend fun getAllEvents(): List<GymEvent> {
         return try {
             val response = retrofit.getEvents()
             Log.d(TAG, "EventURL: ${response.raw().request().url()}")
-            Gson().fromJson<List<Event>>(
+            Gson().fromJson<List<GymEvent>>(
                 response.body()?.string(),
-                object : TypeToken<List<Event>>() {}.type
+                object : TypeToken<List<GymEvent>>() {}.type
             )
         } catch (e: Exception) {
             emptyList()

@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.georgegipa.gym.R
 import com.georgegipa.gym.adapters.CourseAdapter
+import com.georgegipa.gym.adapters.RegisteredAdapter
 import com.georgegipa.gym.api.ApiResponses
 import com.georgegipa.gym.databinding.FragmentHomeBinding
 import com.georgegipa.gym.ui.MainActivity
@@ -36,10 +38,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val greeting = getGreeting() + ", " + ApiResponses.user.name
         (requireActivity() as MainActivity ).changeGreetingTitleBar(greeting)
 
-        val courseList = ""
+        val courseList = ApiResponses.gymEvents
         if(courseList.isEmpty()){
             binding.courseDetailsRv.visibility = View.GONE
             binding.upcomingCoursesTv.text = requireContext().getString(R.string.no_courses_registered)
+        }
+        else {
+            recyclerView.adapter = RegisteredAdapter(courseList)
         }
     }
 

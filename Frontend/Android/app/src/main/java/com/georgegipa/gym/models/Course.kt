@@ -25,7 +25,7 @@ data class Course(
 
     val room : String
         get() {
-            ApiResponses.events.find { it.courseId == id }?.let { event ->
+            ApiResponses.gymEvents.find { it.courseId == id }?.let { event ->
                 return event.room
             }
             return ""

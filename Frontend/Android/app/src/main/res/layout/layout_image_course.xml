@@ -1,10 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/course_info_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="2dp"
+    android:layout_margin="@dimen/default_margin"
     app:cardCornerRadius="@dimen/rounded_corner_radius">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,51 +15,101 @@
 
         <ImageView
             android:id="@+id/course_iv"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_margin="@dimen/default_margin_half"
-            app:layout_constraintBottom_toTopOf="@+id/register_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/title_padding"
+            android:alpha=".5"
+            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/barrier"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/course_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="Pilates Class"
-            android:textSize="@dimen/title_size"
+            android:textSize="@dimen/title_size_large"
             android:textStyle="bold|italic"
-            app:layout_constraintStart_toStartOf="@+id/course_iv"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/course_iv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/course_iv" />
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/instructor_iv"
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            app:layout_constraintBottom_toBottomOf="@+id/course_iv"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/course_iv"
+            tools:srcCompat="@tools:sample/avatars" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/time_tv"
+            android:id="@+id/instructor_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Mon 12:00 PM"
-            android:textAlignment="textEnd"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/course_tv"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/course_tv"
-            app:layout_constraintTop_toTopOf="@+id/course_tv" />
+            android:layout_margin="@dimen/default_margin"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="Instructor: Jessica Smith"
+            android:textSize="@dimen/title_size_large"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="@+id/instructor_iv"
+            app:layout_constraintEnd_toStartOf="@+id/instructor_iv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/instructor_iv" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="instructor_tv, instructor_iv" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/course_description_tv"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:ellipsize="end"
-            android:maxLines="5"
-            android:layout_margin="@dimen/default_margin_half"
-            android:text="The description of the course"
-            app:layout_constraintBottom_toBottomOf="@+id/course_iv"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:text="This is a description of the course. It should be a few sentences long. This is a description of the course. It should be a few sentences long. This is a description of the course. It should be a few sentences long."
+            android:textSize="@dimen/text_size"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/course_iv"
-            app:layout_constraintTop_toTopOf="@+id/course_iv" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/barrier" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/not_available_tv"
+            android:layout_width="0dp"
+            android:layout_margin="@dimen/default_margin"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_baseline_close"
+            android:text="Not available in your plan."
+            android:textColor="@color/error_red"
+            android:textSize="@dimen/title_size"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/course_description_tv" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/available_tv"
+            android:layout_width="0dp"
+            android:layout_margin="@dimen/default_margin"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_baseline_check"
+            android:text="Available in your plan."
+            android:textColor="@color/ok_green"
+            android:textSize="@dimen/title_size"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/course_description_tv" />
+
 
         <Button
             android:id="@+id/register_btn"
@@ -66,19 +117,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:text="Register"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:constraint_referenced_ids="course_tv,time_tv"
-            app:barrierDirection="bottom" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/course_description_tv" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.cardview.widget.CardView>

@@ -15,15 +15,17 @@ import com.georgegipa.gym.api.GymClient
 import com.georgegipa.gym.models.Course
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textview.MaterialTextView
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CourseAdapter(private val context: Context, private var courseList: List<Course>) :
     RecyclerView.Adapter<CourseAdapter.CourseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
         val v: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.layout_image_course2, parent, false)
+            .inflate(R.layout.layout_image_course, parent, false)
         return CourseViewHolder(v)
     }
 
@@ -42,6 +44,7 @@ class CourseAdapter(private val context: Context, private var courseList: List<C
         private val instructorIv: ImageView by lazy { itemView.findViewById(R.id.instructor_iv) }
         private val instructorMtv: MaterialTextView by lazy { itemView.findViewById(R.id.instructor_tv) }
         private val registerBtn: Button by lazy { itemView.findViewById(R.id.register_btn) }
+        private var isRegistered = false
 
         fun bind(item: Course) {
             Glide.with(context).load(item.image).into(courseImage)
@@ -56,33 +59,83 @@ class CourseAdapter(private val context: Context, private var courseList: List<C
                 registerBtn.text = "Not available for your plan"
                 false
             } else {
-                registerBtn.text = "Register"
+                //course is available for the user's plan
+                updateButton()
                 true
             }
+
             registerBtn.setOnClickListener {
-                //create a multiple selection dialog
-                val scheduledCourses =
-                    ApiResponses.events.filter { it.courseId == item.id }.sortedBy { it.start }
+                //create a single selection dialog if the user is not registered to the course
+                //if the user is registered to the course , unregister him
+                val scheduledCourses = ApiResponses.getEventsForCourse(item.id)
                 val scheduledCoursesNames = scheduledCourses.map { it.getReadAbleDate() }
 
-                MaterialAlertDialogBuilder(context)
-                    .setTitle("Choose a date")
-                    .setItems(scheduledCoursesNames.toTypedArray()) { dialog, which ->
-                        // Respond to item chosen
-                        Toast.makeText(
-                            context,
-                            "You have registered for ${item.name} on ${scheduledCoursesNames[which]}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        //get the selected event
-                        val selectedEvent = scheduledCourses[which]
-                        GlobalScope.launch {
-                            //register the user to the event
-                            GymClient().registerToCourse(ApiResponses.user.id,item.id,selectedEvent.start, selectedEvent.end)
+                if (isRegistered) {
+                    //user is already registered to a course , unregister him
+                    val registeredCourse =
+                        ApiResponses.getEventForCourse(item.id) ?: return@setOnClickListener
+
+                    GlobalScope.launch {
+                        GymClient().unregisterFromCourse(
+                            ApiResponses.user.id,
+                            item.id,
+                            registeredCourse.start,
+                            registeredCourse.end
+                        )
+                        ApiResponses.refreshRegisteredCourses(ApiResponses.user.id)
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(context, "Successfully removed from ${item.name}", Toast.LENGTH_SHORT)
+                                .show()
+                            updateButton()
                         }
                     }
-                    .show()
+
+                } else {
+                    //create the above using radio buttons
+                    var selectedItem = 0 //store the selected item index
+                    MaterialAlertDialogBuilder(context)
+                        .setTitle("Choose a date")
+                        .setSingleChoiceItems(scheduledCoursesNames.toTypedArray(), 0) { _, which ->
+                            selectedItem = which // store the selected item index
+                        }
+                        .setPositiveButton("Register") { dialog, _ ->
+                            //register to the selected course
+                            val selectedCourseTime = scheduledCourses[selectedItem]
+
+                            GlobalScope.launch {
+                                GymClient().registerToCourse(
+                                    ApiResponses.user.id,
+                                    item.id,
+                                    selectedCourseTime.start,
+                                    selectedCourseTime.end
+                                )
+                                ApiResponses.refreshRegisteredCourses(ApiResponses.user.id)
+                                withContext(Dispatchers.Main) {
+                                    Toast.makeText(context, "Successfully registered to ${item.name}", Toast.LENGTH_SHORT)
+                                        .show()
+                                    updateButton()
+                                }
+                            }
+                            dialog.dismiss()
+                        }
+                        .setNegativeButton("Cancel") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        .show()
+                }
             }
+        }
+
+        private fun updateButton() {
+            val item = courseList[adapterPosition]
+            val courseAlreadyRegistered = ApiResponses.checkIfUserIsRegisteredToCourse(item.id)
+            if (courseAlreadyRegistered) {
+                registerBtn.text = "Unregister"
+            } else {
+                registerBtn.text = "Register"
+            }
+            //return courseAlreadyRegistered
+            isRegistered = courseAlreadyRegistered
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.georgegipa.gym.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
@@ -13,6 +14,7 @@ import com.georgegipa.gym.api.ApiResponses
 import com.georgegipa.gym.databinding.ActivityMainBinding
 import com.georgegipa.gym.utils.getGreeting
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityMainBinding
@@ -41,6 +43,14 @@ class MainActivity : AppCompatActivity() {
 
     fun changeGreetingTitleBar(title : String) {
         binding.greetingTv.text = title
+    }
+
+    fun snackMessage(message: String) {
+        Snackbar.make(
+            binding.root,
+            message,
+            Snackbar.LENGTH_SHORT
+        ).setAnchorView(bottomNav).show()
     }
 
 }

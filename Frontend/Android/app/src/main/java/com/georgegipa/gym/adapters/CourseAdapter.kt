@@ -1,18 +1,19 @@
 package com.georgegipa.gym.adapters
 
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.georgegipa.gym.R
 import com.georgegipa.gym.api.ApiResponses
 import com.georgegipa.gym.api.GymClient
 import com.georgegipa.gym.models.Course
+import com.georgegipa.gym.ui.MainActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textview.MaterialTextView
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +21,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CourseAdapter(private val context: Context, private var courseList: List<Course>) :
+class CourseAdapter(private val activity: Activity, private var courseList: List<Course>) :
     RecyclerView.Adapter<CourseAdapter.CourseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
@@ -47,6 +48,7 @@ class CourseAdapter(private val context: Context, private var courseList: List<C
         private var isRegistered = false
 
         fun bind(item: Course) {
+            val context = activity as Context
             Glide.with(context).load(item.image).into(courseImage)
             nameTv.text = item.name
             descTv.text = item.description
@@ -76,6 +78,9 @@ class CourseAdapter(private val context: Context, private var courseList: List<C
                         ApiResponses.getEventForCourse(item.id) ?: return@setOnClickListener
 
                     GlobalScope.launch {
+                        withContext(Dispatchers.Main) {
+                            (activity as MainActivity).snackMessage("Removing from ${item.name}...")
+                        }
                         GymClient().unregisterFromCourse(
                             ApiResponses.user.id,
                             item.id,
@@ -84,8 +89,7 @@ class CourseAdapter(private val context: Context, private var courseList: List<C
                         )
                         ApiResponses.refreshRegisteredCourses(ApiResponses.user.id)
                         withContext(Dispatchers.Main) {
-                            Toast.makeText(context, "Successfully removed from ${item.name}", Toast.LENGTH_SHORT)
-                                .show()
+                            (activity as MainActivity).snackMessage("You have been removed from ${item.name}")
                             updateButton()
                         }
                     }
@@ -101,8 +105,11 @@ class CourseAdapter(private val context: Context, private var courseList: List<C
                         .setPositiveButton("Register") { dialog, _ ->
                             //register to the selected course
                             val selectedCourseTime = scheduledCourses[selectedItem]
-
                             GlobalScope.launch {
+                                withContext(Dispatchers.Main) {
+                                    (activity as MainActivity).snackMessage("Registering to ${item.name}...")
+                                }
+
                                 GymClient().registerToCourse(
                                     ApiResponses.user.id,
                                     item.id,
@@ -111,8 +118,7 @@ class CourseAdapter(private val context: Context, private var courseList: List<C
                                 )
                                 ApiResponses.refreshRegisteredCourses(ApiResponses.user.id)
                                 withContext(Dispatchers.Main) {
-                                    Toast.makeText(context, "Successfully registered to ${item.name}", Toast.LENGTH_SHORT)
-                                        .show()
+                                    (activity as MainActivity).snackMessage("You have been registered to ${item.name}")
                                     updateButton()
                                 }
                             }

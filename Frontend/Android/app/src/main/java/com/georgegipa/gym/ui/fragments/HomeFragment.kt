@@ -44,7 +44,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             binding.upcomingCoursesTv.text = requireContext().getString(R.string.no_courses_registered)
         }
         else {
-            recyclerView.adapter = RegisteredAdapter(courseList)
+            recyclerView.adapter = RegisteredAdapter(courseList.sortedBy { it.start })
         }
     }
 

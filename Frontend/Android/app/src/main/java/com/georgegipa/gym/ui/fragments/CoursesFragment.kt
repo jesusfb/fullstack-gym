@@ -30,7 +30,7 @@ class CoursesFragment : Fragment(R.layout.fragment_courses) {
         super.onViewCreated(view, savedInstanceState)
         (requireActivity() as MainActivity).changeGreetingTitleBar("Available Courses")
         binding.coursesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.coursesRecyclerView.adapter = CourseAdapter(requireContext(), ApiResponses.courses)
+        binding.coursesRecyclerView.adapter = CourseAdapter(requireActivity(), ApiResponses.courses)
     }
 
     override fun onDestroyView() {

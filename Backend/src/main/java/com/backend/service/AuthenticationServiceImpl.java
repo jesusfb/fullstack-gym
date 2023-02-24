@@ -1,9 +1,11 @@
 package com.backend.service;
 
 import com.backend.exception.ResourceNotFoundException;
+import com.backend.model.Plan;
+import com.backend.model.Role;
 import com.backend.repository.PlanRepository;
 import com.backend.security.JwtService;
-import com.backend.model.Role;
+//import com.backend.model.Role;
 import com.backend.model.User;
 import com.backend.repository.UserRepository;
 import com.backend.request.AuthenticationRequest;
@@ -28,25 +30,27 @@ public class AuthenticationServiceImpl implements AuthenticationService
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public User register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterRequest request)
+    {
         int plan_id = request.getPlan_id();
-        User user = planRepository.findById(plan_id).map( plan -> {
-                    var user1 = User.builder()
-                            .user_name(request.getFirstname())
-                            .user_lastname(request.getLastname())
-                            .email(request.getEmail())
-                            .password(passwordEncoder.encode(request.getPassword()))
-                            .role(Role.USER)
-                            .user_address(request.getPhysical_address())
-                            .registered_date(LocalDate.now())
-                            .plan(plan)
-                            .image_url("http://localhost:8080/api/get/image?name=no_image.png")
-                            .build();
-                    return repository.save(user1);
-                }
-        ).orElseThrow( () -> new ResourceNotFoundException("Plan","Id",plan_id));
+        Plan plan = planRepository.findById(plan_id).orElseThrow( () -> new ResourceNotFoundException("Plan","Id",plan_id));
+        var user = User.builder()
+                .user_name(request.getFirstname())
+                .user_lastname(request.getLastname())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(Role.USER)
+                .user_address(request.getPhysical_address())
+                .image_url("http://localhost:8080/api/get/image?name=no_image.png")
+                .registered_date(LocalDate.now())
+                .plan(plan)
+                .build();
+        repository.save(user);
+        var jwtToken = jwtService.generateToken(user);
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .build();
 
-        return user;
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {

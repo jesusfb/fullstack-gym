@@ -7,6 +7,6 @@ import com.backend.response.AuthenticationResponse;
 
 public interface AuthenticationService
 {
-    User register(RegisterRequest request);
+    AuthenticationResponse register(RegisterRequest request);
     AuthenticationResponse authenticate(AuthenticationRequest request);
 }

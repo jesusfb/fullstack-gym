@@ -17,7 +17,6 @@ public class EventController
     @Autowired
     EventService eventService;
 
-    //@RequestBody com.fasterxml.jackson.databind.JsonNode payload
     @PostMapping("/events/register")
     public ResponseEntity<Event> saveEvent(@RequestParam("start_tmp") long start_tmp, @RequestParam("end_tmp") long end_tmp,@RequestParam("user_id") int user_id,@RequestParam("course_id") int course_id)
     {

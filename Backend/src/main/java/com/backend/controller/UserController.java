@@ -17,12 +17,6 @@ public class UserController
     @Autowired
     UserService userService;
 
-    @PostMapping("/plans/users/add")
-    public ResponseEntity<User> saveUser(@RequestBody User userRequest)
-    {
-        return new ResponseEntity<>(userService.saveUser(userRequest), HttpStatus.CREATED);
-    }
-
     @GetMapping("/plans/users/all")
     public ResponseEntity<List<User>> getAllUsersByPlanId(@RequestParam(value = "plan_id") int plan_id)
     {

@@ -4,30 +4,42 @@ import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
 import * as IcoIcons from 'react-icons/im';
 import * as TfiIcons from 'react-icons/tfi';
+import * as GiIcons from 'react-icons/gi';
+import * as BsIcons from "react-icons/bs";
 
 export const SidebarData = [
     {
+        title : 'Plans',
+        path : '/Plans',
+        icon : <BsIcons.BsFillPinAngleFill />,
+        cName : 'nav-text'
+    },
+    {
         title : 'Courses',
-        path : '/Courses',
         icon : <AiIcons.AiFillHome />,
         iconOpened : <IoIcons.IoIosArrowDropup />,
         iconClosed : <IoIcons.IoIosArrowDropdownCircle />,
         subNav: [
             {
-                title : 'Free Group Courses',
-                path : '/FreeGroupCourses',
-                icon : <TfiIcons.TfiLayoutGrid3 />
+                title : 'Gold Membership',
+                path : '/GoldMember',
+                icon : <GiIcons.GiGoldBar />
             },
             {
-                title : 'Premium Group Courses',
-                path : '/PremiumGroupCourses',
+                title : 'Silver Membership',
+                path : '/SilverMember',
                 icon : <TfiIcons.TfiLayoutGrid3Alt />
+            },
+            {
+                title : 'Bronze Membership',
+                path : '/BronzeMember',
+                icon : <TfiIcons.TfiLayoutGrid3 />
             }
         ]
     },
     {
         title : 'About Page',
-        path : '/aboutPage',
+        path : '/AboutPage',
         icon : <AiIcons.AiOutlineInfoCircle />,
         cName : 'nav-text'
     },

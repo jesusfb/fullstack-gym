@@ -1,8 +1,8 @@
 package com.backend.service;
 
 import com.backend.model.Schedule;
-import com.backend.request.CalendarResponse;
-import com.backend.request.EventResponse;
+import com.backend.response.CalendarResponse;
+import com.backend.response.EventResponse;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package com.backend.controller;
 
 import com.backend.model.Schedule;
-import com.backend.request.CalendarResponse;
-import com.backend.request.EventResponse;
+import com.backend.response.CalendarResponse;
+import com.backend.response.EventResponse;
 import com.backend.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

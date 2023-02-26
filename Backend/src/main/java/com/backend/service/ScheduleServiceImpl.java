@@ -5,8 +5,8 @@ import com.backend.model.Course;
 import com.backend.model.Schedule;
 import com.backend.repository.CourseRepository;
 import com.backend.repository.ScheduleRepository;
-import com.backend.request.CalendarResponse;
-import com.backend.request.EventResponse;
+import com.backend.response.CalendarResponse;
+import com.backend.response.EventResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

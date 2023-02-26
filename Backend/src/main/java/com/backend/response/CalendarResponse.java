@@ -1,4 +1,4 @@
-package com.backend.request;
+package com.backend.response;
 
 import lombok.Data;
 

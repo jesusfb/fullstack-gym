@@ -82,12 +82,11 @@ class CourseAdapter(private val activity: Activity, private var courseList: List
                             (activity as MainActivity).snackMessage("Removing from ${item.name}...")
                         }
                         GymClient().unregisterFromCourse(
-                            ApiResponses.user.id,
                             item.id,
                             registeredCourse.start,
                             registeredCourse.end
                         )
-                        ApiResponses.refreshRegisteredCourses(ApiResponses.user.id)
+                        ApiResponses.refreshRegisteredCourses()
                         withContext(Dispatchers.Main) {
                             (activity as MainActivity).snackMessage("You have been removed from ${item.name}")
                             updateButton()
@@ -111,12 +110,11 @@ class CourseAdapter(private val activity: Activity, private var courseList: List
                                 }
 
                                 GymClient().registerToCourse(
-                                    ApiResponses.user.id,
                                     item.id,
                                     selectedCourseTime.start,
                                     selectedCourseTime.end
                                 )
-                                ApiResponses.refreshRegisteredCourses(ApiResponses.user.id)
+                                ApiResponses.refreshRegisteredCourses()
                                 withContext(Dispatchers.Main) {
                                     (activity as MainActivity).snackMessage("You have been registered to ${item.name}")
                                     updateButton()

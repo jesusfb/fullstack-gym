@@ -18,6 +18,7 @@ import com.georgegipa.gym.utils.saveUserCredentials
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import android.text.Editable.Factory.getInstance
 import androidx.appcompat.app.AppCompatDelegate
+import com.georgegipa.gym.models.UserBody
 import com.georgegipa.gym.utils.getUserCode
 import com.georgegipa.gym.utils.getUserEmail
 import kotlinx.coroutines.launch
@@ -70,7 +71,7 @@ class StartActivity : AppCompatActivity() {
         binding.button.isEnabled = false
         binding.button.text = "Signing in..."
         lifecycleScope.launch {
-            if (!ApiResponses.init(TEMP_USER_ID)) {
+            if (!ApiResponses.init(UserBody(TEMP_EMAIL, "1234"))) {
                 //run on the main thread
                 runOnUiThread {
                     MaterialAlertDialogBuilder(this@StartActivity)

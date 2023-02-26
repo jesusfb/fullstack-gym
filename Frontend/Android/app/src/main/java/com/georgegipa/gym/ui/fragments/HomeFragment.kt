@@ -33,7 +33,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val context = requireContext()
         val recyclerView = binding.courseDetailsRv
         recyclerView.layoutManager = LinearLayoutManager(context)
-        //recyclerView.adapter = CourseAdapter(context, courseList)
 
         val greeting = getGreeting() + ", " + ApiResponses.user.name
         (requireActivity() as MainActivity ).changeGreetingTitleBar(greeting)

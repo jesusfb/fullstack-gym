@@ -12,7 +12,7 @@ data class User(
     val name: String,
     @SerializedName("user_lastname")
     val lastname: String,
-    @SerializedName("user_email")
+    @SerializedName("email")
     val email: String,
     @SerializedName("user_address")
     val address: String,
@@ -25,37 +25,4 @@ data class User(
 ) {
     val image : String
         get() = url.removeUrlFromImage()
-
-    companion object {
-
-        private const val USER_KEY = "user"
-
-        fun retrieveUser(context: Context): User {
-            val prefs = context.getSharedPreferences(USER_KEY, Context.MODE_PRIVATE)
-            val json = prefs.getString(USER_KEY, "")
-            return Gson().fromJson(json, User::class.java)
-        }
-
-        //save to shared preferences
-        fun saveUser(context: Context, user: User) {
-            val prefs = context.getSharedPreferences(USER_KEY, Context.MODE_PRIVATE)
-            val editor = prefs.edit()
-            editor.putString(USER_KEY, Gson().toJson(user))
-            editor.apply()
-        }
-
-        //check if a user object is in shared preferences
-        fun isUserLoggedIn(context: Context): Boolean {
-            val prefs = context.getSharedPreferences(USER_KEY, Context.MODE_PRIVATE)
-            return prefs.contains(USER_KEY)
-        }
-
-        //remove user object from shared preferences
-        fun logout(context: Context) {
-            val prefs = context.getSharedPreferences(USER_KEY, Context.MODE_PRIVATE)
-            val editor = prefs.edit()
-            editor.remove(USER_KEY)
-            editor.apply()
-        }
-    }
 }

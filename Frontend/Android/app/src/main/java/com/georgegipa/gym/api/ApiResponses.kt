@@ -1,6 +1,5 @@
 package com.georgegipa.gym.api
 
-import android.widget.Toast
 import com.georgegipa.gym.models.*
 import kotlinx.coroutines.*
 
@@ -18,10 +17,10 @@ object ApiResponses {
         private set
     private lateinit var allEvents : List<GymEvent>
 
-    suspend fun init(userId : Int): Boolean {
+    suspend fun init(userBody: UserBody): Boolean {
         //use the new client
         val client = GymClient()
-        if (client.checkAPI()) {
+        if (client.login(userBody)) {
             //request all the data in parallel
             CoroutineScope(Dispatchers.IO).launch {
                 launch {
@@ -34,10 +33,10 @@ object ApiResponses {
                     courses = client.getCourses()
                 }
                 launch {
-                    user = client.getUser(userId)
+                    user = client.getUser()
                 }
                 launch {
-                    gymEvents = client.getEventsForUser(userId)
+                    gymEvents = client.getEventsForUser()
                 }
                 launch {
                     allEvents = client.getAllEvents()
@@ -48,8 +47,8 @@ object ApiResponses {
         return false
     }
 
-    suspend fun refreshRegisteredCourses(userId : Int) {
-        gymEvents = GymClient().getEventsForUser(userId)
+    suspend fun refreshRegisteredCourses() {
+        gymEvents = GymClient().getEventsForUser()
     }
 
     fun getEventsForCourse(courseId : Int) : List<GymEvent> {

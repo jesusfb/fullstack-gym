@@ -9,6 +9,7 @@ data class GymEvent(
     val start: Int,
     @SerializedName("end_timestamp")
     val end: Int,
+    @SerializedName("room")
     val room: String
 ) {
     fun getReadAbleDate(): String {

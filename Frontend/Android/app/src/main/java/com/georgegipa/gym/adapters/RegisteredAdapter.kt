@@ -1,5 +1,6 @@
 package com.georgegipa.gym.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,13 +34,15 @@ class RegisteredAdapter(
     inner class RegisteredAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val timeTv by lazy { itemView.findViewById<TextView>(R.id.time_tv) }
         private val courseNameTv by lazy { itemView.findViewById<TextView>(R.id.course_tv) }
-        private val instructorTv by lazy { itemView.findViewById<MaterialTextView>(R.id.instructor_tv) }
+        private val instructorTv by lazy { itemView.findViewById<MaterialTextView>(R.id.trainer_tv) }
 
         fun bind(item: GymEvent) {
             ApiResponses.courses.find { it.id == item.courseId }?.let { course ->
                 timeTv.text = item.getStartingTime()
                 courseNameTv.text = course.name
-                //TODO: display instructor name & room
+                ApiResponses.instructors.find { it.id == course.instructorId }?.let { instructor ->
+                    instructorTv.text = instructor.name + " " + instructor.surname
+                }
             }
         }
     }

@@ -17,10 +17,11 @@ object ApiResponses {
         private set
     private lateinit var allEvents : List<GymEvent>
 
-    suspend fun init(userBody: UserBody): Boolean {
+    suspend fun init(userBody: UserBody): Int {
         //use the new client
         val client = GymClient()
-        if (client.login(userBody)) {
+        val res = client.login(userBody)
+        return if (res == 200) {
             //request all the data in parallel
             CoroutineScope(Dispatchers.IO).launch {
                 launch {
@@ -42,9 +43,9 @@ object ApiResponses {
                     allEvents = client.getAllEvents()
                 }
             }.join()
-            return true
+            200
         }
-        return false
+        else res
     }
 
     suspend fun refreshRegisteredCourses() {

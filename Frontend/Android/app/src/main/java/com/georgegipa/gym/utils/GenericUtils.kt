@@ -1,5 +1,7 @@
 package com.georgegipa.gym.utils
 
+import android.content.Context
+import android.net.ConnectivityManager
 import com.georgegipa.gym.api.GymClient.Companion.URL
 import java.time.LocalDateTime
 
@@ -16,4 +18,10 @@ fun getGreeting(): String {
         hour < 18 -> "Good afternoon"
         else -> "Good evening"
     }
+}
+
+@Suppress("DEPRECATION")
+fun Context.isNetworkAvailable(): Boolean {
+    val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    return cm.activeNetworkInfo != null && cm.activeNetworkInfo!!.isConnected
 }

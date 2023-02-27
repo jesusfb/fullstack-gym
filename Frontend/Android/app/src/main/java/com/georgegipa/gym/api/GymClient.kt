@@ -33,7 +33,7 @@ class GymClient {
     //rewrite this to use suspend functions
     //suspend functions can be called from a coroutine or another suspend function
 
-    suspend fun login(userBody: UserBody): Boolean {
+    suspend fun login(userBody: UserBody): Int {
         return try {
             val response = retrofit.authenticate(userBody)
             Log.d(TAG, "LoginURL: ${response.raw().request().url()}")
@@ -46,11 +46,11 @@ class GymClient {
             token = res.token
             userId = res.user.id
             Log.d(TAG, "Response: ${res.token}")
-            true
+            response.code()
         } catch (e: Exception) {
             //print the trace
             e.printStackTrace()
-            false
+            -1
         }
     }
 

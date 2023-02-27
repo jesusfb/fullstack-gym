@@ -1,8 +1,6 @@
 package com.georgegipa.gym.models
 
-import android.content.Context
 import com.georgegipa.gym.utils.removeUrlFromImage
-import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
 data class User(

@@ -1,7 +1,6 @@
 package com.georgegipa.gym.utils
 
 import android.content.Context
-//TODO: REMOVE PASSWORD STORING FROM SHARED PREFERENCES
 
 fun Context.saveUserCredentials(email: String, code: String) {
     val editor = this.getSharedPreferences("user_credentials", Context.MODE_PRIVATE).edit()

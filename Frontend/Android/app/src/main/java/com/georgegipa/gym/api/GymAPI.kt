@@ -27,12 +27,6 @@ interface GymAPI {
     @GET("instructors/all")
     suspend fun getTrainers(@Header("Authorization") token: String): Response<ResponseBody>
 
-    @GET("users")
-    suspend fun getUser(
-        @Header("Authorization") token: String,
-        @Query("user_id") id: Int
-    ): Response<ResponseBody>
-
     @GET("events")
     suspend fun getEventsForUser(
         @Header("Authorization") token: String,

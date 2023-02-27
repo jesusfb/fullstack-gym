@@ -33,7 +33,7 @@ class GymClient {
     //rewrite this to use suspend functions
     //suspend functions can be called from a coroutine or another suspend function
 
-    suspend fun login(userBody: UserBody): Int {
+    suspend fun login(userBody: UserBody): Pair<Int,User?> {
         return try {
             val response = retrofit.authenticate(userBody)
             Log.d(TAG, "LoginURL: ${response.raw().request().url()}")
@@ -47,10 +47,11 @@ class GymClient {
             userId = res.user.id
             Log.d(TAG, "Response: ${res.token}")
             response.code()
+            Pair(response.code(),res.user)
         } catch (e: Exception) {
             //print the trace
             e.printStackTrace()
-            -1
+            Pair(-1,null)
         }
     }
 
@@ -71,7 +72,7 @@ class GymClient {
         return try {
             val response = retrofit.getPlans(token)
             Log.d(TAG, "PlanURL: ${response.raw().request().url()}")
-            Gson().fromJson<List<Plan>>(
+            Gson().fromJson(
                 response.body()?.string(),
                 object : TypeToken<List<Plan>>() {}.type
             )
@@ -85,7 +86,7 @@ class GymClient {
         return try {
             val response = retrofit.getTrainers(token)
             Log.d(TAG, "TrainerURL: ${response.raw().request().url()}")
-            Gson().fromJson<List<Instructor>>(
+            Gson().fromJson(
                 response.body()?.string(),
                 object : TypeToken<List<Instructor>>() {}.type
             )
@@ -93,15 +94,6 @@ class GymClient {
             e.printStackTrace()
             emptyList()
         }
-    }
-
-    suspend fun getUser() : User {
-        val response = retrofit.getUser(token,userId)
-        Log.d(TAG, "UserURL: ${response.raw().request().url()}")
-        return Gson().fromJson<User>(
-            response.body()?.string(),
-            object : TypeToken<User>() {}.type
-        )
     }
 
     suspend fun registerToCourse(courseId : Int, start : Int , end : Int) : Boolean {
@@ -120,7 +112,7 @@ class GymClient {
         return try {
             val response = retrofit.getEventsForUser(token,userId)
             Log.d(TAG, "EventURL: ${response.raw().request().url()}")
-            Gson().fromJson<List<GymEvent>>(
+            Gson().fromJson(
                 response.body()?.string(),
                 object : TypeToken<List<GymEvent>>() {}.type
             )
@@ -133,7 +125,7 @@ class GymClient {
         return try {
             val response = retrofit.getEvents(token)
             Log.d(TAG, "EventURL: ${response.raw().request().url()}")
-            Gson().fromJson<List<GymEvent>>(
+            Gson().fromJson(
                 response.body()?.string(),
                 object : TypeToken<List<GymEvent>>() {}.type
             )

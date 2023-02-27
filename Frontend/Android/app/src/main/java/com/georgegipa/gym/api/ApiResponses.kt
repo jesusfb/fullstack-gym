@@ -21,7 +21,8 @@ object ApiResponses {
         //use the new client
         val client = GymClient()
         val res = client.login(userBody)
-        return if (res == 200) {
+        return if (res.first == 200) {
+            user = res.second!!
             //request all the data in parallel
             CoroutineScope(Dispatchers.IO).launch {
                 launch {
@@ -34,9 +35,6 @@ object ApiResponses {
                     courses = client.getCourses()
                 }
                 launch {
-                    user = client.getUser()
-                }
-                launch {
                     gymEvents = client.getEventsForUser()
                 }
                 launch {
@@ -45,7 +43,7 @@ object ApiResponses {
             }.join()
             200
         }
-        else res
+        else res.first
     }
 
     suspend fun refreshRegisteredCourses() {

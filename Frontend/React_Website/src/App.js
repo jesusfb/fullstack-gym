@@ -11,7 +11,19 @@ import SilverMember from './pages/SilverMember';
 import BronzeMember from './pages/BronzeMember';
 import AboutPage from './pages/AboutPage';
 import Plans from './pages/Plans';
-import Admin from './components/Admin';
+import Admin from './pages/admin/Admin';
+import AddUser from './pages/admin/user/AddUser';
+import EditUser from './pages/admin/user/EditUser';
+import ViewUsers from './pages/admin/user/ViewUsers';
+import ViewPersonalUser from './pages/admin/user/ViewPersonalUser';
+import AddInstructor from './pages/admin/instructor/AddInstructor';
+import EditInstructor from './pages/admin/instructor/EditInstructor';
+import ViewInstructors from './pages/admin/instructor/ViewInstructors';
+import ViewPersonalInstructor from './pages/admin/instructor/ViewPersonalInstructor';
+import AddCourse from './pages/admin/course/AddCourse';
+import EditCourse from './pages/admin/course/EditCourse';
+import ViewCourses from './pages/admin/course/ViewCourses';
+import ViewPersonalCourse from './pages/admin/course/ViewPersonalCourse';
 
 function App() {
   return (
@@ -19,6 +31,22 @@ function App() {
       <Sidebar />
       <Routes>
         <Route path='/Admin' element = {<Admin />} />
+
+        <Route path='/AddUser' element = {<AddUser />} />
+        <Route path='/EditUser/:user_id' element = {<EditUser />} />
+        <Route path='/ViewUsers' element = {<ViewUsers />} />
+        <Route path='/ViewPersonalUser/:user_id' element = {<ViewPersonalUser />} />
+
+        <Route path='/AddInstructor' element = {<AddInstructor />} />
+        <Route path='/EditInstructor/:id' element = {<EditInstructor />} />
+        <Route path='/ViewInstructors' element = {<ViewInstructors />} />
+        <Route path='/ViewPersonalInstructor/:id' element = {<ViewPersonalInstructor />} />
+
+        <Route path='/AddCourse' element = {<AddCourse />} />
+        <Route path='/EditCourse/:id' element = {<EditCourse />} />
+        <Route path='/ViewCourses' element = {<ViewCourses />} />
+        <Route path='/ViewPersonalCourse/:id' element = {<ViewPersonalCourse />} />
+
         <Route path='/Courses' element = {<Courses />} />
         <Route path='/' exact element = {<Home />} />
         <Route path='/Home' element = {<Home />} />

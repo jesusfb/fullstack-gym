@@ -27,11 +27,14 @@ import ViewCourses from './pages/admin/course/ViewCourses';
 import ViewPersonalCourse from './pages/admin/course/ViewPersonalCourse';
 import Login from './pages/Login';
 import LoginTest from './pages/LoginTest';
+import {useLocalState} from "./util/useLocalStorage";
 
 function App() {
+
+  const [jwt, setJwt] =  useLocalState("", "jwt");
   return (
     <Router>
-      <Sidebar />
+      <Navbar />
       <Routes>
         <Route path='/Admin' element = {<Admin />} />
 

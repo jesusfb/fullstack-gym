@@ -1,29 +1,39 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {useLocalState } from "../util/useLocalStorage";
 
 export default function Login() {
 
     let navigate = useNavigate();
 
-    const[jwt, setJwt] = useState("", "jwt");
+    const[jwt, setJwt] = useLocalState("", "jwt");
+    const [user_email, setUseremail] = useState("");
+    const [password, setPassword] = useState("");
 
-    const [user, setUser] = useState({
-    user_email: "",
-    password: "",
-  });
+    function sendLoginRequest(){
+      const reqBody ={
+        user_email : user_email,
+        password :password,
+      };
 
-   const { user_email, password } = user;
-
-   const onInputChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
-  };
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    await axios.post("http://localhost:8080/api/auth/authenticate", user);
-    navigate("/")
-  };
+      fetch("http://localhost:8080/api/auth/authenticate", {
+        headers : {
+          "Content-Type" : "application/json",
+        },
+        method: "post",
+        body: JSON.stringify(reqBody)
+      })
+      .then((response) => {
+        if(response.status === 200)
+          return Promise.all([response.json(), response.headers]);
+          else return Promise.reject("Invalid login attempt");
+      })
+      .then(([body, headers]) => {
+        setJwt(headers.get("Authorization"));
+      })
+      navigate("/Admin");
+    }
  
     return (
       <>
@@ -32,18 +42,18 @@ export default function Login() {
           <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
             <h2 className="text-center m-4">Login</h2>
   
-            <form onSubmit={(e) => onSubmit(e)}>
+            <form >
               <div className="mb-3">
                 <label htmlFor="Name" className="form-label">
                   Email
                 </label>
                 <input
-                  type={"text"}
+                  type="email"
                   className="form-control"
                   placeholder="Enter your email"
                   name="user_email"
                   value={user_email}
-                  onChange={(e) => onInputChange(e)}
+                  onChange={(e) => setUseremail(e.target.value)}
                 />
               </div>
               <div className="mb-3">
@@ -56,10 +66,10 @@ export default function Login() {
                   placeholder="Enter your password"
                   name="password"
                   value={password}
-                  onChange={(e) => onInputChange(e)}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <button type="submit" className="btn btn-outline-primary" >
+              <button type="submit" className="btn btn-outline-primary" onClick={() => sendLoginRequest()} to="/Admin">
                 Login
               </button>
               <Link className="btn btn-outline-danger mx-2" to="/">

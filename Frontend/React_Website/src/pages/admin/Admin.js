@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import Footer from '../../components/Footer';
+import { useLocalState } from "../../util/useLocalStorage";
 
 export default function Admin() {
   const [users, setUsers] = useState([]);
+
+  const [jwt, setJwt] = useLocalState("", "jwt");
 
   const { id } = useParams();
 
@@ -29,7 +32,7 @@ export default function Admin() {
         <table className="table border shadow">
           <thead>
             <tr>
-              <th scope="col" >CHOOSE A CATEGORY</th>
+              <th scope="col" >CHOOSE A CATEGORY JWT : {jwt}</th>
             </tr>
           </thead>
           <tbody>

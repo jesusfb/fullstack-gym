@@ -60,6 +60,18 @@ public class User implements UserDetails
     @Transient
     private Integer plan_id;
 
+    public User(int user_id, String user_name, String user_lastname, Role role, String email, String password, String user_address, String image_url, LocalDate registered_date) {
+        this.user_id = user_id;
+        this.user_name = user_name;
+        this.user_lastname = user_lastname;
+        this.role = role;
+        this.email = email;
+        this.password = password;
+        this.user_address = user_address;
+        this.image_url = image_url;
+        this.registered_date = registered_date;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

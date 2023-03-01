@@ -1,6 +1,7 @@
 package com.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -51,6 +52,15 @@ public class Course
     public Course()
     {
 
+    }
+
+    public Course(int id, String course_name, String course_description, String image_url, Instructor instructor, Set<Plan> planSet) {
+        this.id = id;
+        this.course_name = course_name;
+        this.course_description = course_description;
+        this.image_url = image_url;
+        this.instructor = instructor;
+        this.planSet = planSet;
     }
 
     public String getImage_url() {

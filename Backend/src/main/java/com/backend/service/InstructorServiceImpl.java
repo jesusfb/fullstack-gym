@@ -13,6 +13,10 @@ public class InstructorServiceImpl implements InstructorService
     @Autowired
     InstructorRepository instructorRepository;
 
+    public InstructorServiceImpl(InstructorRepository instructorRepository) {
+        this.instructorRepository = instructorRepository;
+    }
+
     @Override
     public Instructor saveInstructor(Instructor instructor)
     {

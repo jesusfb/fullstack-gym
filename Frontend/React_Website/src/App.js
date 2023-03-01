@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Sidebar from './components/Sidebar';
+import Navbar from './components/Navbar';
 import {BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProfilePage from './pages/ProfilePage';
 import Courses from './pages/Courses';
@@ -24,6 +25,8 @@ import AddCourse from './pages/admin/course/AddCourse';
 import EditCourse from './pages/admin/course/EditCourse';
 import ViewCourses from './pages/admin/course/ViewCourses';
 import ViewPersonalCourse from './pages/admin/course/ViewPersonalCourse';
+import Login from './pages/Login';
+import LoginTest from './pages/LoginTest';
 
 function App() {
   return (
@@ -47,6 +50,8 @@ function App() {
         <Route path='/ViewCourses' element = {<ViewCourses />} />
         <Route path='/ViewPersonalCourse/:id' element = {<ViewPersonalCourse />} />
 
+        <Route path='/LoginTest' element = {<LoginTest />} />
+        <Route path='/Login' element = {<Login />} />
         <Route path='/Courses' element = {<Courses />} />
         <Route path='/' exact element = {<Home />} />
         <Route path='/Home' element = {<Home />} />

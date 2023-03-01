@@ -34,7 +34,7 @@ function App() {
   const [jwt, setJwt] =  useLocalState("", "jwt");
   return (
     <Router>
-      <Navbar />
+      <Sidebar />
       <Routes>
         <Route path='/Admin' element = {<Admin />} />
 

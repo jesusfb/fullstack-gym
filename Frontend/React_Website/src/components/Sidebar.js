@@ -77,7 +77,7 @@ const Sidebar = () => {
                     <img src={gymLogo} alt="gymLogo" />
                 </GymLogoImg>
 
-                <ProfileIcon to="/Admin">
+                <ProfileIcon to="/Login">
                     <CgIcons.CgProfile/>
                 </ProfileIcon>
                 

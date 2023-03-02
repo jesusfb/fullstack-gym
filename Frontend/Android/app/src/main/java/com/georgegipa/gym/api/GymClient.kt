@@ -1,6 +1,7 @@
 package com.georgegipa.gym.api
 
 import android.util.Log
+import com.georgegipa.gym.BuildConfig
 import com.georgegipa.gym.models.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -12,8 +13,7 @@ import kotlin.system.exitProcess
 class GymClient {
     companion object {
         private const val TAG = "GymClient"
-        const val URL = "http://192.168.1.9:8080/"
-        private const val BASE_URL = "${URL}api/"
+        private const val BASE_URL = "${BuildConfig.BASE_URL}api/"
         private var token = ""
             get() {
                 if (field.isEmpty()) {

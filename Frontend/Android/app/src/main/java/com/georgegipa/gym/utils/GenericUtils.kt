@@ -2,11 +2,15 @@ package com.georgegipa.gym.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
-import com.georgegipa.gym.api.GymClient.Companion.URL
+import com.georgegipa.gym.BuildConfig
 import java.time.LocalDateTime
 
+//the url of the images is http://localhost:8080/... so we need to remove it
+// and replace it with the actual url if the app is deployed
 fun String.removeUrlFromImage() : String {
-    return this.replace("http://localhost:8080/", URL)
+    return if(this.contains("http://localhost:8080/"))
+     this.replace("http://localhost:8080/", BuildConfig.BASE_URL)
+    else this
 }
 
 //create a greeting based on the current time
@@ -20,6 +24,7 @@ fun getGreeting(): String {
     }
 }
 
+//check if the device is connected to the internet
 @Suppress("DEPRECATION")
 fun Context.isNetworkAvailable(): Boolean {
     val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

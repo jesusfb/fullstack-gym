@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 export default function ViewInstructors() {
   const [instructors, setInstructors] = useState([]);
 
-  const { user_id } = useParams();
+  const { instructor_id } = useParams();
 
   useEffect(() => {
     loadInstructors();
@@ -49,19 +49,19 @@ export default function ViewInstructors() {
                 <td>
                   <Link
                     className="btn btn-primary mx-2"
-                    to={`/ViewPersonalInstructor/${instructor.instructor_id}`}
+                    to={`/ViewPersonalInstructor/${instructor.id}`}
                   >
                     View
                   </Link>
                   <Link
                     className="btn btn-outline-primary mx-2"
-                    to={`/EditInstructor/${instructor.instructor_id}`}
+                    to={`/EditInstructor/${instructor.id}`}
                   >
                     Edit
                   </Link>
                   <button
                     className="btn btn-danger mx-2"
-                    onClick={() => deleteInstructor(instructor.instructor_id)}
+                    onClick={() => deleteInstructor(instructor.id)}
                   >
                     Delete
                   </button>

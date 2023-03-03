@@ -44,14 +44,14 @@ function App() {
         <Route path='/ViewPersonalUser/:user_id' element = {<ViewPersonalUser />} />
 
         <Route path='/AddInstructor' element = {<AddInstructor />} />
-        <Route path='/EditInstructor/:id' element = {<EditInstructor />} />
+        <Route path='/EditInstructor/:instructor_id' element = {<EditInstructor />} />
         <Route path='/ViewInstructors' element = {<ViewInstructors />} />
-        <Route path='/ViewPersonalInstructor/:id' element = {<ViewPersonalInstructor />} />
+        <Route path='/ViewPersonalInstructor/:instructor_id' element = {<ViewPersonalInstructor />} />
 
         <Route path='/AddCourse' element = {<AddCourse />} />
-        <Route path='/EditCourse/:id' element = {<EditCourse />} />
+        <Route path='/EditCourse/:course_id' element = {<EditCourse />} />
         <Route path='/ViewCourses' element = {<ViewCourses />} />
-        <Route path='/ViewPersonalCourse/:id' element = {<ViewPersonalCourse />} />
+        <Route path='/ViewPersonalCourse/:course_id' element = {<ViewPersonalCourse />} />
 
         <Route path='/LoginTest' element = {<LoginTest />} />
         <Route path='/Login' element = {<Login />} />

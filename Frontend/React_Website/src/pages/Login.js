@@ -23,8 +23,8 @@ export default function Login() {
     const onSubmit = async (e) => {
       e.preventDefault();
       const result = await axios.get("http://localhost:8080/api/auth/authenticate?email="+user.user_email+"&password="+user.password);
-      //setUser(result.data);
       setJwt(result.data.token);
+      //setUser(result.data);
       navigate("/Admin")
     };
   

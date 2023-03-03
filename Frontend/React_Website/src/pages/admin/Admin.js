@@ -32,7 +32,7 @@ export default function Admin() {
         <table className="table border shadow">
           <thead>
             <tr>
-              <th scope="col" >CHOOSE A CATEGORY JWT : {jwt}</th>
+              <th scope="col" >CHOOSE A CATEGORY</th>
             </tr>
           </thead>
           <tbody>

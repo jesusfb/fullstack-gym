@@ -18,9 +18,9 @@ public class EventController
     EventService eventService;
 
     @PostMapping("/events/register")
-    public ResponseEntity<Event> saveEvent(@RequestParam("start_tmp") long start_tmp, @RequestParam("end_tmp") long end_tmp,@RequestParam("user_id") int user_id,@RequestParam("course_id") int course_id)
+    public ResponseEntity<Event> saveEvent(@RequestParam("start_tmp") long start_tmp, @RequestParam("end_tmp") long end_tmp,@RequestParam("user_id") int user_id,@RequestParam("course_id") int course_id,@RequestParam("room") String room)
     {
-        return new ResponseEntity<>(eventService.saveEvent(start_tmp,end_tmp,user_id,course_id), HttpStatus.CREATED);
+        return new ResponseEntity<>(eventService.saveEvent(start_tmp,end_tmp,user_id,course_id,room), HttpStatus.CREATED);
     }
 
     @GetMapping("/events/all")

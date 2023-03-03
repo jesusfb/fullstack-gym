@@ -56,6 +56,15 @@ public class Plan
         this.plan_price = plan_price;
     }
 
+    public Plan(int id, String plan_type, String plan_desc, int plan_duration, float plan_price, String image_url) {
+        this.id = id;
+        this.plan_type = plan_type;
+        this.plan_desc = plan_desc;
+        this.plan_duration = plan_duration;
+        this.plan_price = plan_price;
+        this.image_url = image_url;
+    }
+
     public void addCourse(Course course)
     {
         this.courseSet.add(course);

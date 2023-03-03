@@ -8,5 +8,5 @@ import com.backend.response.AuthenticationResponse;
 public interface AuthenticationService
 {
     AuthenticationResponse register(RegisterRequest request);
-    AuthenticationResponse authenticate(AuthenticationRequest request);
+    AuthenticationResponse authenticate(String email,String password);
 }

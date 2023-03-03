@@ -23,6 +23,11 @@ public class UserServiceImpl implements UserService
     @Autowired
     PlanRepository planRepository;
 
+    public UserServiceImpl(UserRepository userRepository)
+    {
+        this.userRepository = userRepository;
+    }
+
     @Override
     public User changePlantoUser(int user_id, int plan_id)
     {

@@ -1,9 +1,7 @@
 package com.georgegipa.gym.api
 
-import com.georgegipa.gym.models.UserBody
 import okhttp3.ResponseBody
 import retrofit2.Response
-import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -12,9 +10,10 @@ import retrofit2.http.Query
 
 interface GymAPI {
 
-    @POST("auth/authenticate")
+    @GET("auth/authenticate")
     suspend fun authenticate(
-        @Body userBody: UserBody
+        @Query("email") email: String,
+        @Query("password") password: String
     ): Response<ResponseBody>
 
     @GET("courses/all")

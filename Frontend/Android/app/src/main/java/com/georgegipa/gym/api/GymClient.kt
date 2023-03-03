@@ -5,10 +5,8 @@ import com.georgegipa.gym.BuildConfig
 import com.georgegipa.gym.models.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import kotlin.system.exitProcess
 
 class GymClient {
     companion object {
@@ -35,7 +33,7 @@ class GymClient {
 
     suspend fun login(userBody: UserBody): Pair<Int,User?> {
         return try {
-            val response = retrofit.authenticate(userBody)
+            val response = retrofit.authenticate(userBody.email, userBody.password)
             Log.d(TAG, "LoginURL: ${response.raw().request().url()}")
             //return the status code
             val res = Gson().fromJson<ResponseUser>(

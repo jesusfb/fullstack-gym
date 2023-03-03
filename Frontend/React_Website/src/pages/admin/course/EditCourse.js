@@ -56,19 +56,6 @@ export default function EditCourse() {
             </div>
             <div className="mb-3">
               <label htmlFor="Name" className="form-label">
-                Instructor 
-              </label>
-              <input
-                type={"text"}
-                className="form-control"
-                placeholder="Enter course's instructor"
-                name="instructor_id"
-                value={instructor_id}
-                onChange={(e) => onInputChange(e)}
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="Name" className="form-label">
                 Course Description
               </label>
               <input

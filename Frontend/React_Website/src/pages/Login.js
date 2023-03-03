@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {useLocalState } from "../util/useLocalStorage";
 
@@ -7,7 +8,7 @@ export default function Login() {
 
     let navigate = useNavigate();
 
-    const[jwt, setJwt] = useLocalState("", "jwt");
+    const[jwt, setJwt] = useLocalState("", "");
 
     const [user, setUser] = useState({
       user_email: "",
@@ -23,9 +24,9 @@ export default function Login() {
     const onSubmit = async (e) => {
       e.preventDefault();
       const result = await axios.get("http://localhost:8080/api/auth/authenticate?email="+user.user_email+"&password="+user.password);
-      setJwt(result.data.token);
+      //setJwt(result.data.token);
       //setUser(result.data);
-      navigate("/Admin")
+      navigate("/Admin/"+result.data.token)
     };
   
  

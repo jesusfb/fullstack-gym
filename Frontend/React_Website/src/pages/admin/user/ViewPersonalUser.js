@@ -31,7 +31,7 @@ export default function ViewPersonalUser() {
 
            <div className="card">
             <div className="card-header">
-              Details of user id : {user.user_id}
+              Details of user id : {user_id}
               <ul className="list-group list-group-flush">
                 <li className="list-group-item">
                   <b>Name:</b>

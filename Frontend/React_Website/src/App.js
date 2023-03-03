@@ -36,7 +36,7 @@ function App() {
     <Router>
       <Sidebar />
       <Routes>
-        <Route path='/Admin' element = {<Admin />} />
+        <Route path='/Admin/:jwt_id' element = {<Admin />} />
 
         <Route path='/AddUser' element = {<AddUser />} />
         <Route path='/EditUser/:user_id' element = {<EditUser />} />

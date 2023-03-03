@@ -54,14 +54,14 @@ public class AuthenticationServiceImpl implements AuthenticationService
 
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(String email,String password) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
+                        email,
+                        password
                 )
         );
-        var user = repository.findByEmail(request.getEmail())
+        var user = repository.findByEmail(email)
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         user.setPlan_id(user.getPlan().getId());

@@ -39,4 +39,6 @@ public class Event
 
     private long start_timestamp;
     private long end_timestamp;
+
+    private String room;
 }

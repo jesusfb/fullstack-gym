@@ -56,7 +56,7 @@ class EventServiceImplTest {
         userRepository.save(user);
         course = new Course(1,"Pilates","Beginners","[URL]",instructor,planSet);
         courseRepository.save(course);
-        event = new Event(1,user,course,1,1,111111,222222);
+        event = new Event(1,user,course,1,1,111111,222222,"B.01");
 
     }
 

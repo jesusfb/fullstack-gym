@@ -1,6 +1,8 @@
 package com.backend.service;
 
 import com.backend.model.User;
+import com.backend.request.UserUpdateRequest;
+
 import java.util.List;
 
 public interface UserService
@@ -9,6 +11,6 @@ public interface UserService
     List<User> getAllUsersByPlanId(int plan_id);
     List<User> getAllUsers();
     User getUserById(int id);
-    User updateUser(User user,int id);
+    User updateUser(UserUpdateRequest user, int id);
     void deleteUser(int id);
 }

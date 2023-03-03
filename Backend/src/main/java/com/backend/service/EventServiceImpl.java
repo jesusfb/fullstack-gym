@@ -33,6 +33,10 @@ public class EventServiceImpl implements EventService
     @Autowired
     PlanRepository planRepository;
 
+    public EventServiceImpl(EventRepository eventRepository) {
+        this.eventRepository = eventRepository;
+    }
+
     @Override
     public Event saveEvent(long start_tmp,long end_tmp,int user_id,int course_id)
     {

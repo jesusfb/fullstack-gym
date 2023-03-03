@@ -36,7 +36,7 @@ public class EventServiceImpl implements EventService
     }
 
     @Override
-    public Event saveEvent(long start_tmp,long end_tmp,int user_id,int course_id,String room)
+    public Event saveEvent(long start_tmp,long end_tmp,int user_id,int course_id)
     {
         // check if user and course exists by id
         User user = userRepository.findById(user_id).orElseThrow( () -> new ResourceNotFoundException("User","Id",user_id));
@@ -55,7 +55,6 @@ public class EventServiceImpl implements EventService
                     event.setCourse(course);
                     event.setStart_timestamp(start_tmp);
                     event.setEnd_timestamp(end_tmp);
-                    event.setRoom(room);
                     return eventRepository.save(event);
                 }
             }

@@ -1,15 +1,6 @@
 import React from 'react';
 import './Footer.css';
 import { Link } from 'react-router-dom';
-import androidLogo from '../media/android.png';
-import styled from 'styled-components';
-
-const AndroidLogoImg = styled(Link)`
-    margin-left: -10rem;
-    height: 75px;
-    width: 80px;
-    display: flex;
-    `;
 
 function Footer() {
   return (
@@ -21,9 +12,16 @@ function Footer() {
         <p className='footer-subscription-text'>
           Available on Play Store
         </p>
-        <AndroidLogoImg to="/Home">
-          <img src={androidLogo} alt="androidLogo" />
-         </AndroidLogoImg>
+        <div className='input-areas'>
+          <form>
+            <input
+              className='footer-input'
+              name='email'
+              type='email'
+              placeholder='Your Email'
+            />
+          </form>
+        </div>
       </section>
       <div class='footer-links'>
         <div className='footer-link-wrapper'>

@@ -51,6 +51,7 @@ const SubMenu = ({item}) => {
 
     return (
         <>
+        {/* to={item.path} sto sidebarlink an theloume na phgainei sta courses*/}
             <SidebarLink to={item.path} onClick={item.subNav && showSubnav}>
                 <div>
                     {item.icon}

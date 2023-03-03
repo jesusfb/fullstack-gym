@@ -1,24 +1,69 @@
 import React from 'react';
 import './App.css';
 import Sidebar from './components/Sidebar';
+import Navbar from './components/Navbar';
 import {BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import FreeGroupCourses from './pages/FreeGroupCourses';
-import PremiumGroupCourses from './pages/PremiumGroupCourses';
 import ProfilePage from './pages/ProfilePage';
 import Courses from './pages/Courses';
 import Home from './pages/Home';
+import OurTeam from './pages/OurTeam';
+import GoldMember from './pages/GoldMember';
+import SilverMember from './pages/SilverMember';
+import BronzeMember from './pages/BronzeMember';
+import AboutPage from './pages/AboutPage';
+import Plans from './pages/Plans';
+import Admin from './pages/admin/Admin';
+import AddUser from './pages/admin/user/AddUser';
+import EditUser from './pages/admin/user/EditUser';
+import ViewUsers from './pages/admin/user/ViewUsers';
+import ViewPersonalUser from './pages/admin/user/ViewPersonalUser';
+import AddInstructor from './pages/admin/instructor/AddInstructor';
+import EditInstructor from './pages/admin/instructor/EditInstructor';
+import ViewInstructors from './pages/admin/instructor/ViewInstructors';
+import ViewPersonalInstructor from './pages/admin/instructor/ViewPersonalInstructor';
+import AddCourse from './pages/admin/course/AddCourse';
+import EditCourse from './pages/admin/course/EditCourse';
+import ViewCourses from './pages/admin/course/ViewCourses';
+import ViewPersonalCourse from './pages/admin/course/ViewPersonalCourse';
+import Login from './pages/Login';
+import LoginTest from './pages/LoginTest';
+import {useLocalState} from "./util/useLocalStorage";
 
 function App() {
+
+  const [jwt, setJwt] =  useLocalState("", "jwt");
   return (
     <Router>
       <Sidebar />
       <Routes>
-        <Route path='/FreeGroupCourses' element= {<FreeGroupCourses />}/>
-        <Route path='/PremiumGroupCourses' element= {<PremiumGroupCourses />}/>
-        <Route path='/ProfilePage' element = {<ProfilePage />} />
+        <Route path='/Admin/:jwt_id' element = {<Admin />} />
+
+        <Route path='/AddUser' element = {<AddUser />} />
+        <Route path='/EditUser/:user_id' element = {<EditUser />} />
+        <Route path='/ViewUsers' element = {<ViewUsers />} />
+        <Route path='/ViewPersonalUser/:user_id' element = {<ViewPersonalUser />} />
+
+        <Route path='/AddInstructor' element = {<AddInstructor />} />
+        <Route path='/EditInstructor/:instructor_id' element = {<EditInstructor />} />
+        <Route path='/ViewInstructors' element = {<ViewInstructors />} />
+        <Route path='/ViewPersonalInstructor/:instructor_id' element = {<ViewPersonalInstructor />} />
+
+        <Route path='/AddCourse' element = {<AddCourse />} />
+        <Route path='/EditCourse/:course_id' element = {<EditCourse />} />
+        <Route path='/ViewCourses' element = {<ViewCourses />} />
+        <Route path='/ViewPersonalCourse/:course_id' element = {<ViewPersonalCourse />} />
+
+        <Route path='/LoginTest' element = {<LoginTest />} />
+        <Route path='/Login' element = {<Login />} />
         <Route path='/Courses' element = {<Courses />} />
         <Route path='/' exact element = {<Home />} />
         <Route path='/Home' element = {<Home />} />
+        <Route path='/OurTeam' element = {<OurTeam />} />
+        <Route path='/GoldMember' element= {<GoldMember />}/>
+        <Route path='/SilverMember' element= {<SilverMember />}/>
+        <Route path='/BronzeMember' element= {<BronzeMember />}/>
+        <Route path='/AboutPage' element= {<AboutPage />}/>
+        <Route path='/Plans' element= {<Plans />}/>
       </Routes>
     </Router>
   );

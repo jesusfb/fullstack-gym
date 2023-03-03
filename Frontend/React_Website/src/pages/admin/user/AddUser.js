@@ -1,20 +1,22 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,  useParams} from "react-router-dom";
 import Footer from '../../../components/Footer';
 
 export default function AddUser() {
   let navigate = useNavigate();
 
   const [user, setUser] = useState({
-    user_name: "",
-    user_lastname: "",
-    user_email: "",
+    firstname: "",
+    lastname: "",
+    email: "",
     plan_id: "",
-    user_address: ""
+    physical_address: "",
+    password: "",
   });
 
-  const { user_name, user_lastname, user_email, plan_id, user_address } = user;
+
+  const { firstname, lastname, email, plan_id, physical_address, password } = user;
 
   const onInputChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -22,7 +24,7 @@ export default function AddUser() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:8080/api/plans/users/add?plan_id="+user.plan_id, user);
+    await axios.post("http://localhost:8080/api/auth/register", user);
     navigate("/")
   };
 
@@ -42,8 +44,8 @@ export default function AddUser() {
                 type={"text"}
                 className="form-control"
                 placeholder="Enter your first name"
-                name="user_name"
-                value={user_name}
+                name="firstname"
+                value={firstname}
                 onChange={(e) => onInputChange(e)}
               />
             </div>
@@ -55,8 +57,8 @@ export default function AddUser() {
                 type={"text"}
                 className="form-control"
                 placeholder="Enter your last name"
-                name="user_lastname"
-                value={user_lastname}
+                name="lastname"
+                value={lastname}
                 onChange={(e) => onInputChange(e)}
               />
             </div>
@@ -68,8 +70,8 @@ export default function AddUser() {
                 type={"text"}
                 className="form-control"
                 placeholder="Enter your e-mail address"
-                name="user_email"
-                value={user_email}
+                name="email"
+                value={email}
                 onChange={(e) => onInputChange(e)}
               />
             </div>
@@ -94,8 +96,21 @@ export default function AddUser() {
                 type={"text"}
                 className="form-control"
                 placeholder="Enter your plan's name"
-                name="user_address"
-                value={user_address}
+                name="physical_address"
+                value={physical_address}
+                onChange={(e) => onInputChange(e)}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">
+                Password
+              </label>
+              <input
+                type={"text"}
+                className="form-control"
+                placeholder="Enter your password"
+                name="password"
+                value={password}
                 onChange={(e) => onInputChange(e)}
               />
             </div>

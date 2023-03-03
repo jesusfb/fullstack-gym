@@ -40,7 +40,7 @@ function App() {
 
         <Route path='/AddUser' element = {<AddUser />} />
         <Route path='/EditUser/:user_id' element = {<EditUser />} />
-        <Route path='/ViewUsers' element = {<ViewUsers />} />
+        <Route path='/ViewUsers/:jwt_id' element = {<ViewUsers />} />
         <Route path='/ViewPersonalUser/:user_id' element = {<ViewPersonalUser />} />
 
         <Route path='/AddInstructor' element = {<AddInstructor />} />

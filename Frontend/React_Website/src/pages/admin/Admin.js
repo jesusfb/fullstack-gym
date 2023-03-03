@@ -11,6 +11,8 @@ export default function Admin() {
 
   const { jwt_id } = useParams();
 
+  const URL_ADD = `/AddUser/${jwt_id}`;
+
   useEffect(() => {
     loadUsers();
   }, []);

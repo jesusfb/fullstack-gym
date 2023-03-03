@@ -1,6 +1,7 @@
 package com.backend.controller;
 
 import com.backend.model.User;
+import com.backend.request.UserUpdateRequest;
 import com.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +37,7 @@ public class UserController
     }
 
     @PutMapping("users/update")
-    public ResponseEntity<User> updateUser( @RequestParam("user_id") int user_id, @RequestBody User user)
+    public ResponseEntity<User> updateUser( @RequestParam("user_id") int user_id, @RequestBody UserUpdateRequest user)
     {
         return new ResponseEntity<>(userService.updateUser(user,user_id),HttpStatus.OK);
     }

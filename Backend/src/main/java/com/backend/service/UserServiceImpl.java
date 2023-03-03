@@ -5,6 +5,7 @@ import com.backend.model.*;
 import com.backend.repository.CourseRepository;
 import com.backend.repository.PlanRepository;
 import com.backend.repository.UserRepository;
+import com.backend.request.UserUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -77,7 +78,7 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public User updateUser(User user, int id)
+    public User updateUser(UserUpdateRequest user, int id)
     {
         User existingUser = userRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("User","Id",id));
         existingUser.setUser_name(user.getUser_name());

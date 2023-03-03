@@ -10,12 +10,11 @@ export default function EditUser() {
   const [user, setUser] = useState({
     user_name: "",
     user_lastname: "",
-    user_email: "",
+    email: "",
     user_address: "",
-    plan_id: ""
   });
 
-  const { user_name, user_lastname, user_email, user_address, plan_id } = user;
+  const { user_name, user_lastname, email, user_address} = user;
 
   const onInputChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -27,6 +26,7 @@ export default function EditUser() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    console.log(user_id);
     await axios.put(`http://localhost:8080/api/users/update?user_id=${user_id}`, user);
     navigate("/");
   };
@@ -90,28 +90,16 @@ export default function EditUser() {
                 type={"text"}
                 className="form-control"
                 placeholder="Enter your e-mail address"
-                name="user_email"
-                value={user_email}
+                name="email"
+                value={email}
                 onChange={(e) => onInputChange(e)}
               />
             </div>
-            <div className="mb-3">
-              <label htmlFor="Name" className="form-label">
-                Plan 
-              </label>
-              <input
-                type={"text"}
-                className="form-control"
-                placeholder="Enter your plan"
-                name="plan_id"
-                value={plan_id}
-                onChange={(e) => onInputChange(e)}
-              />
-            </div>
+            
             <button type="submit" className="btn btn-outline-primary">
               Submit
             </button>
-            <Link className="btn btn-outline-danger mx-2" to="/Admin">
+            <Link className="btn btn-outline-danger mx-2" to="/">
               Cancel
             </Link>
           </form>

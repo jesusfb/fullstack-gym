@@ -46,7 +46,7 @@ export default function ViewPersonalUser() {
             </div>
           </div> 
           <Link className="btn btn-primary my-2" to={"/"}>
-            Back to Admin
+            Back
           </Link>
         </div>
       </div>

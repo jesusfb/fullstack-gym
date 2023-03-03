@@ -50,7 +50,7 @@ export default function ViewPersonalInstructor() {
               </ul>
             </div>
           </div> 
-          <Link className="btn btn-primary my-2" to={"/Admin"}>
+          <Link className="btn btn-primary my-2" to={"/"}>
             Back to Admin
           </Link>
         </div>

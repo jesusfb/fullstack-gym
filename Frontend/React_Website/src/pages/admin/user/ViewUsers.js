@@ -45,7 +45,7 @@ export default function ViewUsers() {
                 </th>
                 <td>{user.user_name}</td>
                 <td>{user.user_lastname}</td>
-                <td>{user.user_email}</td>
+                <td>{user.email}</td>
                 <td>{user.user_address}</td>
                 <td>{user.plan_id}</td>
                 <td>

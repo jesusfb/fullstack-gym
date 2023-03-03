@@ -24,7 +24,6 @@ const GoldMember = () => {
                   <img src={course.image_url} style={{width: "100%"}} />
                   <h1>{course.course_name}</h1>
                   <p className="title">{course.course_description} </p> 
-                  <p className="title"> Instructor name : {course.instructor_name} </p> 
               </div>
           ))}
         </div>

@@ -33,9 +33,9 @@ public class Event
     private Course course;
 
     @Transient
-    int user_id;
+    private int user_id;
     @Transient
-    int course_id;
+    private int course_id;
 
     private long start_timestamp;
     private long end_timestamp;

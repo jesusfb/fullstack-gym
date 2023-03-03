@@ -22,12 +22,18 @@ public class AuthenticationController {
     {
         return ResponseEntity.ok(service.register(request));
     }
+<<<<<<< Updated upstream
     @GetMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestParam(value = "email") String email,
             @RequestParam(value = "password") String password
     )
     {
+=======
+
+    @GetMapping("/authenticate")
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestParam(value = "email") String email, @RequestParam(value = "password") String password) {
+>>>>>>> Stashed changes
         return ResponseEntity.ok(service.authenticate(email,password));
     }
 }

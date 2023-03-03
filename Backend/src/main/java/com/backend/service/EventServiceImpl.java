@@ -2,19 +2,14 @@ package com.backend.service;
 
 import com.backend.exception.GymPolicyException;
 import com.backend.exception.ResourceNotFoundException;
-import com.backend.model.Course;
-import com.backend.model.Event;
-import com.backend.model.Plan;
-import com.backend.model.User;
-import com.backend.repository.CourseRepository;
-import com.backend.repository.EventRepository;
-import com.backend.repository.PlanRepository;
-import com.backend.repository.UserRepository;
+import com.backend.model.*;
+import com.backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +18,9 @@ public class EventServiceImpl implements EventService
 {
     @Autowired
     EventRepository eventRepository;
+
+    @Autowired
+    ScheduleRepository scheduleRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -131,12 +129,18 @@ public class EventServiceImpl implements EventService
     public List<Event> getAllByUserId(int user_id)
     {
         List<Event> events = eventRepository.findByUserId(user_id);
+        List<Event> futureEvents = new ArrayList<>();
         events.forEach(event -> {
-                    event.setCourse_id(event.getCourse().getId());
-                    event.setUser_id(event.getUser().getUser_id());
+                	LocalDateTime localDateTime1 = LocalDateTime.ofEpochSecond(event.getStart_timestamp(), 0, ZoneOffset.UTC);
+                    if(localDateTime1.isAfter(LocalDateTime.now()))
+                    {
+                        event.setCourse_id(event.getCourse().getId());
+                        event.setUser_id(event.getUser().getUser_id());
+                        futureEvents.add(event);
+                    }
                 }
         );
-        return events;
+        return futureEvents;
     }
 
     @Override

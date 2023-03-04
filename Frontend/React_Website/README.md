@@ -13,14 +13,13 @@ This is a promotional website for a gym. It is built with React and uses Bootstr
 * [AXIOS](https://www.npmjs.com/package/axios)
 * [NPM](https://www.npmjs.com/)
 
-<!-- TODO: add libraries used -->
-##Libraries Used
+## Libraries Used
 - react-router-dom - To handle routing
 - axios - To handle api requests
 - react - To construct the webpage
 - react-bootstrap - To make the webpage look good
 
-<!-- TODO: add features -->
+## Features
 - Simple and standardized UI
   -Built using Bootstrap 
 - User login & authentication

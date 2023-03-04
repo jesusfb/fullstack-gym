@@ -14,8 +14,18 @@ This is a promotional website for a gym. It is built with React and uses Bootstr
 * [NPM](https://www.npmjs.com/)
 
 <!-- TODO: add libraries used -->
+##Libraries Used
+- react-router-dom - To handle routing
+- axios - To handle api requests
+- react - To construct the webpage
+- react-bootstrap - To make the webpage look good
 
 <!-- TODO: add features -->
+- Simple and standardized UI
+  -Built using Bootstrap 
+- User login & authentication
+  - Send user credentials to the server and get a token
+- Inclusive and full potential functionalities
 
 <!-- TODO: how to build/run the website-->
 
@@ -28,3 +38,16 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
+
+# Screenshots
+
+<table>
+  <tr>
+    <td><img src="../../Images/android/login_page.jpg" height=100% width=100%></td>
+    <td><img src="../../Images/android/home.jpg" height=100% width=100%></td>
+    <td><img src="../../Images/android/my_profile.jpg" height=100% width=100%></td>
+  </tr>
+    <td><img src="../../Images/android/available_courses.jpg" height=100% width=100%></td>
+    <td><img src="../../Images/android/unavailable_courses.jpg" height=100% width=100%></td>
+  <tr></tr>
+</table>

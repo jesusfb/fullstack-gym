@@ -11,10 +11,26 @@ It is used by the website and the android app to communicate with the database.
 * [Maven](https://maven.apache.org/)
 
 <!-- TODO: libraries used -->
+## Libraries Used
+- Mockito - For Unit Testing
+- JUnit - For Unit Testing
+- Springframework - To create the URL mappings
 
 <!-- TODO: add features of the api -->
+## Features 
+- Simple and comprehensive structure 
+ - URL mappings
+- Individual Unit Testing units
+- Inclusive and easily updated information
 
 <!-- TODO: how to build and run the api -->
+# How to run the app
+- Clone the repository
+- Open the project in Intellij 
+- Navigate to the /Backend/src/main/java/resources/application.properties
+- Change the values according to the values used in the Database0
+- Run the API by running /Backend/src/main/java/com.backend/ProjectApplication
+
 
 # API Endpoints
 

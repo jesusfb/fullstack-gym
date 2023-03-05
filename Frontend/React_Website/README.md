@@ -42,7 +42,7 @@ You may also see any lint errors in the console.
 
 # Screenshots
 
-![Login Page](../../Images/React/Login.png)
+![Login Page](../../Images/React/login.png)
 ![Admin Panel](../../Images/React/AdminPanel.png)
 ![About Page](../../Images/React/AboutPage.png)
 ![Courses](../../Images/React/courses.png)

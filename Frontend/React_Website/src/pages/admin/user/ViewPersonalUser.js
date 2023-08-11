@@ -19,7 +19,7 @@ export default function ViewPersonalUser() {
   }, []);
 
   const loadUser = async () => {
-    const result = await axios.get(`http://localhost:8080/api/users?user_id=${user_id}`);
+    const result = await axios.get(`https://api-gym-j8nk.onrender.com/api/users?user_id=${user_id}`);
     setUser(result.data);
   };
 

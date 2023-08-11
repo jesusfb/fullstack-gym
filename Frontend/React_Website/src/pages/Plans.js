@@ -7,7 +7,7 @@ const Plans = () => {
     const [plans, setPlan] = useState([]);
 
     const loadPlans=async()=> {
-      const result = await axios.get("http://localhost:8080/api/plans/all");
+      const result = await axios.get("https://api-gym-j8nk.onrender.com/api/plans/all");
       setPlan(result.data);
     }
 

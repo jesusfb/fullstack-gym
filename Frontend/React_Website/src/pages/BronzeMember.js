@@ -7,7 +7,7 @@ const BronzeMember = () => {
     const [courses, setCourse] = useState([]);
 
     const loadCourses=async()=> {
-      const result = await axios.get("http://localhost:8080/api/plans/courses/all?plan_id=3");
+      const result = await axios.get("https://api-gym-j8nk.onrender.com/api/plans/courses/all?plan_id=3");
       setCourse(result.data);
     }
 

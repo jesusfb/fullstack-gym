@@ -27,12 +27,12 @@ export default function EditUser() {
   const onSubmit = async (e) => {
     e.preventDefault();
     console.log(user_id);
-    await axios.put(`http://localhost:8080/api/users/update?user_id=${user_id}`, user);
+    await axios.put(`https://api-gym-j8nk.onrender.com/api/users/update?user_id=${user_id}`, user);
     navigate("/");
   };
 
   const loadUser = async () => {
-    const result = await axios.get(`http://localhost:8080/api/users?user_id=${user_id}`);
+    const result = await axios.get(`https://api-gym-j8nk.onrender.com/api/users?user_id=${user_id}`);
     setUser(result.data);
   };
 

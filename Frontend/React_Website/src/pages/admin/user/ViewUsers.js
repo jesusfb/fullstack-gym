@@ -12,12 +12,12 @@ export default function ViewUsers() {
   }, []);
 
   const loadUsers = async () => {
-    const result = await axios.get("http://localhost:8080/api/users/all");
+    const result = await axios.get("https://api-gym-j8nk.onrender.com/api/users/all");
     setUsers(result.data);
   };
 
   const deleteUser = async (id) => {
-    await axios.delete(`http://localhost:8080/api/users/delete?user_id=${id}`);
+    await axios.delete(`https://api-gym-j8nk.onrender.com/api/users/delete?user_id=${id}`);
     loadUsers();
   };
 

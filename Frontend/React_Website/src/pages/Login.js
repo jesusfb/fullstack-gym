@@ -23,7 +23,7 @@ export default function Login() {
   
     const onSubmit = async (e) => {
       e.preventDefault();
-      const result = await axios.get("http://localhost:8080/api/auth/authenticate?email="+user.user_email+"&password="+user.password);
+      const result = await axios.get("https://api-gym-j8nk.onrender.com/api/auth/authenticate?email="+user.user_email+"&password="+user.password);
       console.log(user.user_email); 
       console.log(user.password);
       //setJwt(result.data.token);
